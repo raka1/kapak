@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import NProgress from 'nProgress'
+import NProgress from 'nprogress'
 import login from '@/stores/login'
 import cart from '@/stores/cart'
 import notyf, { error as noter } from '@/utils/notyf'

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import NProgress from 'nProgress'
+import NProgress from 'nprogress'
 import HomeView from '@/views/HomeView.vue'
 import SearchView from '@/views/SearchView.vue'
 import LoginView from '@/views/LoginView.vue'

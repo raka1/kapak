@@ -3,7 +3,7 @@ import { ref, onMounted, type ComponentPublicInstance, watch, computed } from 'v
 import { RouterLink, useRouter } from 'vue-router'
 import { change as changeTheme } from '@/utils/theme'
 import FontFaceObserver from 'fontfaceobserver'
-import NProgress from 'nProgress'
+import NProgress from 'nprogress'
 import login from '@/stores/login'
 import cart from '@/stores/cart'
 
