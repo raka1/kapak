@@ -1,0 +1,137 @@
+@import './base.css';
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+
+.text-muted {
+  color: var(--main-gray) !important;
+  transition: color 0.15s ease-in-out;
+}
+
+a,
+hr {
+  transition: color 0.15s ease-in-out;
+}
+
+#nprogress .bar {
+  background-color: var(--main-prim) !important;
+  transition: background-color 0.15s ease-in-out;
+}
+
+#nprogress .spinner {
+  display: none !important;
+}
+
+input:focus:not(.form-check-input),
+textarea:focus,
+select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--main-prim) !important;
+}
+
+input:not(.form-check-input),
+textarea {
+  color: var(--main-text) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid var(--line-clickable) !important;
+  background-color: transparent !important;
+  transition:
+    color 0.15s ease-in-out,
+    border-bottom 0.15s ease-in-out;
+}
+
+.btn {
+  position: relative;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  color: var(--main-text);
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.15s ease-in-out;
+}
+
+.btn:hover::after {
+  border-bottom: 2px solid var(--main-prim);
+}
+
+.btn.btn-full {
+  color: var(--bs-white);
+  background-color: var(--main-prim);
+  border: var(--bs-btn-border-width) solid var(--main-prim) !important;
+  padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x) !important;
+  border-radius: var(--bs-btn-border-radius) !important;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out;
+}
+
+.btn.btn-full:hover {
+  color: var(--main-prim);
+  background-color: transparent;
+}
+
+.btn.btn-full-outline {
+  color: var(--main-prim);
+  background-color: transparent;
+  border: var(--bs-btn-border-width) solid var(--main-prim) !important;
+  padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x) !important;
+  border-radius: var(--bs-btn-border-radius) !important;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out;
+}
+
+.btn.btn-full-outline:hover {
+  color: var(--bs-white);
+  background-color: var(--main-prim);
+}
+
+.btn.btn-full::after,
+.btn.btn-full-outline::after {
+  content: none;
+}
+
+.link {
+  color: var(--main-prim);
+}
+
+.uplift {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-control-plaintext ~ label,
+.form-floating > .form-select ~ label {
+  color: var(--main-text);
+}
+
+.form-floating > .form-control:focus ~ label::after,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.form-floating > .form-control-plaintext ~ label::after,
+.form-floating > .form-select ~ label::after {
+  background-color: transparent;
+}

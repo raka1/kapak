@@ -1,0 +1,43 @@
+.quantity .btn {
+  border: 1px solid var(--line-clickable) !important;
+  padding: 0.15rem !important;
+}
+
+.quantity .btn:hover {
+  color: var(--main-prim);
+}
+
+.quantity .btn:nth-of-type(1) {
+  border-right: none !important;
+  border-top-left-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+}
+
+.quantity .btn:nth-of-type(2) {
+  border-left: none !important;
+  border-top-right-radius: 0.25rem !important;
+  border-bottom-right-radius: 0.25rem !important;
+}
+
+.quantity > * {
+  transition:
+    border 0.15s ease-in-out,
+    color 0.15s ease-in-out !important;
+}
+
+.quantity > *::after {
+  content: none;
+}
+
+.quantity > *.focus {
+  border-color: var(--main-prim) !important;
+}
+
+.quantity i {
+  font-size: 0.85rem;
+}
+
+.quantity input {
+  border-top: 1px solid var(--line-clickable) !important;
+  width: 2.5rem;
+}
