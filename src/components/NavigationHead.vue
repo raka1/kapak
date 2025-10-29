@@ -123,11 +123,11 @@ function applyTheme() {
     if (localStorage.getItem('theme') == 'dark') {
       i1.classList.add('hidden')
       i2.classList.remove('hidden')
-      brand.style.backgroundImage = `url('/src/assets/logo-secondary.png')`
+      brand.style.backgroundImage = `url('/images/banner-secondary.png')`
     } else {
       i1.classList.remove('hidden')
       i2.classList.add('hidden')
-      brand.style.backgroundImage = `url('/src/assets/logo-primary.png')`
+      brand.style.backgroundImage = `url('/images/banner-primary.png')`
     }
   }
 }

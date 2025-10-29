@@ -3,7 +3,7 @@
     <div class="cons-card my-4 rounded-4 uplift">
       <div class="text-center">
         <img
-          src="/images/kapak-primary.png"
+          src="/images/logo-primary.png"
           alt="Logo"
           class="logo rounded-4 mb-2"
           style="width: 72px; height: 72px"
