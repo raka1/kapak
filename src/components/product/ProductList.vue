@@ -56,7 +56,7 @@ async function getProducts() {
     // List by shop
     if (props.shopname) params.shop = props.shopname
 
-    const response = await fetch(`/item/products${buildQuery(params)}`)
+    const response = await fetch(`/api/item/products${buildQuery(params)}`)
     products.value = await response.json()
 
     if (products.value.length < defaultLimit.value) hasMore.value = false
@@ -76,7 +76,7 @@ async function loadMore() {
     if (route.name == 'Search' && route.query.q) params.q = route.query.q
     if (props.shopname) params.shop = props.shopname
 
-    const response = await fetch(`/item/products${buildQuery(params)}`)
+    const response = await fetch(`/api/item/products${buildQuery(params)}`)
     const newProducts = await response.json()
     products.value.push(...newProducts)
 

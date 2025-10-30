@@ -12,7 +12,7 @@ const carousels = ref<Images[]>([])
 
 async function getCarousels() {
   try {
-    const response = await fetch('/item/banners')
+    const response = await fetch('/api/item/banners')
     carousels.value = await response.json()
   } catch (error) {
     console.error(error)

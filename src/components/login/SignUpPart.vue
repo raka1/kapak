@@ -62,7 +62,7 @@ async function handleNext() {
   NProgress.start()
 
   try {
-    const preresponse = await fetch('/email/check_email', {
+    const preresponse = await fetch('/api/email/check_email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ async function handleNext() {
       return
     } else if (pre.response == 'SERVER_ERROR') throw new Error(`Response: ${pre.response}`)
 
-    const response = await fetch('/email/send_verification', {
+    const response = await fetch('/api/email/send_verification', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ async function resendCode() {
   NProgress.start()
 
   try {
-    const response = await fetch('/email/send_verification', {
+    const response = await fetch('/api/email/send_verification', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ async function verifCode(e: Event) {
     target.setAttribute('disabled', '')
 
     try {
-      const response = await fetch('/email/check_code', {
+      const response = await fetch('/api/email/check_code', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -343,7 +343,7 @@ async function finish() {
   NProgress.start()
 
   try {
-    const response = await fetch('/auth/create_user', {
+    const response = await fetch('/api/auth/create_user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

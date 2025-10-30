@@ -24,7 +24,7 @@ async function handleCartUpdate(
   payload: { action?: 'increase' | 'decrease'; quantity?: number },
 ) {
   try {
-    const response = await fetch(`/cart/${login().username}/items/${product}/${variant}`, {
+    const response = await fetch(`/api/cart/${login().username}/items/${product}/${variant}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -52,7 +52,7 @@ async function handleCartUpdate(
 
 async function refreshCartData() {
   try {
-    const response = await fetch(`/cart/${login().username}`)
+    const response = await fetch(`/api/cart/${login().username}`)
     const res = await response.json()
     cart().reset(res.body)
     console.log(quantityFocused.value)
@@ -90,7 +90,7 @@ async function changeQuantity(change: 'increase' | 'decrease', product: string, 
 
 async function handleDelete(product: string, variant: number) {
   try {
-    const response = await fetch(`/cart/${login().username}/items/${product}/${variant}`, {
+    const response = await fetch(`/api/cart/${login().username}/items/${product}/${variant}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -133,7 +133,7 @@ interface SelectOneBody {
 type SelectBody = SelectAll | SelectSellerBody | SelectOneBody
 
 async function select(body: SelectBody) {
-  const response = await fetch(`/cart/${login().username}/items/check`, {
+  const response = await fetch(`/api/cart/${login().username}/items/check`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -178,7 +178,7 @@ async function handleDeleteChecked() {
       })),
   )
   try {
-    const response = await fetch(`/cart/${login().username}/items`, {
+    const response = await fetch(`/api/cart/${login().username}/items`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(checkedItems),

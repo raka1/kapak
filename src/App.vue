@@ -31,7 +31,7 @@ watch(
 
 onMounted(async () => {
   try {
-    const response = await fetch('/auth/auto_login')
+    const response = await fetch('/api/auth/auto_login')
     const res = await response.json()
 
     if (res.response == 'SUCCESS') {
