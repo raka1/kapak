@@ -1,3 +1,5 @@
+import theme from '@/stores/theme'
+
 export function init() {
   if (!localStorage.getItem('theme')) {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -25,6 +27,7 @@ function apply() {
     document.documentElement.style.setProperty('--main-prim', 'var(--secondary-color)')
     document.documentElement.style.setProperty('--line', 'var(--bs-gray-700)')
     document.documentElement.style.setProperty('--line-clickable', 'var(--bs-gray-600)')
+    theme().setTheme('dark')
   } else {
     document.documentElement.style.setProperty('--body-bg', 'var(--bs-light)')
     document.documentElement.style.setProperty('--main-text', 'var(--bs-dark)')
@@ -33,5 +36,6 @@ function apply() {
     document.documentElement.style.setProperty('--main-prim', 'var(--primary-color)')
     document.documentElement.style.setProperty('--line', 'var(--bs-gray-200)')
     document.documentElement.style.setProperty('--line-clickable', 'var(--bs-gray-400)')
+    theme().setTheme('light')
   }
 }

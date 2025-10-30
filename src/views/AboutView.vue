@@ -1,9 +1,13 @@
+<script setup lang="ts">
+import theme from '@/stores/theme'
+</script>
+
 <template>
   <div class="cons">
     <div class="cons-card my-4 rounded-4 uplift">
       <div class="text-center">
         <img
-          src="/images/logo-primary.png"
+          :src="`/images/logo-${theme().currentTheme === 'dark' ? 'secondary' : 'primary'}.png`"
           alt="Logo"
           class="logo rounded-4 mb-2"
           style="width: 72px; height: 72px"
