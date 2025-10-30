@@ -56,7 +56,7 @@ function handleFocus(focus: boolean) {
 
 async function getCart() {
   try {
-    const response = await fetch(`/api/cart/${login().username}`)
+    const response = await fetch(`/cart/${login().username}`)
     const res = await response.json()
 
     cart().reset(res.body)
@@ -67,7 +67,7 @@ async function getCart() {
 
 async function getAutocompleteItems() {
   try {
-    const response = await fetch('/api/item/autocompletes')
+    const response = await fetch('/item/autocompletes')
     autocompleteItems.value = await response.json()
   } catch (error) {
     console.error(error)
@@ -140,7 +140,7 @@ async function logout() {
   NProgress.start()
 
   try {
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/auth/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

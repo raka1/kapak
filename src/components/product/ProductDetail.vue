@@ -50,7 +50,7 @@ async function getProduct() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     const seller = route.params.seller
     const slug = route.params.slug
-    const response = await fetch(`/api/item/product/${seller}/${slug}`)
+    const response = await fetch(`/item/product/${seller}/${slug}`)
     product.value = await response.json()
     document.title = `${product.value?.name} | Kapak`
     emit(
@@ -134,7 +134,7 @@ function decreaseQuantity() {
 
 async function addToCart() {
   try {
-    const response = await fetch(`/api/cart/${login().username}/items`, {
+    const response = await fetch(`/cart/${login().username}/items`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ async function addToCart() {
 
     if (res.response === 'ITEM_ADDED_TO_CART') {
       try {
-        const response = await fetch(`/api/cart/${login().username}`)
+        const response = await fetch(`/cart/${login().username}`)
         const res = await response.json()
 
         cart().reset(res.body)

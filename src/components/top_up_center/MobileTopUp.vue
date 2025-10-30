@@ -26,7 +26,7 @@ let get: boolean = false
 
 async function getProviders() {
   try {
-    const response = await fetch('/api/item/provider_prefixes')
+    const response = await fetch('/item/provider_prefixes')
     prefixeList.value = await response.json()
   } catch (error) {
     console.error(error)
@@ -35,7 +35,7 @@ async function getProviders() {
 
 async function nominal(id: string) {
   try {
-    const response = await fetch('/api/item/top_up_nominals/' + id)
+    const response = await fetch('/item/top_up_nominals/' + id)
     const nominal = await response.json()
 
     prices.value = nominal.prices

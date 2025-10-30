@@ -74,7 +74,7 @@ function updateUrlParams() {
 
 async function getCategories() {
   try {
-    const response = await fetch('/api/item/categories')
+    const response = await fetch('/item/categories')
     categories.value = await response.json()
   } catch (error) {
     console.error(error)
