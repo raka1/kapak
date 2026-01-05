@@ -81,18 +81,12 @@ async function handleLogin() {
         if (login().afterLogin) router.replace(login().afterLogin)
         else router.go(-1)
         break
-      case 'INVALID_PASSWORD':
+      case 'INVALID_CREDENTIALS':
+        emit('previousElementBorder', fo1Ref.value as HTMLElement, '#ff3f34')
         emit('previousElementBorder', fo2Ref.value as HTMLElement, '#ff3f34')
         notyf.open({
-          message: '<b>The password you entered is incorrect.</b><br /> Please try again.',
-          duration: 3000,
-        })
-        break
-      case 'USER_NOT_FOUND':
-        emit('previousElementBorder', fo1Ref.value as HTMLElement, '#ff3f34')
-        notyf.open({
           message:
-            "<b>We couldn't find an account with that username or email.</b><br /> Please check and try again.",
+            '<b>The username/email or password you entered is incorrect.</b><br /> Please check and try again.',
           duration: 3000,
         })
         break
