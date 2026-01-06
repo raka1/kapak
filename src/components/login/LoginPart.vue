@@ -16,6 +16,7 @@ const loginRef = ref<HTMLButtonElement | null>(null)
 const focus = ref<Array<boolean>>([])
 const usernameM = ref<string>('')
 const passwordM = ref<string>('')
+const logining = ref<boolean>(false)
 
 type propsType = {
   email: string
@@ -31,17 +32,17 @@ const props = defineProps<propsType>()
 const emit = defineEmits<emitType>()
 
 async function handleLogin() {
-  if (loginRef.value) loginRef.value.classList.add('disabled')
+  logining.value = true
 
   if (!usernameM.value) {
-    if (loginRef.value) loginRef.value.classList.remove('disabled')
+    logining.value = false
     emit('previousElementBorder', fo1Ref.value as HTMLElement, '#ff3f34')
     notyf.open({ message: 'You need to enter your username or email.' })
     return
   }
 
   if (!passwordM.value) {
-    if (loginRef.value) loginRef.value.classList.remove('disabled')
+    logining.value = false
     emit('previousElementBorder', fo2Ref.value as HTMLElement, '#ff3f34')
     notyf.open({
       message: "<b>I'm sure the password must be somewhere.</b><br /> Let's check again!",
@@ -130,7 +131,7 @@ async function handleLogin() {
     noter(error)
   }
 
-  if (loginRef.value) loginRef.value.classList.remove('disabled')
+  logining.value = false
   NProgress.done()
 }
 
@@ -161,6 +162,7 @@ onMounted(() => {
         v-model="usernameM"
         @focus="(focus[0] = true), ((fo1Ref as HTMLInputElement).style.borderColor = '')"
         @blur="(focus[0] = false), ((fo1Ref as HTMLInputElement).style.borderColor = '')"
+        @keydown.enter="loginRef?.click()"
       />
     </div>
     <div class="input-group mb-3">
@@ -182,12 +184,15 @@ onMounted(() => {
         v-model="passwordM"
         @focus="(focus[1] = true), ((fo2Ref as HTMLInputElement).style.borderColor = '')"
         @blur="(focus[1] = false), ((fo2Ref as HTMLInputElement).style.borderColor = '')"
+        @keydown.enter="loginRef?.click()"
       />
     </div>
     <div class="row mb-4">
       <div class="col"><RouterLink to="#" class="btn link">Forgot password?</RouterLink></div>
       <div class="col text-end">
-        <button ref="loginRef" type="submit" class="btn btn-full">Login</button>
+        <button ref="loginRef" type="submit" class="btn btn-full" :disabled="logining">
+          Login
+        </button>
       </div>
     </div>
   </form>
