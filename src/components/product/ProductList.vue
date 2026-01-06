@@ -113,8 +113,8 @@ watch(
   { immediate: true },
 )
 
-onMounted(() => {
-  getProducts()
+onMounted(async () => {
+  await getProducts()
   isMounted.value = true
 })
 </script>
