@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 interface Images {
   name: string
@@ -58,11 +59,13 @@ onMounted(() => {
           class="carousel-item"
           :class="index == 0 ? 'active' : ''"
         >
-          <img
-            :src="'data:image/jpg;base64,' + carousel.image"
-            :alt="carousel.name"
-            class="d-block w-100"
-          />
+          <RouterLink v-if="carousel.status" :to="`/banner/${carousel.name}`">
+            <img
+              :src="'data:image/jpg;base64,' + carousel.image"
+              :alt="carousel.name"
+              class="d-block w-100"
+            />
+          </RouterLink>
         </div>
       </div>
       <button
@@ -86,7 +89,7 @@ onMounted(() => {
     </div>
   </transition>
   <div style="text-align: right">
-    <button id="see-all-promos" class="btn">See all</button>
+    <RouterLink id="see-all-promos" class="btn" to="/all_banners">See all</RouterLink>
   </div>
 </template>
 

@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NProgress from 'nprogress'
 import HomeView from '@/views/HomeView.vue'
+import BannerView from '@/views/BannerView.vue'
+import AllBannersView from '@/views/AllBannersView.vue'
 import SearchView from '@/views/SearchView.vue'
 import LoginView from '@/views/LoginView.vue'
 import SignUpView from '@/views/LoginView.vue'
@@ -40,6 +42,16 @@ const router = createRouter({
       path: '/faq',
       name: 'FAQ',
       component: FAQView,
+    },
+    {
+      path: '/banner/:name',
+      name: 'Banner',
+      component: BannerView,
+    },
+    {
+      path: '/all_banners',
+      name: 'AllBanners',
+      component: AllBannersView,
     },
     {
       path: '/search',
