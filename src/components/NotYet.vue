@@ -11,7 +11,7 @@ defineProps<Props>()
     <div class="cons-card uplift">
       <h2>{{ page }} Page Coming Soon</h2>
       <p class="text-muted">This page is under construction.<br />Stay tuned for updates!</p>
-      <router-link to="/" class="btn btn-full"><i class="pi pi-home"></i> Back to Home</router-link>
+      <RouterLink to="/" class="btn btn-full"><i class="pi pi-home"></i> Back to Home</RouterLink>
     </div>
   </div>
 </template>

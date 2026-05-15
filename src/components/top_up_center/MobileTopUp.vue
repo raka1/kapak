@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 interface Price {
   cost: number
@@ -16,7 +17,6 @@ interface Prefix {
 const inputRef = ref<HTMLInputElement | null>(null)
 const imRef = ref<HTMLImageElement | null>(null)
 const valRefs = ref<HTMLDivElement[]>([])
-const buyNowRef = ref<HTMLButtonElement | null>(null)
 const prefixeList = ref<Prefix[]>([])
 const prices = ref<Price[]>([])
 const selectedPrice = ref<Price | null>(null)
@@ -72,7 +72,6 @@ function prefix(e: Event) {
 
   if (value.length < 4 && get) {
     imRef.value?.setAttribute('src', '')
-    buyNowRef.value?.classList.add('disabled')
     selectedPrice.value = null
     provider.value = ''
     prices.value.length = 0
@@ -84,7 +83,6 @@ function clickVal(e: Event, price: Price) {
   const target = e.currentTarget as HTMLElement
 
   selectedPrice.value = price
-  buyNowRef.value?.classList.remove('disabled')
 
   for (let i = 0; i < valRefs.value.length; i++) {
     const element = valRefs.value[i]
@@ -150,7 +148,12 @@ onMounted(getProviders)
           <span style="font-size: 1.2rem; color: var(--main-prim)">Rp{{ selectedPrice.cost }}</span>
         </div>
         <div class="separator d-inline-block" v-if="selectedPrice"></div>
-        <button class="btn btn-lg btn-full d-inline-block disabled" ref="buyNowRef">Buy Now</button>
+        <RouterLink
+          class="btn btn-lg btn-full d-inline-block"
+          :class="selectedPrice ? '' : 'disabled'"
+          to="/cart/checkout"
+          >Buy Now</RouterLink
+        >
       </div>
     </div>
   </transition>
@@ -231,5 +234,11 @@ onMounted(getProviders)
   margin: 0 1rem;
   transform: translateY(1rem);
   transition: border-left 0.15s ease-in-out;
+}
+
+button a {
+  color: var(--bs-white);
+  text-decoration: none;
+  transition: color 0.15s;
 }
 </style>

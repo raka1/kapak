@@ -360,15 +360,13 @@ onBeforeMount(() => {
             </h5>
           </div>
           <div class="text-center">
-            <button
-              class="btn btn-sm btn-full-outline d-inline-block"
-              ref="buyNowRef"
-              @click="addToCart"
-            >
+            <button class="btn btn-sm btn-full-outline d-inline-block" @click="addToCart">
               <i class="pi pi-plus button"></i> Add to Cart
             </button>
             <div class="separator d-inline-block"></div>
-            <button class="btn btn-sm btn-full d-inline-block" ref="buyNowRef">Buy Now</button>
+            <RouterLink class="btn btn-sm btn-full d-inline-block" to="/cart/checkout"
+              >Buy Now</RouterLink
+            >
           </div>
         </div>
       </div>

@@ -62,9 +62,9 @@ onMounted(() => {
         </div>
         <div ref="tabContentRef" class="tab-content">
           <div class="tab-pane fade show active" id="v-mobile"><MobileTopUp /></div>
-          <div class="tab-pane fade" id="v-data-plan">Data Plan</div>
-          <div class="tab-pane fade" id="v-electricity-token">Electricity Token</div>
-          <div class="tab-pane fade" id="v-games">Games</div>
+          <div class="tab-pane fade" id="v-data-plan">Data Plan Coming Soon</div>
+          <div class="tab-pane fade" id="v-electricity-token">Electricity Token Coming Soon</div>
+          <div class="tab-pane fade" id="v-games">Games Coming Soon</div>
         </div>
       </div>
     </div>
