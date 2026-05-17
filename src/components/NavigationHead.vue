@@ -271,7 +271,12 @@ onMounted(() => {
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#logoutModal"
+                  >
                     <i class="pi pi-sign-out"></i> Logout
                   </a>
                 </li>
@@ -306,7 +311,9 @@ onMounted(() => {
           <p>Are you sure you want to logout?</p>
           <div class="text-end">
             <button class="btn btn-full-outline me-2" data-bs-dismiss="modal">Cancel</button>
-            <button class="btn btn-full" @click.prevent="logout" data-bs-dismiss="modal">Logout</button>
+            <button class="btn btn-full" @click.prevent="logout" data-bs-dismiss="modal">
+              Logout
+            </button>
           </div>
         </div>
       </div>
@@ -378,6 +385,15 @@ onMounted(() => {
 
 .dropdown-menu .dropdown-item {
   color: var(--main-text);
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: var(--line) !important;
+}
+
+.dropdown-item .dropdown-item:active {
+  background-color: transparent !important;
 }
 
 ul.list-group {
