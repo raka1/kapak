@@ -271,7 +271,7 @@ onMounted(() => {
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="#" @click.prevent="logout">
+                  <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
                     <i class="pi pi-sign-out"></i> Logout
                   </a>
                 </li>
@@ -282,6 +282,36 @@ onMounted(() => {
       </div>
     </div>
   </nav>
+
+  <div
+    class="modal"
+    id="logoutModal"
+    tabindex="-1"
+    aria-labelledby="logoutModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-11">
+              <h3 class="mb-4">Logout</h3>
+            </div>
+            <div class="col-1 d-flex justify-content-end">
+              <span data-bs-dismiss="modal" style="cursor: pointer"
+                ><i class="pi pi-times"></i
+              ></span>
+            </div>
+          </div>
+          <p>Are you sure you want to logout?</p>
+          <div class="text-end">
+            <button class="btn btn-full-outline me-2" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-full" @click.prevent="logout" data-bs-dismiss="modal">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <ul ref="autocompleteRef" class="list-group" v-show="isFocused && autoCompletes.length">
     <li
