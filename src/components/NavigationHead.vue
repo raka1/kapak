@@ -51,7 +51,10 @@ function handleFocus(focus: boolean) {
   isFocused.value = focus
   emit('getFocus', focus)
 
-  if (!focus) autocompleteSelect.value = -1
+  if (!focus) {
+    searchTextBehind.value = searchText.value
+    autocompleteSelect.value = -1
+  }
 }
 
 async function getCart() {
@@ -80,7 +83,7 @@ function clickAutocomplete(item: AutocompleteItem) {
 }
 
 function handleKeyDown(event: KeyboardEvent) {
-  const key = (event as KeyboardEvent).key
+  const { key } = event
 
   if (key === 'ArrowUp' || key === 'ArrowDown') {
     event.preventDefault()
@@ -100,16 +103,20 @@ function handleKeyDown(event: KeyboardEvent) {
 
     return
   }
-}
 
-function handleKeyUp(event: KeyboardEvent) {
-  const key = (event as KeyboardEvent).key
+  const { ctrlKey, shiftKey, altKey, metaKey } = event
 
-  if (key !== 'ArrowUp' && key !== 'ArrowDown') {
-    autocompleteSelecting.value = false
-    autocompleteSelect.value = -1
+  const isControlKey = key.length > 1 && key !== 'Backspace' && key !== 'Delete'
+  const isModifierActive = ctrlKey || shiftKey || altKey || metaKey
+
+  if (isControlKey || isModifierActive) return
+
+  autocompleteSelecting.value = false
+  autocompleteSelect.value = -1
+
+  setTimeout(() => {
     searchTextBehind.value = searchText.value
-  }
+  }, 0)
 }
 
 function applyTheme() {
@@ -214,7 +221,6 @@ onMounted(() => {
           @keydown.enter="onSearch"
           @keydown.escape="searchRef?.blur()"
           @keydown="handleKeyDown($event)"
-          @keyup="handleKeyUp($event)"
           placeholder="Search Kapak..."
           v-model="searchText"
         />
@@ -269,7 +275,9 @@ onMounted(() => {
                     <i class="pi pi-cog"></i> Settings
                   </RouterLink>
                 </li>
-                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
                 <li>
                   <a
                     class="dropdown-item"
