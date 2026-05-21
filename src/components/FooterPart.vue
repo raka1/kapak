@@ -28,7 +28,7 @@ const route = useRoute()
       Email:
       <a href="mailto:p.raka56@outlook.com" class="footer-email">p.raka56@outlook.com</a>
     </div>
-    <div class="container mb-3">© 2025 Kapak. All Rights Reserved.</div>
+    <div class="container mb-3">© 2026 Kapak. All Rights Reserved.</div>
   </div>
 </template>
 
