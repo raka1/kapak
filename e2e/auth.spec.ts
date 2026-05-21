@@ -7,7 +7,7 @@ const passwords: Array<string> = []
 test('Sign up direclty through API', async ({ request }) => {
   const email = faker.internet.email()
   const password = faker.internet.password()
-  const response = await request.post('/api/auth/create_user', {
+  const response = await request.post('/api/v1/auth/create_user', {
     data: {
       first_name: faker.person.firstName(),
       last_name: faker.person.lastName(),
@@ -28,7 +28,7 @@ test('Delete users direclty through API', async ({ request }) => {
   const email = emails.pop()
   const password = passwords.pop()
 
-  const response = await request.delete('/api/auth/delete_user', {
+  const response = await request.delete('/api/v1/auth/delete_user', {
     data: {
       email: email,
       password: password,

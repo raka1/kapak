@@ -54,7 +54,7 @@ async function handleLogin() {
   NProgress.start()
 
   try {
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch('/api/v1/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ async function handleLogin() {
         login().setUsername(res.body)
 
         try {
-          const response = await fetch(`/api/cart/${login().username}`)
+          const response = await fetch(`/api/v1/cart/${login().username}`)
           const res = await response.json()
 
           cart().reset(res.body)

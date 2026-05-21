@@ -41,9 +41,9 @@ async function OAuth2(s: string) {
   const windowF = `width=${width},height=${height},top=${top},left=${left},resizable=yes`
 
   if (s == 'facebook') {
-    window.open('/api/oauth2/facebook', 'OAuth2', windowF)
+    window.open('/api/v1/oauth2/facebook', 'OAuth2', windowF)
   } else if (s == 'google') {
-    window.open('/api/oauth2/google', 'OAuth2', windowF)
+    window.open('/api/v1/oauth2/google', 'OAuth2', windowF)
   }
 }
 

@@ -24,7 +24,7 @@ async function handleCartUpdate(
   payload: { action?: 'increase' | 'decrease'; quantity?: number },
 ) {
   try {
-    const response = await fetch(`/api/cart/${login().username}/items/${product}/${variant}`, {
+    const response = await fetch(`/api/v1/cart/${login().username}/items/${product}/${variant}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -52,7 +52,7 @@ async function handleCartUpdate(
 
 async function refreshCartData() {
   try {
-    const response = await fetch(`/api/cart/${login().username}`)
+    const response = await fetch(`/api/v1/cart/${login().username}`)
     const res = await response.json()
     cart().reset(res.body)
     console.log(quantityFocused.value)
@@ -90,7 +90,7 @@ async function changeQuantity(change: 'increase' | 'decrease', product: string, 
 
 async function handleDelete(product: string, variant: number) {
   try {
-    const response = await fetch(`/api/cart/${login().username}/items/${product}/${variant}`, {
+    const response = await fetch(`/api/v1/cart/${login().username}/items/${product}/${variant}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -133,7 +133,7 @@ interface SelectOneBody {
 type SelectBody = SelectAll | SelectSellerBody | SelectOneBody
 
 async function select(body: SelectBody) {
-  const response = await fetch(`/api/cart/${login().username}/items/check`, {
+  const response = await fetch(`/api/v1/cart/${login().username}/items/check`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -178,7 +178,7 @@ async function handleDeleteChecked() {
       })),
   )
   try {
-    const response = await fetch(`/api/cart/${login().username}/items`, {
+    const response = await fetch(`/api/v1/cart/${login().username}/items`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(checkedItems),
@@ -275,20 +275,20 @@ onUnmounted(() => {
     </div>
     <div
       class="items uplift rounded-4 my-2 py-3 px-4"
-      v-for="(cart, index) in cart().cart"
+      v-for="(cartItem, index) in cart().cart"
       :key="index"
     >
       <div class="mb-2">
         <input
           class="form-check-input me-2 mb-2"
           type="checkbox"
-          v-model="cart.seller.checked"
-          @click="selectSeller($event, cart.seller._id)"
+          v-model="cartItem.seller.checked"
+          @click="selectSeller($event, cartItem.seller._id)"
         />
-        <b class="mb-3">{{ cart.seller.first_name }} {{ cart.seller.last_name }}</b>
+        <b class="mb-3">{{ cartItem.seller.first_name }} {{ cartItem.seller.last_name }}</b>
       </div>
       <div
-        v-for="(item, indexx) in cart.items"
+        v-for="(item, indexx) in cartItem.items"
         :key="indexx"
         class="d-grid pb-2"
         style="grid-template-columns: 0.5rem auto; gap: 1rem"
@@ -304,7 +304,7 @@ onUnmounted(() => {
         <div>
           <div class="d-grid" style="grid-template-columns: 6rem auto; gap: 1rem">
             <RouterLink
-              :to="`/${cart.seller.username}/${item.product.slug}`"
+              :to="`/${cartItem.seller.username}/${item.product.slug}`"
               class="align-top me-4 img-cart"
             >
               <img :src="'data:image/png;base64, ' + item.product.image" />
@@ -312,7 +312,7 @@ onUnmounted(() => {
             <div class="align-top">
               <div class="d-grid" style="grid-template-columns: auto 8rem; gap: 1rem">
                 <RouterLink
-                  :to="`/${cart.seller.username}/${item.product.slug}`"
+                  :to="`/${cartItem.seller.username}/${item.product.slug}`"
                   style="color: var(--main-text); text-decoration: none"
                   >{{ item.product.name }}</RouterLink
                 >
@@ -363,7 +363,7 @@ onUnmounted(() => {
           <hr
             style="color: var(--line); opacity: 1"
             class="mt-4"
-            v-if="indexx !== cart.items.length - 1"
+            v-if="indexx !== cartItem.items.length - 1"
           />
         </div>
       </div>
