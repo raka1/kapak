@@ -363,7 +363,6 @@ onMounted(() => {
 }
 
 #brand {
-  background-image: url('@/assets/logo-primary.png');
   height: 2rem;
   width: 7rem;
   background-size: contain;
