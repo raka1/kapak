@@ -124,7 +124,7 @@ onMounted(async () => {
     <div
       v-if="products.length && isMounted"
       class="row"
-      :class="route.name == 'Search' ? 'row-cols-5' : 'row-cols-6'"
+      :class="route.name == 'Search' ? 'row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5' : 'row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6'"
     >
       <div v-for="(product, index) in products" :key="index">
         <RouterLink
@@ -160,7 +160,7 @@ onMounted(async () => {
       <div>Try searching with other keywords!</div>
       <img src="/images/woods.png" alt="Woods" id="woods" ref="woodsRef" />
     </div>
-    <div v-else class="row" :class="route.name == 'Search' ? 'row-cols-5' : 'row-cols-6'">
+    <div v-else class="row" :class="route.name == 'Search' ? 'row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5' : 'row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6'">
       <div v-for="n in route.name == 'Search' ? 5 : 6" :key="n">
         <div class="card mb-4 uplift">
           <div class="card-img-top waiting-img-top"></div>
