@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, type ComponentPublicInstance, watch, computed } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { ref, onMounted, onUnmounted, type ComponentPublicInstance, watch, computed } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { change as changeTheme } from '@/utils/theme'
 import FontFaceObserver from 'fontfaceobserver'
 import NProgress from 'nprogress'
@@ -12,6 +12,7 @@ interface AutocompleteItem {
   count: number
 }
 
+const route = useRoute()
 const router = useRouter()
 const autocompleteRef = ref<HTMLUListElement | null>(null)
 const searchRef = ref<HTMLInputElement | null>(null)
@@ -166,6 +167,17 @@ async function logout() {
   NProgress.done()
 }
 
+function resizeWatcher() {
+  const width = window.innerWidth
+  const brand = brandRef.value?.$el
+
+  if (width < 768) {
+    brand.style.display = 'none'
+  } else {
+    brand.style.display = ''
+  }
+}
+
 watch(
   () => login().username,
   () => {
@@ -204,6 +216,13 @@ onMounted(() => {
 
     getAutocompleteItems()
   }
+
+  window.addEventListener('resize', resizeWatcher)
+  resizeWatcher()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resizeWatcher)
 })
 </script>
 
@@ -211,7 +230,10 @@ onMounted(() => {
   <nav ref="navRef" class="navbar fixed-top navbar-expand bg-body-primary">
     <div class="container-fluid container-little">
       <RouterLink class="navbar-brand" to="/" ref="brandRef" id="brand"></RouterLink>
-      <div class="input-group" id="search">
+      <button class="btn" id="back" @click="$router.back()" :class="route.name == 'Home' ? 'hide' : ''">
+        <i class="pi pi-arrow-left"></i>
+      </button>
+      <div class="input-group" id="search" :class="route.name == 'Home' ? 'home' : ''">
         <input
           ref="searchRef"
           type="text"
@@ -369,8 +391,32 @@ onMounted(() => {
   background-repeat: no-repeat;
 }
 
+#back {
+  margin-right: 0.5rem;
+  height: 2.2rem;
+  display: none;
+}
+
+#back.hide {
+  display: none;
+}
+
 #search {
   width: calc(100% - 25rem) !important;
+}
+
+@media only screen and (max-width: 768px) {
+  #search {
+    width: calc(100% - 18rem) !important;
+  }
+
+  #search.home {
+    width: calc(100% - 16rem) !important;
+  }
+
+  #back {
+    display: block;
+  }
 }
 
 #search .btn::after {

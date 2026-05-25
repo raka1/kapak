@@ -3,9 +3,9 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import ProductFilter from '@/components/product/ProductFilter.vue'
 import Products from '@/components/product/ProductList.vue'
 
-const filterRef = ref<HTMLElement | null>(null)
+const filterRef = ref<HTMLDivElement | null>(null)
 
-const resizeWatcher = () => {
+function resizeWatcher() {
   const width = window.innerWidth
 
   if (filterRef.value) {
@@ -19,6 +19,7 @@ const resizeWatcher = () => {
 
 onMounted(() => {
   window.addEventListener('resize', resizeWatcher)
+  resizeWatcher()
 })
 
 onUnmounted(() => {
