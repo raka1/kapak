@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import Swiper from 'swiper'
 import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import Swiper from 'swiper'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'

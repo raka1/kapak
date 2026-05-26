@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import Swiper from 'swiper'
 import { ref, onMounted, onBeforeMount, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import Swiper from 'swiper'
 import { Pagination } from 'swiper/modules'
 import 'swiper/css'
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 import login from '@/stores/login'
 import cart from '@/stores/cart'
 import notyf, { error as noter } from '@/utils/notyf'
