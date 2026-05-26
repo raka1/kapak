@@ -16,7 +16,6 @@ const route = useRoute()
 const router = useRouter()
 const autocompleteRef = ref<HTMLUListElement | null>(null)
 const searchRef = ref<HTMLInputElement | null>(null)
-const navRef = ref<HTMLElement | null>(null)
 const themeIconRef = ref<HTMLAnchorElement | null>(null)
 const brandRef = ref<ComponentPublicInstance | null>(null)
 const isFocused = ref(false)
@@ -186,11 +185,8 @@ watch(
 )
 
 onMounted(() => {
-  const nav = navRef.value
   const themeIcon = themeIconRef.value
   const fontLoaded = new FontFaceObserver('PrimeIcons')
-
-  emit('getHeight', nav?.offsetHeight as number)
 
   fontLoaded.load().then(() => {
     if (themeIcon) {

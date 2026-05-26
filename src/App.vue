@@ -1,33 +1,17 @@
 <script setup lang="ts">
 import { RouterView, useRoute, useRouter } from 'vue-router'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import NavigationHead from '@/components/NavigationHead.vue'
 import FooterPart from '@/components/FooterPart.vue'
 import login from '@/stores/login'
 
-const viewRef = ref<HTMLDivElement | null>(null)
-const nav = ref<InstanceType<typeof NavigationHead> | null>(null)
 const focus = ref(false)
-const navHeight = ref(0)
 const route = useRoute()
 const router = useRouter()
 
 function setFocus(e: boolean) {
   focus.value = e
 }
-
-function setHeight(e: number) {
-  navHeight.value = e
-}
-
-watch(
-  () => route.name,
-  (name) => {
-    if (viewRef.value && name !== 'Login' && name !== 'SignUp')
-      viewRef.value.style.paddingTop = `${navHeight.value}px`
-    else if (viewRef.value) viewRef.value.style.paddingTop = '0'
-  },
-)
 
 onMounted(async () => {
   try {
@@ -48,12 +32,10 @@ onMounted(async () => {
   <header>
     <NavigationHead
       @getFocus="setFocus"
-      @getHeight="setHeight"
-      ref="nav"
       v-if="route?.name !== 'Login' && route?.name !== 'SignUp'"
     />
   </header>
-  <div ref="viewRef" class="view" :class="focus ? 'blur' : ''">
+  <div class="view" :class="focus ? 'blur' : ''">
     <div class="container"><RouterView /></div>
   </div>
   <FooterPart />
@@ -63,6 +45,7 @@ onMounted(async () => {
 .view {
   position: relative;
   min-height: 100vh;
+  padding-top: 54px;
 }
 
 .view::after {
