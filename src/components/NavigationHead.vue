@@ -227,7 +227,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <nav ref="navRef" class="navbar fixed-top navbar-expand bg-body-primary">
+  <nav ref="navRef" class="navbar fixed-top bg-body-primary">
     <div class="container-fluid container-little">
       <RouterLink class="navbar-brand" to="/" ref="brandRef" id="brand"></RouterLink>
       <button class="btn" id="back" @click="$router.back()" :class="route.name == 'Home' ? 'hide' : ''">
@@ -267,8 +267,8 @@ onUnmounted(() => {
           <i class="pi pi-sun hidden"></i>
           <i class="pi pi-moon hidden"></i>
         </div>
-        <div class="separator ms-4 me-4"></div>
-        <div v-if="login().isLoginChecked">
+        <div class="separator ms-4 me-4 sm-hide"></div>
+        <div v-if="login().isLoginChecked" class="sm-hide">
           <div v-if="!login().username" style="margin-top: 0.1rem">
             <RouterLink to="/login" class="btn btn-sm me-2 pb-1">Login</RouterLink>
             <RouterLink to="/sign_up" class="btn btn-sm pb-1">Sign Up</RouterLink>
@@ -407,15 +407,15 @@ onUnmounted(() => {
 
 @media only screen and (max-width: 768px) {
   #search {
-    width: calc(100% - 18rem) !important;
+    width: calc(100% - 9rem) !important;
   }
 
   #search.home {
-    width: calc(100% - 16rem) !important;
+    width: calc(100% - 7rem) !important;
   }
 
   #back {
-    display: block;
+    display: initial;
   }
 }
 

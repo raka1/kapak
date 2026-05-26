@@ -69,7 +69,7 @@ onMounted(() => {
         </div>
       </div>
       <button
-        class="carousel-control-prev"
+        class="carousel-control-prev sm-hide"
         type="button"
         data-bs-target="#carousel-banner"
         data-bs-slide="prev"
@@ -78,7 +78,7 @@ onMounted(() => {
         <span class="visually-hidden">Previous</span>
       </button>
       <button
-        class="carousel-control-next"
+        class="carousel-control-next sm-hide"
         type="button"
         data-bs-target="#carousel-banner"
         data-bs-slide="next"
