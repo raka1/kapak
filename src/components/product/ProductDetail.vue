@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeMount, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import Swiper from 'swiper'
+import { Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import login from '@/stores/login'
 import cart from '@/stores/cart'
 import notyf, { error as noter } from '@/utils/notyf'
@@ -207,6 +212,14 @@ onMounted(() => {
   window.addEventListener('resize', resizeImage)
   resizeImage()
   getProduct()
+
+  new Swiper('.swiper', {
+    modules: [Pagination],
+    pagination: {
+      el: ".swiper-pagination",
+      type: "fraction"
+    }
+  })
 })
 
 onBeforeMount(() => {
@@ -256,52 +269,23 @@ onBeforeMount(() => {
         ></div>
       </div>
     </div>
-    <div
-      id="carousel-product"
-      class="carousel slide mt-4 rounded-4 uplift sm-show"
-    >
-      <div class="carousel-indicators">
-        <button
-          v-for="(image, index) in product?.images"
-          :key="index"
-          type="button"
-          data-bs-target="#carousel-product"
-          :data-bs-slide-to="index"
-          :class="index == 0 ? 'active' : ''"
-        ></button>
-      </div>
-      <div class="carousel-inner rounded-4">
+    <div class="swiper sm-show mb-4">
+      <div class="swiper-wrapper">
         <div
           v-for="(image, index) in product?.images"
           :key="index"
-          class="carousel-item"
-          :class="index == 0 ? 'active' : ''"
+          class="swiper-slide"
         >
           <img
             :src="'data:image/jpg;base64,' + image"
             alt=""
-            class="d-block w-100"
+            class="d-block w-100 pointer"
+            @click="enlargeImage($event)"
           />
         </div>
       </div>
-      <button
-        class="carousel-control-prev sm-hide"
-        type="button"
-        data-bs-target="#carousel-banner"
-        data-bs-slide="prev"
-      >
-        <i class="pi pi-chevron-left"></i>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next sm-hide"
-        type="button"
-        data-bs-target="#carousel-banner"
-        data-bs-slide="next"
-      >
-        <i class="pi pi-chevron-right"></i>
-        <span class="visually-hidden">Next</span>
-      </button>
+
+      <div class="swiper-pagination"></div>
     </div>
     <div class="col-12 col-md-6">
       <transition name="fade" mode="out-in">
@@ -561,56 +545,23 @@ i.cart {
   border: 1px solid var(--main-prim);
 }
 
-/* For mobile view/carousel */
-
-#carousel-banner {
+.swiper {
   display: none;
 }
 
-.carousel:hover > .carousel-control-prev,
-.carousel:hover > .carousel-control-next {
-  opacity: 1;
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--bs-gray-100);
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
 }
 
-.carousel:hover > .carousel-control-prev {
-  transform: translateX(-50%) translateY(-50%);
-}
-.carousel:hover > .carousel-control-next {
-  transform: translateX(50%) translateY(-50%);
-}
-
-.carousel-control-prev {
-  transform: translateX(calc(-50% + 1rem)) translateY(-50%);
-}
-
-.carousel-control-next {
-  transform: translateX(calc(50% - 1rem)) translateY(-50%);
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-  height: 3rem;
-  width: 3rem;
-  border-radius: 100%;
+.swiper-pagination {
+  color: var(--main-text);
   background-color: var(--main-bg);
-  color: var(--main-gray);
-  opacity: 0;
-  top: 50%;
-  bottom: unset;
-  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
-  transition: all 0.15s ease-in-out;
-}
-
-.carousel-indicators {
-  margin-left: unset;
-  margin-right: 1rem;
-  margin-bottom: 0.5rem;
-  left: unset;
-}
-
-.carousel-indicators [data-bs-target] {
-  height: 0.5rem;
-  width: 0.5rem;
-  border-radius: 100%;
+  border-radius: 0.75rem;
+  width: fit-content;
+  padding: 0.25rem 0.75rem;
+  left: 10px;
+  opacity: 0.75;
 }
 </style>

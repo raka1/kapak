@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import Swiper from 'swiper'
+import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 interface Images {
   name: string
@@ -20,11 +25,34 @@ async function getCarousels() {
   }
 }
 
-onMounted(() => {
+function onBannerLoaded(index: number) {
+  if (index == carousels.value.length - 1) {
+    new Swiper('.swiper', {
+      modules: [Navigation, Pagination, Autoplay],
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      observer: true,
+      observeParents: true,
+      observeSlideChildren: true,
+      loop: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: ".swiper-pagination"
+      }
+    })
+  }
+}
+
+onMounted(async () => {
   if (waitingCarouselsRef.value)
     waitingCarouselsRef.value.style.height = `calc(${waitingCarouselsRef.value?.offsetWidth / 4}px)`
 
-  getCarousels()
+  await getCarousels()
 })
 </script>
 
@@ -36,56 +64,28 @@ onMounted(() => {
       class="rounded-4 mt-4"
       v-if="!carousels.length"
     ></div>
-    <div
-      id="carousel-banner"
-      class="carousel slide mt-4 rounded-4 uplift"
-      data-bs-ride="carousel"
-      v-else
-    >
-      <div class="carousel-indicators">
-        <button
-          v-for="(carousel, index) in carousels"
-          :key="index"
-          type="button"
-          data-bs-target="#carousel-banner"
-          :data-bs-slide-to="index"
-          :class="index == 0 ? 'active' : ''"
-        ></button>
-      </div>
-      <div class="carousel-inner rounded-4">
+    <div class="swiper mt-4 rounded-4 uplift" v-else>
+      <div class="swiper-wrapper">
         <div
           v-for="(carousel, index) in carousels"
           :key="index"
-          class="carousel-item"
-          :class="index == 0 ? 'active' : ''"
+          class="swiper-slide"
         >
           <RouterLink v-if="carousel.status" :to="`/banner/${carousel.name}`">
             <img
               :src="'data:image/jpg;base64,' + carousel.image"
               :alt="carousel.name"
+              @load="onBannerLoaded(index)"
               class="d-block w-100"
             />
           </RouterLink>
         </div>
       </div>
-      <button
-        class="carousel-control-prev sm-hide"
-        type="button"
-        data-bs-target="#carousel-banner"
-        data-bs-slide="prev"
-      >
-        <i class="pi pi-chevron-left"></i>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next sm-hide"
-        type="button"
-        data-bs-target="#carousel-banner"
-        data-bs-slide="next"
-      >
-        <i class="pi pi-chevron-right"></i>
-        <span class="visually-hidden">Next</span>
-      </button>
+
+      <div class="swiper-pagination"></div>
+
+      <div class="swiper-button-prev sm-hide"></div>
+      <div class="swiper-button-next sm-hide"></div>
     </div>
   </transition>
   <div style="text-align: right">
@@ -101,54 +101,39 @@ onMounted(() => {
   transition: background-color 0.15s ease-in-out;
 }
 
-.carousel:hover > .carousel-control-prev,
-.carousel:hover > .carousel-control-next {
+#see-all-promos {
+  display: inline-block;
+}
+
+.swiper {
+  --swiper-theme-color: var(--bs-gray-100);
+  --swiper-pagination-color: var(--bs-gray-100);
+}
+
+.swiper:hover > .swiper-button-prev,
+.swiper:hover > .swiper-button-next {
   opacity: 1;
 }
 
-.carousel:hover > .carousel-control-prev {
-  transform: translateX(-50%) translateY(-50%);
+.swiper:hover > .swiper-button-prev {
+  transform: translateX(0);
 }
-.carousel:hover > .carousel-control-next {
-  transform: translateX(50%) translateY(-50%);
-}
-
-.carousel-control-prev {
-  transform: translateX(calc(-50% + 1rem)) translateY(-50%);
+.swiper:hover > .swiper-button-next {
+  transform: translateX(0);
 }
 
-.carousel-control-next {
-  transform: translateX(calc(50% - 1rem)) translateY(-50%);
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-  height: 3rem;
-  width: 3rem;
-  border-radius: 100%;
-  background-color: var(--main-bg);
-  color: var(--main-gray);
+.swiper-button-prev,
+.swiper-button-next {
   opacity: 0;
-  top: 50%;
-  bottom: unset;
-  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
   transition: all 0.15s ease-in-out;
+  color: var(--bs-gray-100);
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
 }
 
-.carousel-indicators {
-  margin-left: unset;
-  margin-right: 1rem;
-  margin-bottom: 0.5rem;
-  left: unset;
+.swiper-button-prev {
+  transform: translateX(50%);
 }
-
-.carousel-indicators [data-bs-target] {
-  height: 0.5rem;
-  width: 0.5rem;
-  border-radius: 100%;
-}
-
-#see-all-promos {
-  display: inline-block;
+.swiper-button-next {
+  transform: translateX(-50%);
 }
 </style>
