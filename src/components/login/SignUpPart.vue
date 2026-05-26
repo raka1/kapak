@@ -638,4 +638,13 @@ onMounted(() => {
   outline: none !important;
   box-shadow: none !important;
 }
+
+@media only screen and (max-width: 768px) {
+  .sign-up,
+  .sign-up-e,
+  .sign-up-f {
+    padding: initial;
+    padding-top: initial;
+  }
+}
 </style>

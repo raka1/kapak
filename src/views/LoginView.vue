@@ -103,7 +103,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div id="box" class="rounded-4 uplift">
+  <div id="box" class="rounded-4 uplift sm-hide">
     <div ref="backgrRef" id="backgr" :class="[page, backgrLoaded ? 'loaded' : '']"></div>
     <div id="white-box" :class="page"></div>
     <transition name="fade" mode="out-in">
@@ -128,6 +128,22 @@ onUnmounted(() => {
       </div>
       <div v-else></div>
     </transition>
+  </div>
+  <div class="sm-show login" v-if="page === 'Login'">
+    <LoginPart
+      :email="email"
+      @getEmail="setEmail"
+      @previousElementBorder="previousElementBorder"
+      @OAuth2="OAuth2"
+    />
+  </div>
+  <div class="sm-show" v-else-if="page === 'SignUp'">
+    <SignUpPart
+      :email="email"
+      @getEmail="setEmail"
+      @previousElementBorder="previousElementBorder"
+      @OAuth2="OAuth2"
+    />
   </div>
 </template>
 
@@ -222,6 +238,13 @@ onUnmounted(() => {
   padding-top: 5rem;
 }
 
+@media only screen and (max-width: 768px) {
+  .login {
+    padding: 0;
+    padding-top: 0;
+  }
+}
+
 .input-group > .input-group-text {
   border-radius: 0;
   border: 0;
@@ -230,4 +253,15 @@ onUnmounted(() => {
   background-color: transparent;
   transition: border-bottom 0.15s ease-in-out;
 }
+
+.sm-show {
+  display: none;
+}
+
+/* @media only screen and (max-width: 768px) {
+  .screen {
+    height: 100%;
+    width: 100%;
+  }
+} */
 </style>
