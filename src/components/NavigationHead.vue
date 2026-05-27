@@ -274,9 +274,9 @@ onUnmounted(() => {
               <div data-bs-toggle="dropdown"></div>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                  <RouterLink class="dropdown-item" to="/profile">
+                  <div class="dropdown-item">
                     <i class="pi pi-user-edit"></i> <strong>{{ login().username }}</strong>
-                  </RouterLink>
+                  </div>
                 </li>
                 <li>
                   <RouterLink class="dropdown-item" to="/orders">

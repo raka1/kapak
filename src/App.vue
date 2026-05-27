@@ -13,6 +13,8 @@ function setFocus(e: boolean) {
   focus.value = e
 }
 
+const excludeRoutes = ['Login', 'SignUp', 'Profile']
+
 onMounted(async () => {
   try {
     const response = await fetch('/api/v1/auth/auto_login')
@@ -32,13 +34,13 @@ onMounted(async () => {
   <header>
     <NavigationHead
       @getFocus="setFocus"
-      v-if="route?.name !== 'Login' && route?.name !== 'SignUp'"
+      v-if="!excludeRoutes.includes(route?.name as string)"
     />
   </header>
   <div class="view" :class="focus ? 'blur' : ''">
     <div class="container"><RouterView /></div>
   </div>
-  <FooterPart />
+  <FooterPart v-if="!excludeRoutes.includes(route?.name as string)" />
 </template>
 
 <style scoped>
