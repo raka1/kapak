@@ -8,12 +8,10 @@ import NavigationBottom from '@/components/NavigationBottom.vue'
     <hr />
     <div class="row">
       <div class="col-6 d-grid">
-        <button class="btn btn-full"><RouterLink to="/login">Login</RouterLink></button>
+        <RouterLink class="btn btn-full" to="/login">Login</RouterLink>
       </div>
       <div class="col-6 d-grid">
-        <button class="btn btn-full-outline">
-          <RouterLink to="/sign-up">Sign Up</RouterLink>
-        </button>
+        <RouterLink class="btn btn-full-outline" to="/sign-up">Sign Up</RouterLink>
       </div>
     </div>
   </div>
