@@ -99,7 +99,7 @@ onMounted(getProviders)
 <template>
   <transition name="fade" mode="out-in">
     <div v-if="!prefixeList.length">
-      <h5 class="placeholder-glow"><span class="placeholder col-1"></span></h5>
+      <h5 class="placeholder-glow"><span class="placeholder col-3"></span></h5>
       <div class="placeholder-glow"><span class="placeholder col-2"></span></div>
       <h2 class="placeholder-glow"><span class="placeholder col-12"></span></h2>
       <div class="text-end">
@@ -110,7 +110,7 @@ onMounted(getProviders)
       </div>
     </div>
     <div v-else>
-      <h5>Recharge</h5>
+      <h5>Mobile Recharge</h5>
       <label for="phone-number">Phone Number</label>
       <div class="input-group">
         <input
@@ -129,7 +129,7 @@ onMounted(getProviders)
       <transition-group
         name="expand"
         tag="div"
-        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mt-4"
+        class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mt-4"
       >
         <div v-for="(price, index) in prices" :key="index" class="col mb-3">
           <div ref="valRefs" class="val rounded-2" @click="clickVal($event, price)">

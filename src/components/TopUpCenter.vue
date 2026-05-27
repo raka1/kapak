@@ -5,10 +5,17 @@ import MobileTopUp from './top_up_center/MobileTopUp.vue'
 const vTabRef = ref<HTMLDivElement | null>(null)
 const tabContentRef = ref<HTMLDivElement | null>(null)
 
-onMounted(() => {
+function resize() {
   const tabContent = tabContentRef.value
 
-  if (tabContent) tabContent.style.width = `calc(100% - 2rem - ${vTabRef.value?.offsetWidth}px)`
+  if (tabContent)
+    tabContent.style.width = `calc(100% - 2rem - ${vTabRef.value?.offsetWidth}px)`
+}
+
+window.addEventListener('resize', resize)
+
+onMounted(() => {
+  resize()
 })
 </script>
 
@@ -30,7 +37,7 @@ onMounted(() => {
             data-bs-target="#v-mobile"
             type="button"
           >
-            <i class="pi pi-mobile"></i>&nbsp;&nbsp;Mobile
+            <i class="pi pi-mobile"></i><span class="sm-hide">&nbsp;&nbsp;Mobile</span>
           </button>
           <button
             class="nav-link"
@@ -39,7 +46,7 @@ onMounted(() => {
             data-bs-target="#v-data-plan"
             type="button"
           >
-            <i class="pi pi-globe"></i>&nbsp;&nbsp;Data Plan
+            <i class="pi pi-globe"></i><span class="sm-hide">&nbsp;&nbsp;Data Plan</span>
           </button>
           <button
             class="nav-link"
@@ -48,7 +55,7 @@ onMounted(() => {
             data-bs-target="#v-electricity-token"
             type="button"
           >
-            <i class="pi pi-bolt"></i>&nbsp;&nbsp;Electricity Token
+            <i class="pi pi-bolt"></i><span class="sm-hide">&nbsp;&nbsp;Electricity Token</span>
           </button>
           <button
             class="nav-link"
@@ -57,7 +64,7 @@ onMounted(() => {
             data-bs-target="#v-games"
             type="button"
           >
-            <i class="pi pi-at"></i>&nbsp;&nbsp;Games
+            <i class="pi pi-at"></i><span class="sm-hide">&nbsp;&nbsp;Games</span>
           </button>
         </div>
         <div ref="tabContentRef" class="tab-content">
