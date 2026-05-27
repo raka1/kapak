@@ -89,7 +89,7 @@ onMounted(async () => {
     </div>
   </transition>
   <div style="text-align: right">
-    <RouterLink id="see-all-promos" class="btn" to="/all_banners">See all</RouterLink>
+    <RouterLink id="see-all-promos" class="btn" to="/all-banners">See all</RouterLink>
   </div>
 </template>
 

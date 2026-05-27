@@ -49,7 +49,7 @@ const router = createRouter({
       component: BannerView,
     },
     {
-      path: '/all_banners',
+      path: '/all-banners',
       name: 'AllBanners',
       component: AllBannersView,
     },
@@ -64,7 +64,7 @@ const router = createRouter({
       component: LoginView,
     },
     {
-      path: '/sign_up',
+      path: '/sign-up',
       name: 'SignUp',
       component: SignUpView,
     },

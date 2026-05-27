@@ -267,7 +267,7 @@ onUnmounted(() => {
         <div v-if="login().isLoginChecked" class="sm-hide">
           <div v-if="!login().username" style="margin-top: 0.1rem">
             <RouterLink to="/login" class="btn btn-sm me-2 pb-1">Login</RouterLink>
-            <RouterLink to="/sign_up" class="btn btn-sm pb-1">Sign Up</RouterLink>
+            <RouterLink to="/sign-up" class="btn btn-sm pb-1">Sign Up</RouterLink>
           </div>
           <div v-else>
             <div class="dropdown" id="profile">

@@ -214,7 +214,7 @@ onMounted(() => {
     Need an account?
     <RouterLink
       replace
-      to="/sign_up"
+      to="/sign-up"
       class="btn link"
       @click="emit('getEmail', usernameM)"
       style="transform: translateY(-0.15rem)"
