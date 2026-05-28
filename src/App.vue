@@ -41,6 +41,7 @@ onMounted(async () => {
     <div class="container"><RouterView /></div>
   </div>
   <FooterPart v-if="!excludeRoutes.includes(route?.name as string)" />
+  <div class="spacer-for-mobile-view" v-if="route?.name === 'Home'"></div>
 </template>
 
 <style scoped>
@@ -65,5 +66,11 @@ onMounted(async () => {
 .view.blur::after {
   pointer-events: initial;
   background-color: rgba(0, 0, 0, 0.18);
+}
+
+@media only screen and (max-width: 768px) {
+  .spacer-for-mobile-view {
+    height: 46px;
+  }
 }
 </style>
