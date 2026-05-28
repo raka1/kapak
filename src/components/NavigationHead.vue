@@ -113,10 +113,6 @@ function handleKeyDown(event: KeyboardEvent) {
 
   autocompleteSelecting.value = false
   autocompleteSelect.value = -1
-
-  setTimeout(() => {
-    searchTextBehind.value = searchText.value
-  }, 0)
 }
 
 function applyTheme() {
@@ -239,6 +235,7 @@ onUnmounted(() => {
           @keydown.enter="onSearch"
           @keydown.escape="searchRef?.blur()"
           @keydown="handleKeyDown($event)"
+          @input="searchTextBehind = searchText"
           placeholder="Search Kapak..."
           v-model="searchText"
         />
