@@ -3,6 +3,7 @@ import NavigationBottom from '@/components/NavigationBottom.vue'
 import NProgress from 'nprogress'
 import login from '@/stores/login'
 import cart from '@/stores/cart'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 async function logout() {
   NProgress.start()
@@ -29,36 +30,43 @@ async function logout() {
 </script>
 
 <template>
-  <div v-if="login().username" class="box">
-    <div class="position-absolute top-0 mt-4 mb-4 d-flex align-items-center">
-      <span class="profile-image"></span>
-      <strong class="profile-name">{{ login().username }}</strong>
-    </div>
-    <div class="menu-item">
-      <RouterLink to="/orders"> <i class="pi pi-list"></i> My Orders </RouterLink>
-    </div>
-    <div class="menu-item">
-      <RouterLink to="/wishlist"> <i class="pi pi-heart"></i> Wishlist </RouterLink>
-    </div>
-    <div class="menu-item">
-      <RouterLink to="/settings"> <i class="pi pi-cog"></i> Settings </RouterLink>
-    </div>
-    <div class="menu-item">
-      <div @click.prevent="logout"> <i class="pi pi-sign-out"></i> Logout </div>
-    </div>
-  </div>
-  <div v-else class="box">
-    <h2 class="mb-4">Account</h2>
-    <hr style="color: var(--line)" />
-    <div class="row">
-      <div class="col-6 d-grid">
-        <RouterLink class="btn btn-full" to="/login">Login</RouterLink>
+  <div class="sm-show">
+    <div v-if="login().username">
+      <div class="position-absolute top-0 mt-4 mb-4 d-flex align-items-center">
+        <span class="profile-image"></span>
+        <strong class="profile-name">{{ login().username }}</strong>
       </div>
-      <div class="col-6 d-grid">
-        <RouterLink class="btn btn-full-outline" to="/sign-up">Sign Up</RouterLink>
+      <div class="list-group mt-3">
+        <RouterLink class="list-group-item" to="/orders">
+          <i class="pi pi-list pe-2"></i> My Orders
+        </RouterLink>
+        <RouterLink class="list-group-item" to="/wishlist">
+          <i class="pi pi-heart pe-2"></i> Wishlist
+        </RouterLink>
+        <RouterLink class="list-group-item" to="/settings">
+          <i class="pi pi-cog pe-2"></i> Settings
+        </RouterLink>
+        <div class="list-group-item" @click.prevent="logout">
+          <i class="pi pi-sign-out pe-2"></i> Logout
+        </div>
       </div>
     </div>
+    <div v-else class="box">
+      <h2 class="mb-4">Account</h2>
+      <hr style="color: var(--line)" />
+      <div class="row">
+        <div class="col-6 d-grid">
+          <RouterLink class="btn btn-full" to="/login">Login</RouterLink>
+        </div>
+        <div class="col-6 d-grid">
+          <RouterLink class="btn btn-full-outline" to="/sign-up">Sign Up</RouterLink>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="sm-hide">
+    <NotFoundView />
+   </div>
   <NavigationBottom />
 </template>
 
@@ -92,7 +100,13 @@ button.btn-full-outline a {
   margin-left: 0.5rem;
 }
 
-.menu-item {
-
+.list-group-item {
+  background-color: var(--main-bg);
+  color: var(--text);
+  border: none;
+  padding: 1rem;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
 }
 </style>

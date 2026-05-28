@@ -592,7 +592,6 @@ onBeforeMount(() => {
 }
 
 .navbar {
-  display: none;
   background-color: var(--main-bg);
   border-bottom-width: 1px !important;
   border-bottom-style: solid !important;
@@ -709,10 +708,6 @@ i.cart {
 
 .list div.selected {
   border: 1px solid var(--main-prim);
-}
-
-.swiper {
-  display: none;
 }
 
 .swiper-button-prev,
