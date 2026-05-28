@@ -25,6 +25,8 @@ const autocompleteSelecting = ref(false)
 const searchText = ref('')
 const searchTextBehind = ref('')
 
+let resizeTimeout: number | undefined
+
 type emitType = {
   (event: 'getFocus', focus: boolean): void
   (event: 'getHeight', focus: number): void
@@ -54,6 +56,7 @@ function handleFocus(focus: boolean) {
   if (!focus) {
     searchTextBehind.value = searchText.value
     autocompleteSelect.value = -1
+  } else {
   }
 }
 
@@ -139,6 +142,22 @@ function toggleTheme() {
   changeTheme().then(applyTheme)
 }
 
+function resizeObserver() {
+  if (resizeTimeout) clearTimeout(resizeTimeout)
+  resizeTimeout = setTimeout(() => {
+    // Set autocomplete position and size
+    const autocomplete = autocompleteRef.value
+    const search = searchRef.value
+
+    if (autocomplete && search) {
+      const rect = search.getBoundingClientRect()
+      autocomplete.style.top = rect.bottom + 12 + 'px'
+      autocomplete.style.left = rect.left + 'px'
+      autocomplete.style.width = rect.width + 'px'
+    }
+  }, 200)
+}
+
 async function logout() {
   NProgress.start()
 
@@ -185,18 +204,9 @@ onMounted(() => {
     }
   })
 
-  // Set autocomplete position and size
-  const autocomplete = autocompleteRef.value
-  const search = searchRef.value
-
-  if (autocomplete && search) {
-    const rect = search.getBoundingClientRect()
-    autocomplete.style.top = rect.bottom + 12 + 'px'
-    autocomplete.style.left = rect.left + 'px'
-    autocomplete.style.width = rect.width + 'px'
-
-    getAutocompleteItems()
-  }
+  getAutocompleteItems()
+  window.addEventListener('resize', resizeObserver)
+  resizeObserver()
 })
 </script>
 
