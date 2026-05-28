@@ -13,5 +13,3 @@ import Products from '@/components/product/ProductList.vue'
     </div>
   </div>
 </template>
-
-<style scoped></style>
