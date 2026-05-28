@@ -6,7 +6,6 @@ import { RouterLink } from 'vue-router'
   <div class="cons">
     <div class="cons-card uplift">
       <div style="font-size: 3rem">😕</div>
-      <h1 class="mb-2 fw-bolder" style="color: var(--main-prim)">404</h1>
       <p class="mb-3 text-muted">Oops! The page you are looking for does not exist.</p>
       <RouterLink to="/" class="btn btn-full"> <i class="pi pi-home"></i> Back to Home </RouterLink>
     </div>
