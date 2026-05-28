@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, type ComponentPublicInstance, watch, computed } from 'vue'
+import { ref, onMounted, type ComponentPublicInstance, watch, computed } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { change as changeTheme } from '@/utils/theme'
 import FontFaceObserver from 'fontfaceobserver'
@@ -162,17 +162,6 @@ async function logout() {
   NProgress.done()
 }
 
-function resizeWatcher() {
-  const width = window.innerWidth
-  const brand = brandRef.value?.$el
-
-  if (width < 768) {
-    brand.style.display = 'none'
-  } else {
-    brand.style.display = ''
-  }
-}
-
 watch(
   () => login().username,
   () => {
@@ -208,13 +197,6 @@ onMounted(() => {
 
     getAutocompleteItems()
   }
-
-  window.addEventListener('resize', resizeWatcher)
-  resizeWatcher()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', resizeWatcher)
 })
 </script>
 
@@ -382,6 +364,12 @@ onUnmounted(() => {
   width: 7rem;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 768px) {
+  #brand {
+    display: none;
+  }
 }
 
 #back {
