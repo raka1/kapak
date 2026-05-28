@@ -3,6 +3,7 @@ import NavigationBottom from '@/components/NavigationBottom.vue'
 import NProgress from 'nprogress'
 import login from '@/stores/login'
 import cart from '@/stores/cart'
+import NavigationHead from '@/components/NavigationHead.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 
 async function logout() {
@@ -65,6 +66,7 @@ async function logout() {
     </div>
   </div>
   <div class="sm-hide">
+    <NavigationHead />
     <NotFoundView />
    </div>
   <NavigationBottom />
