@@ -105,7 +105,7 @@ onUnmounted(() => {
 <template>
   <div id="box" class="rounded-4 uplift sm-hide">
     <div ref="backgrRef" id="backgr" :class="[page, backgrLoaded ? 'loaded' : '']"></div>
-    <div id="white-box" :class="page"></div>
+    <div id="white-box" :class="page ? String(page) : ''"></div>
     <transition name="fade" mode="out-in">
       <div v-if="page === 'Login'" class="login">
         <LoginPart

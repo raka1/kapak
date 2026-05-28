@@ -381,9 +381,74 @@ onMounted(() => {
 
 <template>
   <transition name="shift" mode="out-in">
-    <div v-if="pageSignUp === 0" class="sign-up">
-      <h3 class="mb-3">Sign Up</h3>
-      <form @submit.prevent="handleNext">
+    <div v-if="pageSignUp === 0" class="box">
+      <div class="sign-up">
+        <h3 class="mb-3">Sign Up</h3>
+        <form @submit.prevent="handleNext">
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text"
+              @click="fo1Ref?.focus()"
+              :style="
+                focus[0]
+                  ? 'border-bottom: 1px solid var(--main-prim)'
+                  : 'border-bottom: 1px solid var(--line-clickable)'
+              "
+              ><i class="pi pi-envelope"></i
+            ></span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email address"
+              ref="fo1Ref"
+              v-model="emailM"
+              @focus="((focus[0] = true), ((fo1Ref as HTMLInputElement).style.borderColor = ''))"
+              @blur="((focus[0] = false), ((fo1Ref as HTMLInputElement).style.borderColor = ''))"
+            />
+          </div>
+          <div class="row mb-4">
+            <div class="col text-end">
+              <button ref="sendRef" type="submit" class="btn btn-full">Next</button>
+            </div>
+          </div>
+        </form>
+        <div class="separator mb-4"></div>
+        <div class="mb-2">Or sign up with:</div>
+        <div>
+          <button
+            class="btn btn-full me-2"
+            @click="emit('OAuth2', 'google')"
+            style="transform: translateY(0.06rem)"
+          >
+            <i class="pi pi-google"></i> Google
+          </button>
+          <button class="btn btn-full" @click="emit('OAuth2', 'facebook')">
+            <i class="pi pi-facebook" style="transform: translateY(0.06rem)"></i> Facebook
+          </button>
+        </div>
+        <div class="text-center" style="margin-top: 5.3rem">
+          Already have an account?
+          <RouterLink
+            replace
+            to="/login"
+            class="btn link"
+            @click="emit('getEmail', emailM)"
+            style="transform: translateY(-0.15rem)"
+            >Login</RouterLink
+          >
+        </div>
+      </div>
+    </div>
+    <div v-else-if="pageSignUp === 1" class="box">
+      <div class="sign-up-e">
+        <div class="text-center mb-2" style="font-size: 5rem">
+          <i class="pi pi-envelope"></i>
+        </div>
+        <h4 class="mb-3">Well Done!</h4>
+        <div class="mb-3">
+          A verification code has been sent to <b>{{ emailM }}</b
+          >. Please check your inbox and enter the code below to proceed.
+        </div>
         <div class="input-group mb-3">
           <span
             class="input-group-text"
@@ -393,191 +458,140 @@ onMounted(() => {
                 ? 'border-bottom: 1px solid var(--main-prim)'
                 : 'border-bottom: 1px solid var(--line-clickable)'
             "
-            ><i class="pi pi-envelope"></i
+            ><i class="pi pi-key"></i
           ></span>
           <input
             type="text"
             class="form-control"
-            placeholder="Email address"
+            placeholder="Verification code"
             ref="fo1Ref"
-            v-model="emailM"
-            @focus="(focus[0] = true), ((fo1Ref as HTMLInputElement).style.borderColor = '')"
-            @blur="(focus[0] = false), ((fo1Ref as HTMLInputElement).style.borderColor = '')"
+            @input="verifCode"
+            @focus="((focus[0] = true), ((fo1Ref as HTMLInputElement).style.borderColor = ''))"
+            @blur="((focus[0] = false), ((fo1Ref as HTMLInputElement).style.borderColor = ''))"
           />
         </div>
-        <div class="row mb-4">
-          <div class="col text-end">
-            <button ref="sendRef" type="submit" class="btn btn-full">Next</button>
-          </div>
+        <div class="text-end">
+          <button class="btn link" @click="resendCode()">Resend code</button>
         </div>
-      </form>
-      <div class="separator mb-4"></div>
-      <div class="mb-2">Or sign up with:</div>
-      <div>
-        <button
-          class="btn btn-full me-2"
-          @click="emit('OAuth2', 'google')"
-          style="transform: translateY(0.06rem)"
-        >
-          <i class="pi pi-google"></i> Google
-        </button>
-        <button class="btn btn-full" @click="emit('OAuth2', 'facebook')">
-          <i class="pi pi-facebook" style="transform: translateY(0.06rem)"></i> Facebook
-        </button>
-      </div>
-      <div class="text-center" style="margin-top: 5.3rem">
-        Already have an account?
-        <RouterLink
-          replace
-          to="/login"
-          class="btn link"
-          @click="emit('getEmail', emailM)"
-          style="transform: translateY(-0.15rem)"
-          >Login</RouterLink
-        >
       </div>
     </div>
-    <div v-else-if="pageSignUp === 1" class="sign-up-e">
-      <div class="text-center mb-2" style="font-size: 5rem">
-        <i class="pi pi-envelope"></i>
-      </div>
-      <h4 class="mb-3">Well Done!</h4>
-      <div class="mb-3">
-        A verification code has been sent to <b>{{ emailM }}</b
-        >. Please check your inbox and enter the code below to proceed.
-      </div>
-      <div class="input-group mb-3">
-        <span
-          class="input-group-text"
-          @click="fo1Ref?.focus()"
-          :style="
-            focus[0]
-              ? 'border-bottom: 1px solid var(--main-prim)'
-              : 'border-bottom: 1px solid var(--line-clickable)'
-          "
-          ><i class="pi pi-key"></i
-        ></span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Verification code"
-          ref="fo1Ref"
-          @input="verifCode"
-          @focus="(focus[0] = true), ((fo1Ref as HTMLInputElement).style.borderColor = '')"
-          @blur="(focus[0] = false), ((fo1Ref as HTMLInputElement).style.borderColor = '')"
-        />
-      </div>
-      <div class="text-end">
-        <button class="btn link" @click="resendCode()">Resend code</button>
-      </div>
-    </div>
-    <div v-else-if="pageSignUp === 2" class="sign-up-f">
-      <h4>Almost There!</h4>
-      <div class="mb-3">Let's complete your profile.</div>
-      <form @submit.prevent="finish">
-        <div class="input-group mb-3">
-          <span
-            class="input-group-text"
-            @click="fo1Ref?.focus()"
-            :style="
-              focus[0]
-                ? 'border-bottom: 1px solid var(--main-prim)'
-                : 'border-bottom: 1px solid var(--line-clickable)'
-            "
-            ><i class="pi pi-id-card"></i
-          ></span>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="First name"
-            ref="fo1Ref"
-            v-model="name1"
-            @focus="(focus[0] = true), ((fo1Ref as HTMLInputElement).style.borderColor = '')"
-            @blur="(focus[0] = false), ((fo1Ref as HTMLInputElement).style.borderColor = '')"
-          />
-          <input type="text" class="form-control" placeholder="Last name" v-model="name2" />
-        </div>
-        <div class="input-group mb-3">
-          <span
-            class="input-group-text"
-            @click="fo2Ref?.focus()"
-            :style="
-              focus[1]
-                ? 'border-bottom: 1px solid var(--main-prim)'
-                : 'border-bottom: 1px solid var(--line-clickable)'
-            "
-            ><i class="pi pi-phone"></i
-          ></span>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Phone number"
-            ref="fo2Ref"
-            v-model="phone"
-            @focus="(focus[1] = true), ((fo2Ref as HTMLInputElement).style.borderColor = '')"
-            @blur="(focus[1] = false), ((fo2Ref as HTMLInputElement).style.borderColor = '')"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <span class="input-group-text" ref="spanPass1Ref" @click="fo3Ref?.focus()">
-            <i class="pi pi-key"></i>
-          </span>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Password"
-            ref="fo3Ref"
-            v-model="pass1"
-            @input="password"
-            @focus="password"
-            @blur="passwordCheck"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <span class="input-group-text" ref="spanPass2Ref" @click="fo4Ref?.focus()">
-            <i class="pi pi-key"> </i>
-          </span>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Verify password"
-            ref="fo4Ref"
-            v-model="pass2"
-            @input="passwordVerify"
-            @focus="passwordVerify"
-            @blur="passwordVerifyCheck"
-          />
-        </div>
-        <div class="form-check mb-3">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="agreement"
-            v-model="agreement"
-          />
-          <label class="form-check-label" for="agreement">
-            I'm okay with the
-            <RouterLink to="#" class="btn link" style="transform: translateY(-0.15rem)">
-              terms of use
-            </RouterLink>
-            and
-            <RouterLink to="#" class="btn link" style="transform: translateY(-0.15rem)">
-              privacy policy </RouterLink
-            >.
-          </label>
-        </div>
-        <div class="row mb-4">
-          <div class="col text-end">
-            <button ref="sendRef" type="submit" class="btn btn-full">Let's go!</button>
+    <div v-else-if="pageSignUp === 2" class="box">
+      <div class="sign-up-f">
+        <h4>Almost There!</h4>
+        <div class="mb-3">Let's complete your profile.</div>
+        <form @submit.prevent="finish">
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text"
+              @click="fo1Ref?.focus()"
+              :style="
+                focus[0]
+                  ? 'border-bottom: 1px solid var(--main-prim)'
+                  : 'border-bottom: 1px solid var(--line-clickable)'
+              "
+              ><i class="pi pi-id-card"></i
+            ></span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First name"
+              ref="fo1Ref"
+              v-model="name1"
+              @focus="((focus[0] = true), ((fo1Ref as HTMLInputElement).style.borderColor = ''))"
+              @blur="((focus[0] = false), ((fo1Ref as HTMLInputElement).style.borderColor = ''))"
+            />
+            <input type="text" class="form-control" placeholder="Last name" v-model="name2" />
           </div>
-        </div>
-      </form>
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text"
+              @click="fo2Ref?.focus()"
+              :style="
+                focus[1]
+                  ? 'border-bottom: 1px solid var(--main-prim)'
+                  : 'border-bottom: 1px solid var(--line-clickable)'
+              "
+              ><i class="pi pi-phone"></i
+            ></span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Phone number"
+              ref="fo2Ref"
+              v-model="phone"
+              @focus="((focus[1] = true), ((fo2Ref as HTMLInputElement).style.borderColor = ''))"
+              @blur="((focus[1] = false), ((fo2Ref as HTMLInputElement).style.borderColor = ''))"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" ref="spanPass1Ref" @click="fo3Ref?.focus()">
+              <i class="pi pi-key"></i>
+            </span>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              ref="fo3Ref"
+              v-model="pass1"
+              @input="password"
+              @focus="password"
+              @blur="passwordCheck"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" ref="spanPass2Ref" @click="fo4Ref?.focus()">
+              <i class="pi pi-key"> </i>
+            </span>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Verify password"
+              ref="fo4Ref"
+              v-model="pass2"
+              @input="passwordVerify"
+              @focus="passwordVerify"
+              @blur="passwordVerifyCheck"
+            />
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="agreement"
+              v-model="agreement"
+            />
+            <label class="form-check-label" for="agreement">
+              I'm okay with the
+              <RouterLink to="#" class="btn link" style="transform: translateY(-0.15rem)">
+                terms of use
+              </RouterLink>
+              and
+              <RouterLink to="#" class="btn link" style="transform: translateY(-0.15rem)">
+                privacy policy </RouterLink
+              >.
+            </label>
+          </div>
+          <div class="row mb-4">
+            <div class="col text-end">
+              <button ref="sendRef" type="submit" class="btn btn-full">Let's go!</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </transition>
 </template>
 
 <style scoped>
+@media only screen and (max-width: 768px) {
+  .box {
+    background-color: var(--main-bg);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+  }
+}
+
 .sign-up {
   padding: 0 3rem;
   padding-top: 6rem;
