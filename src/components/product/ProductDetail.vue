@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Swiper from 'swiper'
 import { ref, onMounted, onBeforeMount, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -12,6 +12,7 @@ import notyf, { error as noter } from '@/utils/notyf'
 import '@/assets/quantity.css'
 
 const route = useRoute()
+const router = useRouter()
 
 interface Product {
   _id: string
@@ -43,6 +44,8 @@ const enlargedImageListRef = ref<HTMLDivElement[]>([])
 const quantityFocused = ref(false)
 const quantityString = ref('1')
 const variant = ref(0)
+const hidePreview = ref<boolean>(true)
+const btnInPreview = ref(0)
 
 type emitType = {
   (event: 'getShop', s: string, n: string): void
@@ -138,6 +141,11 @@ function decreaseQuantity() {
 }
 
 async function addToCart() {
+  if (!login().username) {
+    router.push('/login')
+    return
+  }
+
   try {
     const response = await fetch(`/api/v1/cart/${login().username}/items`, {
       method: 'POST',
@@ -191,6 +199,11 @@ async function addToCart() {
   }
 }
 
+function showPreview(index: number) {
+  hidePreview.value = false
+  btnInPreview.value = index
+}
+
 watch(
   () => variant.value,
   () => {
@@ -216,9 +229,9 @@ onMounted(() => {
   new Swiper('.swiper', {
     modules: [Pagination],
     pagination: {
-      el: ".swiper-pagination",
-      type: "fraction"
-    }
+      el: '.swiper-pagination',
+      type: 'fraction',
+    },
   })
 })
 
@@ -228,8 +241,108 @@ onBeforeMount(() => {
 </script>
 
 <template>
+  <nav class="navbar fixed-bottom bg-body-primary sm-show">
+    <div class="row gx-2 mx-2">
+      <div class="col-6" @click="showPreview(0)">
+        <button class="btn btn-full-outline w-100">
+          <i class="pi pi-plus button"></i> Add to Cart
+        </button>
+      </div>
+      <div class="col-6" @click="showPreview(1)">
+        <button class="btn btn-full w-100">Buy Now</button>
+      </div>
+    </div>
+  </nav>
+  <div id="back-drop" :class="{ hidden: hidePreview }" @click="hidePreview = true"></div>
+  <div :class="{ hidden: hidePreview }" id="purchase-preview-wrapper">
+    <div id="purchase-preview-close">
+      <i class="pi pi-times" @click="hidePreview = true"></i>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <img
+          :src="'data:image/jpg;base64,' + product?.images[0]"
+          alt=""
+          class="d-block w-100 h-100 pointer"
+          @click="enlargeImage($event)"
+        />
+      </div>
+      <div class="col-7" style="margin-top: auto">
+        <h5>
+          {{
+            product?.variants[variant].price !== undefined
+              ? 'Rp' +
+                Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
+                  product.variants[variant].price,
+                )
+              : ''
+          }}
+        </h5>
+        <div>
+          Stock:
+          {{
+            product?.variants[variant].stock !== undefined
+              ? Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
+                  product.variants[variant].stock,
+                )
+              : ''
+          }}
+        </div>
+      </div>
+    </div>
+    <hr style="color: var(--line)" />
+    <div class="mb-1">
+      <strong>Choose variant:</strong>
+    </div>
+    <div id="variant-list" class="mb-3">
+      <button
+        v-for="(v, index) in product?.variants"
+        :key="index"
+        class="btn btn-full-outline me-1 mb-1 uplift"
+        :class="{
+          active: index == variant,
+        }"
+        @click="variant = index"
+      >
+        {{ v.name }}
+      </button>
+    </div>
+    <hr style="color: var(--line)" />
+    <div class="quantity input-group">
+      <button class="btn" :class="{ focus: quantityFocused }" @click="decreaseQuantity">
+        <i class="pi pi-minus ps-2 pe-2"></i>
+      </button>
+      <input
+        class="text-center"
+        :class="{ focus: quantityFocused }"
+        type="text"
+        v-model="quantityString"
+        @input="quantityInput"
+        @focus="quantityFocused = true"
+        @blur="quantityFocused = false"
+      />
+      <button class="btn" :class="{ focus: quantityFocused }" @click="increaseQuantity">
+        <i class="pi pi-plus ps-2 pe-2"></i>
+      </button>
+    </div>
+    <hr style="color: var(--line)" />
+    <div class="d-grid">
+      <button class="btn btn-full" v-if="btnInPreview == 0" @click="addToCart">Add to Cart</button>
+      <RouterLink
+        class="btn btn-full"
+        v-if="btnInPreview == 1"
+        :to="login().username ? '/cart/checkout' : '/login'"
+        >Buy Now</RouterLink
+      >
+    </div>
+  </div>
   <transition name="fade" mode="out-in">
-    <nav v-if="product" style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb" class="mt-2 sm-hide">
+    <nav
+      v-if="product"
+      style="--bs-breadcrumb-divider: '>'"
+      aria-label="breadcrumb"
+      class="mt-2 sm-hide"
+    >
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <RouterLink class="breadcrumb-item" to="/">Home</RouterLink>
@@ -271,11 +384,7 @@ onBeforeMount(() => {
     </div>
     <div class="swiper sm-show mb-4">
       <div class="swiper-wrapper">
-        <div
-          v-for="(image, index) in product?.images"
-          :key="index"
-          class="swiper-slide"
-        >
+        <div v-for="(image, index) in product?.images" :key="index" class="swiper-slide">
           <img
             :src="'data:image/jpg;base64,' + image"
             alt=""
@@ -395,7 +504,9 @@ onBeforeMount(() => {
               <i class="pi pi-plus button"></i> Add to Cart
             </button>
             <div class="separator d-inline-block"></div>
-            <RouterLink class="btn btn-sm btn-full d-inline-block" to="/cart/checkout"
+            <RouterLink
+              class="btn btn-sm btn-full d-inline-block"
+              :to="login().username ? '/cart/checkout' : '/login'"
               >Buy Now</RouterLink
             >
           </div>
@@ -446,6 +557,61 @@ onBeforeMount(() => {
 </template>
 
 <style scoped>
+.hidden {
+  display: none;
+}
+
+#back-drop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.18);
+  z-index: 1040;
+}
+
+#purchase-preview-wrapper {
+  position: fixed;
+  background-color: var(--main-bg);
+  padding: 1rem;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1050;
+}
+
+#purchase-preview-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  font-size: 1.25rem;
+  color: var(--text);
+}
+
+.navbar {
+  display: none;
+  background-color: var(--main-bg);
+  border-bottom-width: 1px !important;
+  border-bottom-style: solid !important;
+  border-bottom-color: var(--line) !important;
+  transition:
+    background-color 0.15s ease-in-out,
+    border-bottom-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
+  font-size: 1.25rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .navbar,
+  #back-drop,
+  #purchase-preview-wrapper {
+    display: none;
+  }
+}
+
 .breadcrumb .breadcrumb-item {
   color: var(--main-prim);
   text-decoration: none;

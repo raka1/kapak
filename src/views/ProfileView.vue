@@ -5,7 +5,7 @@ import NavigationBottom from '@/components/NavigationBottom.vue'
 <template>
   <div>
     <h2 class="mb-4">Account</h2>
-    <hr />
+    <hr style="color: var(--line);">
     <div class="row">
       <div class="col-6 d-grid">
         <RouterLink class="btn btn-full" to="/login">Login</RouterLink>
