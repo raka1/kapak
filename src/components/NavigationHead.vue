@@ -232,9 +232,11 @@ onMounted(() => {
           @keydown.enter="onSearch"
           @keydown.escape="searchRef?.blur()"
           @keydown="handleKeyDown($event)"
-          @input="searchTextBehind = searchText"
+          @input="
+            ((searchText = ($event.target as HTMLInputElement).value),
+            (searchTextBehind = ($event.target as HTMLInputElement).value))
+          "
           placeholder="Search Kapak..."
-          v-model="searchText"
         />
         <button class="btn" @click="onSearch">
           <i class="pi pi-search ps-2 pe-2"></i>
