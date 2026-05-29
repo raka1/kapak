@@ -68,7 +68,7 @@ async function logout() {
   <div class="sm-hide">
     <NavigationHead />
     <NotFoundView />
-   </div>
+  </div>
   <NavigationBottom />
 </template>
 

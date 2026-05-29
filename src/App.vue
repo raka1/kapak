@@ -32,10 +32,7 @@ onMounted(async () => {
 
 <template>
   <header>
-    <NavigationHead
-      @getFocus="setFocus"
-      v-if="!excludeRoutes.includes(route?.name as string)"
-    />
+    <NavigationHead @getFocus="setFocus" v-if="!excludeRoutes.includes(route?.name as string)" />
   </header>
   <div class="view" :class="focus ? 'blur' : ''">
     <div class="container"><RouterView /></div>

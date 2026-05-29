@@ -42,8 +42,8 @@ function onBannerLoaded(index: number) {
         prevEl: '.swiper-button-prev',
       },
       pagination: {
-        el: ".swiper-pagination"
-      }
+        el: '.swiper-pagination',
+      },
     })
   }
 }
@@ -66,11 +66,7 @@ onMounted(async () => {
     ></div>
     <div class="swiper mt-4 rounded-4 uplift" v-else>
       <div class="swiper-wrapper">
-        <div
-          v-for="(carousel, index) in carousels"
-          :key="index"
-          class="swiper-slide"
-        >
+        <div v-for="(carousel, index) in carousels" :key="index" class="swiper-slide">
           <RouterLink v-if="carousel.status" :to="`/banner/${carousel.name}`">
             <img
               :src="'data:image/jpg;base64,' + carousel.image"

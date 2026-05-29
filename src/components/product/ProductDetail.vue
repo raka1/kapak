@@ -112,7 +112,7 @@ function enlargeImage(e: MouseEvent) {
       el.classList.contains('selected'),
     )
     selectedElement?.classList.remove('selected')
-    enlargedImageListRef.value[idx.value].classList.add('selected')
+    enlargedImageListRef.value[idx.value]?.classList.add('selected')
   }
 }
 
@@ -120,8 +120,8 @@ function quantityInput(e: Event) {
   const input = e.target as HTMLInputElement
   let num = input.value.replace(/\D/g, '')
   num = num.replace(/^0+/, '') || '1'
-  if (product.value && Number(num) > product.value.variants[variant.value].stock)
-    num = product.value.variants[variant.value].stock.toString()
+  if (product.value && Number(num) > Number(product.value.variants[variant.value]?.stock))
+    num = product.value.variants[variant.value]?.stock?.toString() ?? '1'
 
   quantityString.value = num
 }
@@ -129,7 +129,7 @@ function quantityInput(e: Event) {
 function increaseQuantity() {
   if (!product.value?.variants?.[0]) return
 
-  const stock = product.value.variants[variant.value].stock
+  const stock: number = product.value.variants[variant.value]?.stock ?? 0
   const currentQty = Number(quantityString.value) || 1
 
   quantityString.value = Math.min(currentQty + 1, stock).toString()
@@ -180,7 +180,7 @@ async function addToCart() {
           : `You already have ${quantity} of these items in your cart.`
 
       notyf.open({
-        message: `<b>Quantity exceeds stock!</b><br /> Only ${product.value?.variants[variant.value].stock} items available. ${additional}`,
+        message: `<b>Quantity exceeds stock!</b><br /> Only ${product.value?.variants[variant.value]?.stock} items available. ${additional}`,
         duration: 3000,
       })
     } else if (res.response === 'ITEM_NOT_FOUND') {
@@ -207,8 +207,11 @@ function showPreview(index: number) {
 watch(
   () => variant.value,
   () => {
-    if (product.value && Number(quantityString.value) > product.value.variants[variant.value].stock)
-      quantityString.value = product.value.variants[variant.value].stock.toString()
+    if (
+      product.value &&
+      Number(quantityString.value) > Number(product.value.variants[variant.value]?.stock)
+    )
+      quantityString.value = product.value.variants[variant.value]?.stock?.toString() ?? '1'
   },
 )
 
@@ -270,10 +273,10 @@ onBeforeMount(() => {
       <div class="col-7" style="margin-top: auto">
         <h5>
           {{
-            product?.variants[variant].price !== undefined
+            product?.variants[variant]?.price !== undefined
               ? 'Rp' +
                 Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
-                  product.variants[variant].price,
+                  Number(product.variants[variant]?.price),
                 )
               : ''
           }}
@@ -281,9 +284,9 @@ onBeforeMount(() => {
         <div>
           Stock:
           {{
-            product?.variants[variant].stock !== undefined
+            product?.variants[variant]?.stock !== undefined
               ? Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
-                  product.variants[variant].stock,
+                  Number(product.variants[variant]?.stock),
                 )
               : ''
           }}
@@ -401,7 +404,7 @@ onBeforeMount(() => {
         <h3 v-if="product">
           {{ product?.name }}
           {{
-            product && product.variants.length > 1 ? ' - ' + product?.variants[variant].name : ''
+            product && product.variants.length > 1 ? ' - ' + product?.variants[variant]?.name : ''
           }}
         </h3>
         <h3 v-else class="placeholder-glow"><span class="placeholder col-6"></span></h3>
@@ -409,10 +412,10 @@ onBeforeMount(() => {
       <transition name="fade" mode="out-in">
         <h3 v-if="product" class="mb-3">
           {{
-            product?.variants[variant].price !== undefined
+            product?.variants[variant]?.price !== undefined
               ? 'Rp' +
                 Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
-                  product.variants[variant].price,
+                  Number(product.variants[variant]?.price),
                 )
               : ''
           }}
@@ -478,9 +481,9 @@ onBeforeMount(() => {
             <div class="col-5" style="margin-top: 2px">
               Stock:
               {{
-                product?.variants[variant].stock !== undefined
+                product?.variants[variant]?.stock !== undefined
                   ? Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
-                      product.variants[variant].stock,
+                      Number(product.variants[variant]?.stock),
                     )
                   : ''
               }}
@@ -490,10 +493,10 @@ onBeforeMount(() => {
             <div class="col-3" style="margin-top: 1px">Subtotal</div>
             <h5 class="col-9 text-end">
               {{
-                product?.variants[variant].price !== undefined
+                product?.variants[variant]?.price !== undefined
                   ? 'Rp' +
                     Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
-                      Number(quantityString) * product.variants[variant].price,
+                      Number(quantityString) * Number(product.variants[variant]?.price),
                     )
                   : ''
               }}

@@ -1,8 +1,12 @@
 <template>
   <nav class="navbar fixed-bottom bg-body-primary">
     <div class="row row-cols-2">
-      <RouterLink class="text-center" to="/" :class="{ active: $route.path === '/' }"><i class="pi pi-home"></i></RouterLink>
-      <RouterLink class="text-center" to="/profile" :class="{ active: $route.path === '/profile' }"><i class="pi pi-user"></i></RouterLink>
+      <RouterLink class="text-center" to="/" :class="{ active: $route.path === '/' }"
+        ><i class="pi pi-home"></i
+      ></RouterLink>
+      <RouterLink class="text-center" to="/profile" :class="{ active: $route.path === '/profile' }"
+        ><i class="pi pi-user"></i
+      ></RouterLink>
     </div>
   </nav>
 </template>

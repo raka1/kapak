@@ -8,8 +8,7 @@ const tabContentRef = ref<HTMLDivElement | null>(null)
 function resize() {
   const tabContent = tabContentRef.value
 
-  if (tabContent)
-    tabContent.style.width = `calc(100% - 2rem - ${vTabRef.value?.offsetWidth}px)`
+  if (tabContent) tabContent.style.width = `calc(100% - 2rem - ${vTabRef.value?.offsetWidth}px)`
 }
 
 window.addEventListener('resize', resize)

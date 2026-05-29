@@ -102,7 +102,7 @@ function handleKeyDown(event: KeyboardEvent) {
       autocompleteSelect.value = (autocompleteSelect.value + 1) % autoCompletes.value.length
     }
 
-    searchText.value = autoCompletes.value[autocompleteSelect.value].keyword
+    searchText.value = String(autoCompletes.value[autocompleteSelect.value]?.keyword)
 
     return
   }
@@ -127,12 +127,12 @@ function applyTheme() {
     const i2 = themeIcon.querySelectorAll('i')[1]
 
     if (localStorage.getItem('theme') == 'dark') {
-      i1.classList.add('hidden')
-      i2.classList.remove('hidden')
+      i1?.classList.add('hidden')
+      i2?.classList.remove('hidden')
       brand.style.backgroundImage = `url('/images/banner-secondary.png')`
     } else {
-      i1.classList.remove('hidden')
-      i2.classList.add('hidden')
+      i1?.classList.remove('hidden')
+      i2?.classList.add('hidden')
       brand.style.backgroundImage = `url('/images/banner-primary.png')`
     }
   }
@@ -196,7 +196,7 @@ onMounted(() => {
     if (themeIcon) {
       const i1 = themeIcon.querySelectorAll('i')[0]
       const i2 = themeIcon.querySelectorAll('i')[1]
-      const width = Math.max(i1.offsetWidth, i2.offsetWidth)
+      const width = Math.max(i1?.offsetWidth || 0, i2?.offsetWidth || 0)
 
       themeIcon.style.width = width + 'px'
 
@@ -214,7 +214,12 @@ onMounted(() => {
   <nav ref="navRef" class="navbar fixed-top bg-body-primary">
     <div class="container-fluid container-little">
       <RouterLink class="navbar-brand" to="/" ref="brandRef" id="brand"></RouterLink>
-      <button class="btn" id="back" @click="$router.back()" :class="route.name == 'Home' ? 'hide' : ''">
+      <button
+        class="btn"
+        id="back"
+        @click="$router.back()"
+        :class="route.name == 'Home' ? 'hide' : ''"
+      >
         <i class="pi pi-arrow-left"></i>
       </button>
       <div class="input-group" id="search" :class="route.name == 'Home' ? 'home' : ''">
@@ -345,7 +350,7 @@ onMounted(() => {
         arrow: autocompleteSelecting,
       }"
       @mousedown="clickAutocomplete(item)"
-      @mouseover="(autocompleteSelect = index), (autocompleteSelecting = false)"
+      @mouseover="((autocompleteSelect = index), (autocompleteSelecting = false))"
     >
       {{ item.keyword }}
     </li>

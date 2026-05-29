@@ -50,12 +50,12 @@ function prefix(e: Event) {
   if (value.length >= 4 && !get)
     for (let i = 0; i < prefixeList.value.length; i++) {
       const pre = prefixeList.value[i]
-      const id = pre._id
-      const name = pre.name
-      const image = pre.image
-      const prefixes = pre.prefixes
+      const id = pre?._id
+      const name = pre?.name
+      const image = pre?.image
+      const prefixes = pre?.prefixes
 
-      const find = prefixes.find((str) => value.startsWith(str))
+      const find = prefixes?.find((str) => value.startsWith(str))
 
       if (find) {
         get = true
@@ -65,7 +65,7 @@ function prefix(e: Event) {
         if (imRef.value && inputRef.value?.offsetHeight !== undefined)
           imRef.value.style.height = `${inputRef.value?.offsetHeight}px`
 
-        nominal(id)
+        nominal(String(id))
         break
       }
     }
@@ -87,7 +87,7 @@ function clickVal(e: Event, price: Price) {
   for (let i = 0; i < valRefs.value.length; i++) {
     const element = valRefs.value[i]
 
-    if (element.classList.contains('selected')) element.classList.remove('selected')
+    if (element?.classList.contains('selected')) element.classList.remove('selected')
   }
 
   target.classList.add('selected')

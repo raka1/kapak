@@ -1,3 +1,1 @@
-<template>
-Kung
-</template>
+<template>Kung</template>

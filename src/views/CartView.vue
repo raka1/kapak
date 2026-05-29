@@ -97,7 +97,7 @@ async function handleDelete(product: string, variant: number) {
     const res = await response.json()
 
     if (res.response == 'ITEM_DELETED_FROM_CART') refreshCartData()
-    else new Error(`Response: ${res.response}`)
+    else throw new Error(`Response: ${res.response}`)
   } catch (error) {
     noter(error)
   }
@@ -235,8 +235,8 @@ watch(
       for (const index in cart().cart) {
         quantityFocused.value[index] = []
 
-        for (const indexx in cart().cart[index].items) {
-          quantityFocused.value[index][indexx] = false
+        for (const indexx in cart().cart[index]?.items) {
+          quantityFocused.value[index][Number(indexx)] = false
         }
       }
     }
@@ -334,24 +334,28 @@ onUnmounted(() => {
                 <div class="quantity input-group justify-content-end" style="width: 7rem">
                   <button
                     class="btn"
-                    :class="{ focus: quantityFocused[index][indexx] }"
+                    :class="{ focus: quantityFocused[index]?.[indexx] }"
                     @click="changeQuantity('decrease', item.product._id, item.variant_index)"
                   >
                     <i class="pi pi-minus ps-2 pe-2"></i>
                   </button>
                   <input
                     class="text-center"
-                    :class="{ focus: quantityFocused[index][indexx] }"
+                    :class="{ focus: quantityFocused[index]?.[indexx] }"
                     type="text"
                     v-model="item.quantity"
                     @input="quantityInput($event, item.product._id, item.variant_index)"
                     @keyup.enter="quantityInputEnter($event, item.product._id, item.variant_index)"
-                    @focus="quantityFocused[index][indexx] = true"
-                    @blur="quantityFocused[index][indexx] = false"
+                    @focus="
+                      (quantityFocused[index] || (quantityFocused[index] = []))[indexx] = true
+                    "
+                    @blur="
+                      (quantityFocused[index] || (quantityFocused[index] = []))[indexx] = false
+                    "
                   />
                   <button
                     class="btn"
-                    :class="{ focus: quantityFocused[index][indexx] }"
+                    :class="{ focus: quantityFocused[index]?.[indexx] }"
                     @click="changeQuantity('increase', item.product._id, item.variant_index)"
                   >
                     <i class="pi pi-plus ps-2 pe-2"></i>

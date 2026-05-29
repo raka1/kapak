@@ -118,7 +118,7 @@ onMounted(() => {
           id="min-price"
           @input="handleInput('min')"
           @focus="minPriceFocused = true"
-          @blur="updateUrlParams(), (minPriceFocused = false)"
+          @blur="(updateUrlParams(), (minPriceFocused = false))"
           @keydown="handleKeyDownPrice($event, minPrice, 'min')"
         />
       </div>
@@ -137,7 +137,7 @@ onMounted(() => {
           id="max-price"
           @input="handleInput('max')"
           @focus="maxPriceFocused = true"
-          @blur="updateUrlParams(), (maxPriceFocused = false)"
+          @blur="(updateUrlParams(), (maxPriceFocused = false))"
           @keydown="handleKeyDownPrice($event, maxPrice, 'max')"
         />
       </div>
