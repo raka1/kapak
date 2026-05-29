@@ -156,3 +156,7 @@ textarea {
     display: initial !important;
   }
 }
+
+.modal-content {
+  color: var(--main-text);
+}
