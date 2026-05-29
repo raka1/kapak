@@ -264,7 +264,7 @@ onBeforeMount(() => {
     <div class="row">
       <div class="col-5">
         <img
-          :src="'data:image/jpg;base64,' + product?.images[0]"
+          :src="product?.images[0] ? 'data:image/jpg;base64,' + product.images[0] : ''"
           alt=""
           class="d-block w-100 h-100 pointer"
           @click="enlargeImage($event)"
@@ -294,23 +294,25 @@ onBeforeMount(() => {
       </div>
     </div>
     <hr style="color: var(--line)" />
-    <div class="mb-1">
-      <strong>Choose variant:</strong>
+    <div v-if="product && product.variants.length > 1">
+      <div class="mb-1">
+        <strong>Choose variant:</strong>
+      </div>
+      <div id="variant-list" class="mb-3">
+        <button
+          v-for="(v, index) in product?.variants"
+          :key="index"
+          class="btn btn-full-outline me-1 mb-1 uplift"
+          :class="{
+            active: index == variant,
+          }"
+          @click="variant = index"
+        >
+          {{ v.name }}
+        </button>
+      </div>
+      <hr style="color: var(--line)" />
     </div>
-    <div id="variant-list" class="mb-3">
-      <button
-        v-for="(v, index) in product?.variants"
-        :key="index"
-        class="btn btn-full-outline me-1 mb-1 uplift"
-        :class="{
-          active: index == variant,
-        }"
-        @click="variant = index"
-      >
-        {{ v.name }}
-      </button>
-    </div>
-    <hr style="color: var(--line)" />
     <div class="quantity input-group">
       <button class="btn" :class="{ focus: quantityFocused }" @click="decreaseQuantity">
         <i class="pi pi-minus ps-2 pe-2"></i>
