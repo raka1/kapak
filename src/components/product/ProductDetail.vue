@@ -401,7 +401,7 @@ onBeforeMount(() => {
       <span class="placeholder" style="width: 15rem"></span>
     </div>
   </transition>
-  <div class="row">
+  <div class="row" id="product-container">
     <div id="image" class="col-12 col-md-3 sm-hide">
       <img
         class="rounded-2 pointer"
@@ -830,6 +830,12 @@ i.cart {
     height: 1.5rem;
     width: 1.5rem;
     pointer-events: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #product-container {
+    min-width: 1160px;
   }
 }
 </style>
