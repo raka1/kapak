@@ -51,6 +51,7 @@ let enlargedSwiper: Swiper
 
 type emitType = {
   (event: 'getShop', s: string, n: string): void
+  (event: 'avaibility', b: boolean): void
 }
 
 const emit = defineEmits<emitType>()
@@ -73,6 +74,7 @@ async function getProduct() {
     selectImage(imageRef.value, imageListRef.value, 0, product.value?.images[0] ?? '')
   } catch (error) {
     console.error(error)
+    emit('avaibility', false)
   }
 }
 
