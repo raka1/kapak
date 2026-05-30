@@ -133,10 +133,10 @@ onMounted(getProviders)
       >
         <div v-for="(price, index) in prices" :key="index" class="col mb-3">
           <div ref="valRefs" class="val rounded-2" @click="clickVal($event, price)">
-            <div>
+            <div class="text-truncate">
               {{ Intl.NumberFormat('id-ID', { style: 'decimal' }).format(price.nominal) }}
             </div>
-            <div>
+            <div class="text-truncate">
               Price: Rp{{ Intl.NumberFormat('id-ID', { style: 'decimal' }).format(price.cost) }}
             </div>
           </div>

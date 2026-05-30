@@ -306,7 +306,7 @@ onBeforeMount(() => {
         </div>
       </div>
       <div class="col-7" style="margin-top: auto">
-        <h5>
+        <h5 class="text-truncate">
           {{
             product?.variants[variant]?.price !== undefined
               ? 'Rp' +
@@ -316,7 +316,7 @@ onBeforeMount(() => {
               : ''
           }}
         </h5>
-        <div>
+        <div class="text-truncate">
           Stock:
           {{
             product?.variants[variant]?.stock !== undefined
@@ -444,7 +444,7 @@ onBeforeMount(() => {
 
     <div class="col-12 col-md-6">
       <transition name="fade" mode="out-in">
-        <h3 v-if="product">
+        <h3 v-if="product" class="text-truncate">
           {{ product?.name }}
           {{
             product && product.variants.length > 1 ? ' - ' + product?.variants[variant]?.name : ''
@@ -453,7 +453,7 @@ onBeforeMount(() => {
         <h3 v-else class="placeholder-glow"><span class="placeholder col-6"></span></h3>
       </transition>
       <transition name="fade" mode="out-in">
-        <h3 v-if="product" class="mb-3">
+        <h3 v-if="product" class="mb-3 text-truncate">
           {{
             product?.variants[variant]?.price !== undefined
               ? 'Rp' +
@@ -521,7 +521,7 @@ onBeforeMount(() => {
                 </button>
               </div>
             </div>
-            <div class="col-5" style="margin-top: 2px">
+            <div class="col-5 text-truncate" style="margin-top: 2px">
               Stock:
               {{
                 product?.variants[variant]?.stock !== undefined
@@ -534,7 +534,7 @@ onBeforeMount(() => {
           </div>
           <div class="row mt-3">
             <div class="col-3" style="margin-top: 1px">Subtotal</div>
-            <h5 class="col-9 text-end">
+            <h5 class="col-9 text-end text-truncate">
               {{
                 product?.variants[variant]?.price !== undefined
                   ? 'Rp' +

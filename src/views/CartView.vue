@@ -316,7 +316,7 @@ onUnmounted(() => {
                   style="color: var(--main-text); text-decoration: none"
                   >{{ item.product.name }}</RouterLink
                 >
-                <div class="text-end">
+                <div class="text-end text-truncate">
                   <b
                     >Rp{{
                       Intl.NumberFormat('id-ID', { style: 'decimal' }).format(item.variant.price)
@@ -389,7 +389,7 @@ onUnmounted(() => {
             }}
             item):</b
           >
-          <span class="text-muted">
+          <span class="text-muted text-truncate">
             Rp{{ Intl.NumberFormat('id-ID', { style: 'decimal' }).format(selectedTotalPrice()) }}
           </span>
           <div class="text-muted small mt-1">*Shipping fee not included</div>

@@ -138,8 +138,8 @@ onMounted(async () => {
         >
           <img :src="'data:image/png;base64, ' + product.images" class="card-img-top" />
           <div class="card-body">
-            <div class="text-ellipsis">{{ product.name }}</div>
-            <div style="font-weight: bold">
+            <div class="text-truncate">{{ product.name }}</div>
+            <div class="text-truncate" style="font-weight: bold">
               Rp{{ Intl.NumberFormat('id-ID', { style: 'decimal' }).format(product.price) }}
             </div>
           </div>
@@ -218,12 +218,6 @@ onMounted(async () => {
 
 .card-body {
   color: var(--main-text);
-}
-
-.text-ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .btn-load-more {
