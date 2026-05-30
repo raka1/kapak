@@ -403,8 +403,8 @@ onUnmounted(() => {
   </div>
   <div v-else id="empty-container" class="position-relative w-100 d-flex justify-content-center">
     <div id="empty" class="row">
-      <div class="col-3"><img src="/images/cart.png" /></div>
-      <div class="col-9">
+      <div class="col-12 col-md-3"><img src="/images/cart.png" /></div>
+      <div class="col-12 col-md-9">
         <h3>Oops, your cart is empty!</h3>
         <p>Time to treat yourself.</p>
         <button class="btn btn-full" @click="router.push('/')">Let's Shopping</button>
