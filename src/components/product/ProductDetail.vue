@@ -36,9 +36,9 @@ interface Product {
 }
 
 const product = ref<Product | null>(null)
-const idx = ref(0)
-const imageRef = ref<HTMLDivElement | null>(null)
-const enlargedImageRef = ref<HTMLDivElement | null>(null)
+const indexInEnlargedImage = ref(0)
+const imageRef = ref<HTMLImageElement | null>(null)
+const enlargedImageRef = ref<HTMLImageElement | null>(null)
 const imageListRef = ref<HTMLDivElement[]>([])
 const enlargedImageListRef = ref<HTMLDivElement[]>([])
 const quantityFocused = ref(false)
@@ -46,6 +46,8 @@ const quantityString = ref('1')
 const variant = ref(0)
 const hidePreview = ref<boolean>(true)
 const btnInPreview = ref(0)
+
+let enlargedSwiper: Swiper
 
 type emitType = {
   (event: 'getShop', s: string, n: string): void
@@ -83,36 +85,44 @@ function resizeImage() {
 }
 
 function selectImage(
-  ref: HTMLElement | null,
+  ref: HTMLImageElement | null,
   list: Array<HTMLElement>,
   index: number,
   image: string,
 ) {
   if (ref) {
     if (ref.style.backgroundColor) ref.style.backgroundColor = ''
-    ref.style.backgroundImage = `url(data:image/jpg;base64,${image})`
+    ref.src = `data:image/jpg;base64,${image}`
   }
   const selectedElement = list.find((el) => el.classList.contains('selected'))
   selectedElement?.classList.remove('selected')
   list[index]?.classList.add('selected')
-  if (list !== enlargedImageListRef.value) idx.value = index
+  if (list !== enlargedImageListRef.value) indexInEnlargedImage.value = index
 }
 
-function enlargeImage(e: MouseEvent) {
-  const html = e.target as HTMLElement
-  const image = html.style.backgroundImage
+function enlargeImage(e: MouseEvent, index: number | undefined = undefined) {
+  const img = e.target as HTMLImageElement
+  const imgSrc = img.src
 
   if (enlargedImageRef.value && enlargedImageListRef.value) {
-    enlargedImageRef.value.style.backgroundImage = image
-
-    const width = enlargedImageRef.value.getBoundingClientRect().width
-    enlargedImageRef.value.style.height = width + 'px'
+    enlargedImageRef.value.src = imgSrc
 
     const selectedElement = enlargedImageListRef.value.find((el) =>
       el.classList.contains('selected'),
     )
     selectedElement?.classList.remove('selected')
-    enlargedImageListRef.value[idx.value]?.classList.add('selected')
+    enlargedImageListRef.value[indexInEnlargedImage.value]?.classList.add('selected')
+  }
+
+  // Enlarge image from mobile view/swiper
+  if (index) {
+    const selectedElement = enlargedImageListRef.value.find((el) =>
+      el.classList.contains('selected'),
+    )
+    selectedElement?.classList.remove('selected')
+    enlargedImageListRef.value[index]?.classList.add('selected')
+
+    enlargedSwiper.slideTo(index)
   }
 }
 
@@ -229,11 +239,24 @@ onMounted(() => {
   resizeImage()
   getProduct()
 
-  new Swiper('.swiper', {
+  new Swiper('#swiper-list', {
     modules: [Pagination],
     pagination: {
-      el: '.swiper-pagination',
+      el: '#swiper-pagination-list',
       type: 'fraction',
+    },
+  })
+
+  enlargedSwiper = new Swiper('#swiper-enlarge', {
+    modules: [Pagination],
+    pagination: {
+      el: '#swiper-pagination-enlarge',
+      type: 'fraction',
+    },
+    on: {
+      slideChange: function (swiper) {
+        indexInEnlargedImage.value = swiper.realIndex
+      },
     },
   })
 })
@@ -266,13 +289,21 @@ onBeforeMount(() => {
       <i class="pi pi-times" @click="hidePreview = true"></i>
     </div>
     <div class="row">
-      <div class="col-5">
+      <div class="col-5 position-relative">
         <img
           :src="product?.images[0] ? 'data:image/jpg;base64,' + product.images[0] : ''"
-          alt=""
-          class="d-block w-100 h-100 pointer"
-          @click="enlargeImage($event)"
+          alt="Error when loading an image"
+          class="d-block w-100 h-100"
+          data-bs-toggle="modal"
+          data-bs-target="#imageModal"
+          @click="enlargeImage($event, 0)"
         />
+        <div
+          class="position-absolute bottom-0 d-flex align-items-center justify-content-center"
+          id="enlarge-icon"
+        >
+          <i class="pi pi-expand"></i>
+        </div>
       </div>
       <div class="col-7" style="margin-top: auto">
         <h5>
@@ -372,15 +403,14 @@ onBeforeMount(() => {
   </transition>
   <div class="row">
     <div id="image" class="col-12 col-md-3 sm-hide">
-      <div
+      <img
         class="rounded-2 pointer"
         ref="imageRef"
         id="show"
         data-bs-toggle="modal"
         data-bs-target="#imageModal"
         @click="enlargeImage($event)"
-        style="background-color: var(--line-clickable)"
-      ></div>
+      />
       <div class="list list-horizontal">
         <div
           v-for="(image, index) in product?.images"
@@ -395,20 +425,20 @@ onBeforeMount(() => {
     </div>
 
     <!-- Image list for mobile -->
-    <div class="col-12 swiper sm-show mb-4">
+    <div class="col-12 swiper sm-show mb-4" id="swiper-list">
       <div class="swiper-wrapper">
         <div v-for="(image, index) in product?.images" :key="index" class="swiper-slide">
           <img
             :src="'data:image/jpg;base64,' + image"
-            alt=""
+            alt="Error when loading an image"
             class="d-block w-100 pointer"
             data-bs-toggle="modal"
             data-bs-target="#imageModal"
-            @click="enlargeImage($event)"
+            @click="enlargeImage($event, index)"
           />
         </div>
       </div>
-      <div class="swiper-pagination"></div>
+      <div class="swiper-pagination" id="swiper-pagination-list"></div>
     </div>
     <!-- End of image list for mobile -->
 
@@ -539,7 +569,7 @@ onBeforeMount(() => {
     aria-labelledby="imageModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
       <div class="modal-content">
         <div class="modal-body">
           <div class="row">
@@ -553,18 +583,35 @@ onBeforeMount(() => {
             </div>
           </div>
           <div class="row">
-            <div class="col-9 d-flex justify-content-center">
-              <div ref="enlargedImageRef" class="rounded-2"></div>
+            <div class="col-12 col-md-9 d-flex justify-content-center mobile-centered">
+              <img ref="enlargedImageRef" class="rounded-2 w-100 sm-hide" />
+              <div class="col-12 swiper sm-show mb-4 sm-show" id="swiper-enlarge">
+                <div class="swiper-wrapper">
+                  <div v-for="(image, index) in product?.images" :key="index" class="swiper-slide">
+                    <img
+                      :src="'data:image/jpg;base64,' + image"
+                      alt="Error when loading an image"
+                      class="d-block w-100"
+                    />
+                  </div>
+                </div>
+                <div class="swiper-pagination" id="swiper-pagination-enlarge"></div>
+              </div>
             </div>
-            <div class="col-3 justify-content-center list list-vertical">
+            <div
+              class="col-12 col-md-3 justify-content-center list list-vertical list-horizontal-sm mobile-pull-down"
+            >
               <div
                 v-for="(image, index) in product?.images"
                 class="rounded-2"
-                :class="index == idx ? 'selected' : ''"
+                :class="index == indexInEnlargedImage ? 'selected' : ''"
                 :key="index"
                 :style="{ 'background-image': `url(data:image/jpg;base64,${image})` }"
                 ref="enlargedImageListRef"
-                @click="selectImage(enlargedImageRef, enlargedImageListRef, index, image)"
+                @click="
+                  (selectImage(enlargedImageRef, enlargedImageListRef, index, image),
+                  enlargedSwiper.slideTo(index))
+                "
               ></div>
             </div>
           </div>
@@ -717,6 +764,28 @@ i.cart {
   overflow-y: auto;
 }
 
+@media only screen and (max-width: 768px) {
+  .list.list-horizontal-sm {
+    grid-auto-flow: column;
+    grid-auto-columns: 4rem;
+    grid-auto-rows: initial;
+    overflow-x: auto;
+    overflow-y: initial;
+  }
+
+  .mobile-centered {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .mobile-pull-down {
+    position: absolute;
+    bottom: 2rem;
+  }
+}
+
 .list div {
   cursor: pointer;
   background-size: 4rem 4rem;
@@ -742,5 +811,25 @@ i.cart {
   padding: 0.25rem 0.75rem;
   left: 10px;
   opacity: 0.75;
+}
+
+@media only screen and (max-width: 768px) {
+  .modal-content {
+    background-color: var(--body-bg) !important;
+  }
+
+  .modal-body {
+    overflow: hidden;
+  }
+
+  #enlarge-icon {
+    display: table-cell;
+    background-color: rgba(0, 0, 0, 0.18);
+    right: 12.5px;
+    border-radius: 0.25rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    pointer-events: none;
+  }
 }
 </style>
