@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap.min.js'
 import 'nprogress/nprogress.css'
 import 'primeicons/primeicons.css'
 import 'notyf/notyf.min.css'

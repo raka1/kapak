@@ -1,23 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NProgress from 'nprogress'
-import HomeView from '@/views/HomeView.vue'
-import BannerView from '@/views/BannerView.vue'
-import AllBannersView from '@/views/AllBannersView.vue'
-import SearchView from '@/views/SearchView.vue'
-import LoginView from '@/views/LoginView.vue'
-import SignUpView from '@/views/LoginView.vue'
-import CartView from '@/views/CartView.vue'
-import CheckoutView from '@/views/CheckoutView.vue'
-import ChatView from '@/views/ChatView.vue'
-import ProfileView from '@/views/ProfileView.vue'
-import OrdersView from '@/views/OrdersView.vue'
-import WishlistView from '@/views/WishlistView.vue'
-import SettingsView from '@/views/SettingsView.vue'
-import ProductDetailView from '@/views/ProductDetailView.vue'
-import AboutView from '@/views/AboutView.vue'
-import ContactView from '@/views/ContactView.vue'
-import FAQView from '@/views/FAQView.vue'
-import NotFoundView from '@/views/NotFoundView.vue'
 import login from '@/stores/login'
 
 const router = createRouter({
@@ -26,92 +8,92 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: HomeView,
+      component: () => import('@/views/HomeView.vue'),
     },
     {
       path: '/about',
       name: 'About',
-      component: AboutView,
+      component: () => import('@/views/AboutView.vue'),
     },
     {
       path: '/contact',
       name: 'Contact',
-      component: ContactView,
+      component: () => import('@/views/ContactView.vue'),
     },
     {
       path: '/faq',
       name: 'FAQ',
-      component: FAQView,
+      component: () => import('@/views/FAQView.vue'),
     },
     {
       path: '/banner/:name',
       name: 'Banner',
-      component: BannerView,
+      component: () => import('@/views/BannerView.vue'),
     },
     {
       path: '/all-banners',
       name: 'AllBanners',
-      component: AllBannersView,
+      component: () => import('@/views/AllBannersView.vue'),
     },
     {
       path: '/search',
       name: 'Search',
-      component: SearchView,
+      component: () => import('@/views/SearchView.vue'),
     },
     {
       path: '/login',
       name: 'Login',
-      component: LoginView,
+      component: () => import('@/views/LoginView.vue'),
     },
     {
       path: '/sign-up',
       name: 'SignUp',
-      component: SignUpView,
+      component: () => import('@/views/LoginView.vue'),
     },
     {
       path: '/cart',
       name: 'Cart',
-      component: CartView,
+      component: () => import('@/views/CartView.vue'),
     },
     {
       path: '/cart/checkout',
       name: 'Checkout',
-      component: CheckoutView,
+      component: () => import('@/views/CheckoutView.vue'),
     },
     {
       path: '/chat',
       name: 'Chat',
-      component: ChatView,
+      component: () => import('@/views/ChatView.vue'),
     },
     {
       path: '/profile',
       name: 'Profile',
-      component: ProfileView,
+      component: () => import('@/views/ProfileView.vue'),
     },
     {
       path: '/orders',
       name: 'Orders',
-      component: OrdersView,
+      component: () => import('@/views/OrdersView.vue'),
     },
     {
       path: '/wishlist',
       name: 'Wishlist',
-      component: WishlistView,
+      component: () => import('@/views/WishlistView.vue'),
     },
     {
       path: '/settings',
       name: 'Settings',
-      component: SettingsView,
+      component: () => import('@/views/SettingsView.vue'),
     },
     {
       path: '/:seller/:slug',
       name: 'Product',
-      component: ProductDetailView,
+      component: () => import('@/views/ProductDetailView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
-      component: NotFoundView,
+      component: () => import('@/views/NotFoundView.vue'),
     },
   ],
 })

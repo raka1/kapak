@@ -2,6 +2,8 @@
 import { ref, onMounted, type ComponentPublicInstance, watch, computed } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { change as changeTheme } from '@/utils/theme'
+import 'bootstrap/js/dist/dropdown'
+import 'bootstrap/js/dist/modal'
 import FontFaceObserver from 'fontfaceobserver'
 import NProgress from 'nprogress'
 import login from '@/stores/login'

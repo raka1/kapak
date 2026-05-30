@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import 'bootstrap/js/dist/tab'
 import MobileTopUp from './top_up_center/MobileTopUp.vue'
 
 const vTabRef = ref<HTMLDivElement | null>(null)
