@@ -13,7 +13,8 @@ function setFocus(e: boolean) {
   focus.value = e
 }
 
-const excludeRoutes = ['Login', 'SignUp', 'Profile']
+const excludeRoutesForNavBar = ['Login', 'SignUp', 'Profile']
+const includeRoutesForMobileSpacer = ['Home', 'Product']
 
 onMounted(async () => {
   try {
@@ -32,13 +33,19 @@ onMounted(async () => {
 
 <template>
   <header>
-    <NavigationHead @getFocus="setFocus" v-if="!excludeRoutes.includes(route?.name as string)" />
+    <NavigationHead
+      @getFocus="setFocus"
+      v-if="!excludeRoutesForNavBar.includes(route?.name as string)"
+    />
   </header>
   <div class="view" :class="focus ? 'blur' : ''">
     <div class="container"><RouterView /></div>
   </div>
-  <FooterPart v-if="!excludeRoutes.includes(route?.name as string)" />
-  <div class="spacer-for-mobile-view" v-if="route?.name === 'Home'"></div>
+  <FooterPart v-if="!excludeRoutesForNavBar.includes(route?.name as string)" />
+  <div
+    class="spacer-for-mobile-view"
+    v-if="includeRoutesForMobileSpacer.includes(route?.name as string)"
+  ></div>
 </template>
 
 <style scoped>

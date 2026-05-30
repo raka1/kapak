@@ -244,6 +244,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
+  <!-- Bottom checkout preview for mobile view -->
   <nav class="navbar fixed-bottom bg-body-primary sm-show">
     <div class="row gx-2 mx-2">
       <div class="col-6" @click="showPreview(0)">
@@ -256,7 +257,10 @@ onBeforeMount(() => {
       </div>
     </div>
   </nav>
+
   <div id="back-drop" :class="{ hidden: hidePreview }" @click="hidePreview = true"></div>
+
+  <!-- Checkout preview modal for mobile view -->
   <div :class="{ hidden: hidePreview }" id="purchase-preview-wrapper">
     <div id="purchase-preview-close">
       <i class="pi pi-times" @click="hidePreview = true"></i>
@@ -341,6 +345,8 @@ onBeforeMount(() => {
       >
     </div>
   </div>
+
+  <!-- Product detail and description -->
   <transition name="fade" mode="out-in">
     <nav
       v-if="product"
@@ -387,20 +393,25 @@ onBeforeMount(() => {
         ></div>
       </div>
     </div>
-    <div class="swiper sm-show mb-4">
+
+    <!-- Image list for mobile -->
+    <div class="col-12 swiper sm-show mb-4">
       <div class="swiper-wrapper">
         <div v-for="(image, index) in product?.images" :key="index" class="swiper-slide">
           <img
             :src="'data:image/jpg;base64,' + image"
             alt=""
             class="d-block w-100 pointer"
+            data-bs-toggle="modal"
+            data-bs-target="#imageModal"
             @click="enlargeImage($event)"
           />
         </div>
       </div>
-
       <div class="swiper-pagination"></div>
     </div>
+    <!-- End of image list for mobile -->
+
     <div class="col-12 col-md-6">
       <transition name="fade" mode="out-in">
         <h3 v-if="product">
@@ -519,6 +530,8 @@ onBeforeMount(() => {
       </div>
     </transition>
   </div>
+
+  <!-- Modal for image preview -->
   <div
     class="modal modal-lg"
     id="imageModal"
