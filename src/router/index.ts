@@ -110,7 +110,7 @@ const router = createRouter({
     },
     {
       path: '/:pathMatch(.*)*',
-      name: '404',
+      name: 'NotFound',
       component: NotFoundView,
     },
   ],
@@ -119,6 +119,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.name === 'Home') document.title = `Quality Products, Unbeatable Prices | Kapak`
   else if (to.name === 'SignUp') document.title = `Sign Up | Kapak`
+  else if (to.name === 'NotFound') document.title = `Not Found | Kapak`
   else document.title = `${String(to.name)} | Kapak`
   if (to.name !== 'Login' && login().afterLogin) login().setAfterLogin('')
   NProgress.start()
