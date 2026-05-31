@@ -213,11 +213,15 @@ onMounted(() => {
         class="btn"
         id="back"
         @click="$router.back()"
-        :class="route.name == 'Home' ? 'hidden' : ''"
+        :class="{ hidden: route.name == 'Home' }"
       >
         <BIconArrowLeft />
       </button>
-      <div class="input-group" id="search" :class="route.name == 'Home' ? 'home' : ''">
+      <div
+        class="input-group"
+        id="search"
+        :class="{ home: route.name == 'Home', login: login().username }"
+      >
         <input
           ref="searchRef"
           type="text"
@@ -400,6 +404,10 @@ onMounted(() => {
 
 #search {
   width: calc(100% - 24rem) !important;
+}
+
+#search.login {
+  width: calc(100% - 20rem) !important;
 }
 
 .icons {
