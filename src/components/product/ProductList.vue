@@ -15,7 +15,6 @@ interface Product {
 }
 
 const products = ref<Product[]>([])
-const woodsRef = ref<HTMLElement | null>(null)
 const defaultLimit = ref(30)
 const skipStep = ref(0)
 const hasMore = ref(true)
@@ -94,26 +93,6 @@ watch([() => route.query, () => props.shopname], () => {
   getProducts()
 })
 
-function woodsController() {
-  const woods = woodsRef.value
-  if (!woods) return
-
-  // When scrolling, the img is getting zoomer
-  const scrollY = window.scrollY || window.pageYOffset
-  woods.style.transform = `scale(${1 + scrollY / 1000}) translateY(-${1 * scrollY}px)`
-  woods.style.opacity = `${Math.max(0, 0.6 + scrollY / 850)}`
-}
-
-watch(
-  [() => products.value.length, () => isMounted.value],
-  () => {
-    if (!products.value.length && isMounted.value)
-      document.addEventListener('scroll', woodsController)
-    else document.removeEventListener('scroll', woodsController)
-  },
-  { immediate: true },
-)
-
 onMounted(async () => {
   await getProducts()
   isMounted.value = true
@@ -161,9 +140,8 @@ onMounted(async () => {
       </template>
     </div>
     <div v-else-if="!products.length && isMounted">
-      <div>Oh no, it seems we're lost in the Kapak Woods.</div>
+      <div>Oh no, the item you are looking for must have been eaten by aliens.</div>
       <div>Try searching with other keywords!</div>
-      <img src="/images/woods.png" alt="Woods" id="woods" ref="woodsRef" />
     </div>
     <div
       v-else
@@ -248,14 +226,5 @@ onMounted(async () => {
 
 .btn-load-more i {
   transform: translateY(0.1rem);
-}
-
-#woods {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  z-index: -1;
-  opacity: 0.6;
 }
 </style>
