@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import theme from '@/stores/theme'
+import { BIconHeart, BIconLock, BIconPhone, BIconSearch, BIconShop } from 'bootstrap-icons-vue'
 </script>
 
 <template>
@@ -22,14 +23,14 @@ import theme from '@/stores/theme'
       <div>
         <h5 class="fw-bold">Featured Features</h5>
         <ul class="ps-4">
-          <li class="pb-1"><i class="pi pi-search"></i> Super fast product search</li>
-          <li class="pb-1"><i class="pi pi-shopping-cart"></i> Smart shopping cart</li>
-          <li class="pb-1"><i class="pi pi-lock"></i> Secure & trusted transactions</li>
-          <li class="pb-1"><i class="pi pi-mobile"></i> Responsive design on all devices</li>
+          <li class="pb-1"><BIconSearch /> Super fast product search</li>
+          <li class="pb-1"><BIconShop /> Smart shopping cart</li>
+          <li class="pb-1"><BIconLock /> Secure & trusted transactions</li>
+          <li class="pb-1"><BIconPhone /> Responsive design on all devices</li>
         </ul>
       </div>
       <div class="text-center text-muted">
-        <span>Made with <i class="pi pi-heart"></i> by Kapak Team</span>
+        <span>Made with <BIconHeart /> by Kapak Team</span>
       </div>
     </div>
   </div>

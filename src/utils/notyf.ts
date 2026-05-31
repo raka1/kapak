@@ -6,7 +6,7 @@ const notyfObj: Partial<INotyfOptions> = {
       backgroundColor: 'var(--main-prim)',
       icon: {
         color: 'var(--bs-white)',
-        className: 'pi pi-exclamation-circle',
+        className: 'bi bi-exclamation-circle',
         tagName: 'i',
       },
     },

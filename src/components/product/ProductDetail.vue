@@ -11,6 +11,7 @@ import login from '@/stores/login'
 import cart from '@/stores/cart'
 import notyf, { error as noter } from '@/utils/notyf'
 import '@/assets/quantity.css'
+import { BIconArrowsExpand, BIconDash, BIconPlus, BIconX } from 'bootstrap-icons-vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -274,9 +275,7 @@ onBeforeMount(() => {
   <nav class="navbar fixed-bottom bg-body-primary sm-show">
     <div class="row gx-2 mx-2">
       <div class="col-6" @click="showPreview(0)">
-        <button class="btn btn-full-outline w-100">
-          <i class="pi pi-plus button"></i> Add to Cart
-        </button>
+        <button class="btn btn-full-outline w-100"><BIconPlus /> Add to Cart</button>
       </div>
       <div class="col-6" @click="showPreview(1)">
         <button class="btn btn-full w-100">Buy Now</button>
@@ -289,7 +288,7 @@ onBeforeMount(() => {
   <!-- Checkout preview modal for mobile view -->
   <div :class="{ hidden: hidePreview }" id="purchase-preview-wrapper">
     <div id="purchase-preview-close">
-      <i class="pi pi-times" @click="hidePreview = true"></i>
+      <BIconX @click="hidePreview = true" />
     </div>
     <div class="row">
       <div class="col-5 position-relative">
@@ -305,7 +304,7 @@ onBeforeMount(() => {
           class="position-absolute bottom-0 d-flex align-items-center justify-content-center"
           id="enlarge-icon"
         >
-          <i class="pi pi-expand"></i>
+          <BIconArrowsExpand />
         </div>
       </div>
       <div class="col-7" style="margin-top: auto">
@@ -353,7 +352,7 @@ onBeforeMount(() => {
     </div>
     <div class="quantity input-group">
       <button class="btn" :class="{ focus: quantityFocused }" @click="decreaseQuantity">
-        <i class="pi pi-minus ps-2 pe-2"></i>
+        <BIconDash class="ps-2 pe-2" />
       </button>
       <input
         class="text-center"
@@ -365,7 +364,7 @@ onBeforeMount(() => {
         @blur="quantityFocused = false"
       />
       <button class="btn" :class="{ focus: quantityFocused }" @click="increaseQuantity">
-        <i class="pi pi-plus ps-2 pe-2"></i>
+        <BIconPlus class="ps-2 pe-2" />
       </button>
     </div>
     <hr style="color: var(--line)" />
@@ -508,7 +507,7 @@ onBeforeMount(() => {
             <div class="col-7">
               <div class="quantity input-group">
                 <button class="btn" :class="{ focus: quantityFocused }" @click="decreaseQuantity">
-                  <i class="pi pi-minus ps-2 pe-2"></i>
+                  <BIconDash class="ps-2 pe-2" />
                 </button>
                 <input
                   class="text-center"
@@ -520,7 +519,7 @@ onBeforeMount(() => {
                   @blur="quantityFocused = false"
                 />
                 <button class="btn" :class="{ focus: quantityFocused }" @click="increaseQuantity">
-                  <i class="pi pi-plus ps-2 pe-2"></i>
+                  <BIconPlus class="ps-2 pe-2" />
                 </button>
               </div>
             </div>
@@ -550,7 +549,7 @@ onBeforeMount(() => {
           </div>
           <div class="text-center">
             <button class="btn btn-sm btn-full-outline d-inline-block" @click="addToCart">
-              <i class="pi pi-plus button"></i> Add to Cart
+              <BIconPlus /> Add to Cart
             </button>
             <div class="separator d-inline-block"></div>
             <RouterLink
@@ -580,9 +579,7 @@ onBeforeMount(() => {
               <h3 class="mb-4">{{ product?.name }}</h3>
             </div>
             <div class="col-1 d-flex justify-content-end">
-              <span data-bs-dismiss="modal" style="cursor: pointer"
-                ><i class="pi pi-times"></i
-              ></span>
+              <span data-bs-dismiss="modal" style="cursor: pointer"><i class="bi bi-x"></i></span>
             </div>
           </div>
           <div class="row">
@@ -690,15 +687,6 @@ onBeforeMount(() => {
 
 .breadcrumb-item + .breadcrumb-item::before {
   color: var(--main-text);
-}
-
-i.button {
-  vertical-align: middle;
-  margin-top: -4px;
-}
-
-i.cart {
-  vertical-align: middle;
 }
 
 #variant-list button {

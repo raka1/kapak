@@ -5,6 +5,7 @@ import NProgress from 'nprogress'
 import login from '@/stores/login'
 import cart from '@/stores/cart'
 import notyf, { error as noter } from '@/utils/notyf'
+import { BIconFacebook, BIconGoogle, BIconKey, BIconPeople } from 'bootstrap-icons-vue'
 
 const router = useRouter()
 
@@ -153,8 +154,8 @@ onMounted(() => {
               ? 'border-bottom: 1px solid var(--main-prim)'
               : 'border-bottom: 1px solid var(--line-clickable)'
           "
-          ><i class="pi pi-user"></i
-        ></span>
+          ><BIconPeople
+        /></span>
         <input
           type="text"
           class="form-control"
@@ -175,8 +176,8 @@ onMounted(() => {
               ? 'border-bottom: 1px solid var(--main-prim)'
               : 'border-bottom: 1px solid var(--line-clickable)'
           "
-          ><i class="pi pi-key"></i
-        ></span>
+          ><BIconKey
+        /></span>
         <input
           type="password"
           class="form-control"
@@ -205,10 +206,10 @@ onMounted(() => {
         @click="emit('OAuth2', 'google')"
         style="transform: translateY(0.06rem)"
       >
-        <i class="pi pi-google"></i> Google
+        <BIconGoogle /> Google
       </button>
       <button class="btn btn-full" @click="emit('OAuth2', 'facebook')">
-        <i class="pi pi-facebook" style="transform: translateY(0.06rem)"></i> Facebook
+        <BIconFacebook /> Facebook
       </button>
     </div>
     <div class="text-center mt-5">

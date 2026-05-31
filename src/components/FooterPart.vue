@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
+import { BIconInstagram, BIconFacebook } from 'bootstrap-icons-vue'
 
 const route = useRoute()
 </script>
@@ -18,10 +19,10 @@ const route = useRoute()
     </div>
     <div class="footer-social mb-2">
       <a href="https://instagram.com/_tukangsate2" target="_blank">
-        <i class="pi pi-instagram"></i>
+        <BIconInstagram />
       </a>
       <a href="https://www.facebook.com/Prevolver/" target="_blank">
-        <i class="pi pi-facebook"></i>
+        <BIconFacebook />
       </a>
     </div>
     <div class="footer-contact mb-2 small">

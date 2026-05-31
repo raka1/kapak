@@ -7,6 +7,7 @@ import Products from '@/components/product/ProductList.vue'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import notyf, { error as noter } from '@/utils/notyf'
 import '@/assets/quantity.css'
+import { BIconArrowRight, BIconDash, BIconPlus, BIconTrash } from 'bootstrap-icons-vue'
 
 const router = useRouter()
 
@@ -270,8 +271,8 @@ onUnmounted(() => {
       />
       <label class="form-check-label" for="select-all"> <b>Select all</b></label>
       <span v-if="hasCheckedItems" class="btn float-end" @click="deleteCheckedItems"
-        ><i class="pi pi-trash"></i
-      ></span>
+        ><BIconTrash
+      /></span>
     </div>
     <div
       class="items uplift rounded-4 my-2 py-3 px-4"
@@ -329,7 +330,7 @@ onUnmounted(() => {
               </div>
               <div class="d-flex mt-2 justify-content-end">
                 <div class="btn me-4" @click="deleteItem(item.product._id, item.variant_index)">
-                  <i class="align-middle pi pi-trash"></i>
+                  <BIconTrash class="align-middle" />
                 </div>
                 <div class="quantity input-group justify-content-end" style="width: 7rem">
                   <button
@@ -337,7 +338,7 @@ onUnmounted(() => {
                     :class="{ focus: quantityFocused[index]?.[indexx] }"
                     @click="changeQuantity('decrease', item.product._id, item.variant_index)"
                   >
-                    <i class="pi pi-minus ps-2 pe-2"></i>
+                    <BIconDash class="ps-2 pe-2" />
                   </button>
                   <input
                     class="text-center"
@@ -358,7 +359,7 @@ onUnmounted(() => {
                     :class="{ focus: quantityFocused[index]?.[indexx] }"
                     @click="changeQuantity('increase', item.product._id, item.variant_index)"
                   >
-                    <i class="pi pi-plus ps-2 pe-2"></i>
+                    <BIconPlus class="ps-2 pe-2" />
                   </button>
                 </div>
               </div>
@@ -380,7 +381,7 @@ onUnmounted(() => {
       >
         <div class="d-inline-block">
           <i
-            class="pi pi-shopping-cart me-2"
+            class="bi bi-shopping-cart me-2"
             style="color: var(--main-prim); font-size: 1.2rem"
           ></i>
           <b
@@ -396,7 +397,7 @@ onUnmounted(() => {
         </div>
         <div class="separator d-inline-block"></div>
         <button class="btn btn-lg btn-full d-inline-block" ref="buyNowRef">
-          Checkout <i class="pi pi-arrow-right ms-2"></i>
+          Checkout <BIconArrowRight class="ms-2" />
         </button>
       </div>
     </transition>

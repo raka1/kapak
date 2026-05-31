@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { BIconHouseFill } from 'bootstrap-icons-vue'
 import { RouterLink } from 'vue-router'
 </script>
 
@@ -7,7 +8,7 @@ import { RouterLink } from 'vue-router'
     <div class="cons-card uplift">
       <div style="font-size: 3rem">😕</div>
       <p class="mb-3 text-muted">Oops! The page you are looking for does not exist.</p>
-      <RouterLink to="/" class="btn btn-full"> <i class="pi pi-home"></i> Back to Home </RouterLink>
+      <RouterLink to="/" class="btn btn-full"> <BIconHouseFill /> Back to Home </RouterLink>
     </div>
   </div>
 </template>

@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'nprogress/nprogress.css'
-import 'primeicons/primeicons.css'
 import 'notyf/notyf.min.css'
 import '@/assets/main.css'
 

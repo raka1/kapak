@@ -2,9 +2,22 @@
 import { ref, onMounted, type ComponentPublicInstance, watch, computed } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { change as changeTheme } from '@/utils/theme'
+import {
+  BIconArrowLeft,
+  BIconBoxArrowLeft,
+  BIconCart,
+  BIconEnvelope,
+  BIconGear,
+  BIconHeart,
+  BIconList,
+  BIconMoon,
+  BIconPeople,
+  BIconSearch,
+  BIconSun,
+  BIconX,
+} from 'bootstrap-icons-vue'
 import 'bootstrap/js/dist/dropdown'
 import 'bootstrap/js/dist/modal'
-import FontFaceObserver from 'fontfaceobserver'
 import NProgress from 'nprogress'
 import login from '@/stores/login'
 import cart from '@/stores/cart'
@@ -18,8 +31,8 @@ const route = useRoute()
 const router = useRouter()
 const autocompleteRef = ref<HTMLUListElement | null>(null)
 const searchRef = ref<HTMLInputElement | null>(null)
-const themeIconRef = ref<HTMLAnchorElement | null>(null)
 const brandRef = ref<ComponentPublicInstance | null>(null)
+const isDark = ref<boolean>(false)
 const isFocused = ref(false)
 const autocompleteItems = ref<AutocompleteItem[]>([])
 const autocompleteSelect = ref(-1)
@@ -121,20 +134,14 @@ function handleKeyDown(event: KeyboardEvent) {
 }
 
 function applyTheme() {
-  const themeIcon = themeIconRef.value
   const brand = brandRef.value?.$el
 
-  if (themeIcon && brand) {
-    const i1 = themeIcon.querySelectorAll('i')[0]
-    const i2 = themeIcon.querySelectorAll('i')[1]
-
+  if (brand) {
     if (localStorage.getItem('theme') == 'dark') {
-      i1?.classList.add('hidden')
-      i2?.classList.remove('hidden')
+      isDark.value = true
       brand.style.backgroundImage = `url('/images/banner-secondary.png')`
     } else {
-      i1?.classList.remove('hidden')
-      i2?.classList.add('hidden')
+      isDark.value = false
       brand.style.backgroundImage = `url('/images/banner-primary.png')`
     }
   }
@@ -191,21 +198,7 @@ watch(
 )
 
 onMounted(() => {
-  const themeIcon = themeIconRef.value
-  const fontLoaded = new FontFaceObserver('PrimeIcons')
-
-  fontLoaded.load().then(() => {
-    if (themeIcon) {
-      const i1 = themeIcon.querySelectorAll('i')[0]
-      const i2 = themeIcon.querySelectorAll('i')[1]
-      const width = Math.max(i1?.offsetWidth || 0, i2?.offsetWidth || 0)
-
-      themeIcon.style.width = width + 'px'
-
-      applyTheme()
-    }
-  })
-
+  applyTheme()
   getAutocompleteItems()
   window.addEventListener('resize', resizeObserver)
   resizeObserver()
@@ -220,9 +213,9 @@ onMounted(() => {
         class="btn"
         id="back"
         @click="$router.back()"
-        :class="route.name == 'Home' ? 'hide' : ''"
+        :class="route.name == 'Home' ? 'hidden' : ''"
       >
-        <i class="pi pi-arrow-left"></i>
+        <BIconArrowLeft />
       </button>
       <div class="input-group" id="search" :class="route.name == 'Home' ? 'home' : ''">
         <input
@@ -240,13 +233,13 @@ onMounted(() => {
           "
           placeholder="Search Kapak..."
         />
-        <button class="btn" @click="onSearch">
-          <i class="pi pi-search ps-2 pe-2"></i>
+        <button class="btn" @click="onSearch" style="width: 2rem">
+          <BIconSearch />
         </button>
       </div>
       <div class="d-flex ps-4">
-        <RouterLink to="/cart" class="btn me-3 icons">
-          <i class="pi pi-shopping-cart"></i>
+        <RouterLink to="/cart" class="btn icons me-3">
+          <BIconCart />
           <span
             v-if="cart().total_all_quantity > 0"
             class="position-absolute top-20 start-100 translate-middle badge rounded-pill bg-danger"
@@ -254,18 +247,28 @@ onMounted(() => {
             {{ cart().total_all_quantity }}
           </span>
         </RouterLink>
-        <RouterLink to="/chat" class="btn me-3 icons">
-          <i class="pi pi-envelope"></i>
+        <RouterLink to="/chat" class="btn icons me-3">
+          <BIconEnvelope />
         </RouterLink>
-        <div ref="themeIconRef" class="btn icons" @click.prevent="toggleTheme">
-          <i class="pi pi-sun hidden"></i>
-          <i class="pi pi-moon hidden"></i>
+        <div class="btn icons" @click.prevent="toggleTheme">
+          <BIconMoon v-if="isDark" />
+          <BIconSun v-else />
         </div>
         <div class="separator ms-4 me-4 sm-hide"></div>
         <div v-if="login().isLoginChecked" class="sm-hide">
-          <div v-if="!login().username" style="margin-top: 0.1rem">
-            <RouterLink to="/login" class="btn btn-sm me-2 pb-1">Login</RouterLink>
-            <RouterLink to="/sign-up" class="btn btn-sm pb-1">Sign Up</RouterLink>
+          <div v-if="!login().username" class="">
+            <RouterLink
+              to="/login"
+              class="btn btn-sm me-2"
+              style="height: 2.2rem; align-content: center"
+              >Login</RouterLink
+            >
+            <RouterLink
+              to="/sign-up"
+              class="btn btn-sm"
+              style="height: 2.2rem; align-content: center"
+              >Sign Up</RouterLink
+            >
           </div>
           <div v-else>
             <div class="dropdown" id="profile">
@@ -273,22 +276,22 @@ onMounted(() => {
               <ul class="dropdown-menu dropdown-menu-end">
                 <li>
                   <div class="dropdown-item">
-                    <i class="pi pi-user-edit"></i> <strong>{{ login().username }}</strong>
+                    <BIconPeople /> <strong>{{ login().username }}</strong>
                   </div>
                 </li>
                 <li>
                   <RouterLink class="dropdown-item" to="/orders">
-                    <i class="pi pi-list"></i> My Orders
+                    <BIconList /> My Orders
                   </RouterLink>
                 </li>
                 <li>
                   <RouterLink class="dropdown-item" to="/wishlist">
-                    <i class="pi pi-heart"></i> Wishlist
+                    <BIconHeart /> Wishlist
                   </RouterLink>
                 </li>
                 <li>
                   <RouterLink class="dropdown-item" to="/settings">
-                    <i class="pi pi-cog"></i> Settings
+                    <BIconGear /> Settings
                   </RouterLink>
                 </li>
                 <li>
@@ -301,7 +304,7 @@ onMounted(() => {
                     data-bs-toggle="modal"
                     data-bs-target="#logoutModal"
                   >
-                    <i class="pi pi-sign-out"></i> Logout
+                    <BIconBoxArrowLeft /> Logout
                   </a>
                 </li>
               </ul>
@@ -327,9 +330,7 @@ onMounted(() => {
               <h3 class="mb-4">Logout</h3>
             </div>
             <div class="col-1 d-flex justify-content-end">
-              <span data-bs-dismiss="modal" style="cursor: pointer"
-                ><i class="pi pi-times"></i
-              ></span>
+              <span data-bs-dismiss="modal" style="cursor: pointer"><BIconX /></span>
             </div>
           </div>
           <p>Are you sure you want to logout?</p>
@@ -397,12 +398,19 @@ onMounted(() => {
   display: none;
 }
 
-#back.hide {
-  display: none;
+#search {
+  width: calc(100% - 24rem) !important;
 }
 
-#search {
-  width: calc(100% - 25rem) !important;
+.icons {
+  display: flex;
+  align-items: center;
+  width: 1.1rem;
+  height: 2.2rem;
+}
+
+.hidden {
+  display: none !important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -479,22 +487,6 @@ ul.list-group {
 
 .top-20 {
   top: 20%;
-}
-
-.icons {
-  display: grid;
-  place-items: center;
-}
-
-.icons > i {
-  padding: 0.5rem 0;
-  grid-area: 1 / 1;
-  opacity: 1;
-  transition: all 0.15s ease-in-out;
-}
-
-.icons > i.hidden {
-  opacity: 0;
 }
 
 .separator {

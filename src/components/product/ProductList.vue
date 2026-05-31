@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { BIconArrowDown } from 'bootstrap-icons-vue'
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -195,7 +196,7 @@ onMounted(async () => {
       @click="loadMore"
     >
       <span>Load More</span>
-      <i class="pi pi-angle-down"></i>
+      <BIconArrowDown />
     </button>
   </transition>
 </template>

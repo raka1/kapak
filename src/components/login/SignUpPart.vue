@@ -3,6 +3,14 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import NProgress from 'nprogress'
 import notyf, { error as noter } from '@/utils/notyf'
+import {
+  BIconEnvelope,
+  BIconFacebook,
+  BIconGoogle,
+  BIconKey,
+  BIconPersonVcard,
+  BIconTelephone,
+} from 'bootstrap-icons-vue'
 
 const router = useRouter()
 
@@ -394,8 +402,8 @@ onMounted(() => {
                   ? 'border-bottom: 1px solid var(--main-prim)'
                   : 'border-bottom: 1px solid var(--line-clickable)'
               "
-              ><i class="pi pi-envelope"></i
-            ></span>
+              ><BIconEnvelope
+            /></span>
             <input
               type="text"
               class="form-control"
@@ -420,10 +428,10 @@ onMounted(() => {
             @click="emit('OAuth2', 'google')"
             style="transform: translateY(0.06rem)"
           >
-            <i class="pi pi-google"></i> Google
+            <BIconGoogle /> Google
           </button>
           <button class="btn btn-full" @click="emit('OAuth2', 'facebook')">
-            <i class="pi pi-facebook" style="transform: translateY(0.06rem)"></i> Facebook
+            <BIconFacebook /> Facebook
           </button>
         </div>
         <div class="text-center" style="margin-top: 5.3rem">
@@ -442,7 +450,7 @@ onMounted(() => {
     <div v-else-if="pageSignUp === 1" class="box">
       <div class="sign-up-e">
         <div class="text-center mb-2" style="font-size: 5rem">
-          <i class="pi pi-envelope"></i>
+          <BIconEnvelope />
         </div>
         <h4 class="mb-3">Well Done!</h4>
         <div class="mb-3">
@@ -458,8 +466,8 @@ onMounted(() => {
                 ? 'border-bottom: 1px solid var(--main-prim)'
                 : 'border-bottom: 1px solid var(--line-clickable)'
             "
-            ><i class="pi pi-key"></i
-          ></span>
+            ><BIconKey
+          /></span>
           <input
             type="text"
             class="form-control"
@@ -489,8 +497,8 @@ onMounted(() => {
                   ? 'border-bottom: 1px solid var(--main-prim)'
                   : 'border-bottom: 1px solid var(--line-clickable)'
               "
-              ><i class="pi pi-id-card"></i
-            ></span>
+              ><BIconPersonVcard
+            /></span>
             <input
               type="text"
               class="form-control"
@@ -511,8 +519,8 @@ onMounted(() => {
                   ? 'border-bottom: 1px solid var(--main-prim)'
                   : 'border-bottom: 1px solid var(--line-clickable)'
               "
-              ><i class="pi pi-phone"></i
-            ></span>
+              ><BIconTelephone
+            /></span>
             <input
               type="text"
               class="form-control"
@@ -525,7 +533,7 @@ onMounted(() => {
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text" ref="spanPass1Ref" @click="fo3Ref?.focus()">
-              <i class="pi pi-key"></i>
+              <BIconKey />
             </span>
             <input
               type="password"
@@ -540,7 +548,7 @@ onMounted(() => {
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text" ref="spanPass2Ref" @click="fo4Ref?.focus()">
-              <i class="pi pi-key"> </i>
+              <BIconKey />
             </span>
             <input
               type="password"

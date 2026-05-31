@@ -1,12 +1,21 @@
+<script lang="ts" setup>
+import { BIconHouseFill, BIconHouse, BIconPersonFill, BIconPerson } from 'bootstrap-icons-vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+</script>
+
 <template>
   <nav class="navbar fixed-bottom bg-body-primary">
     <div class="row row-cols-2">
-      <RouterLink class="text-center" to="/" :class="{ active: $route.path === '/' }"
-        ><i class="pi pi-home"></i
-      ></RouterLink>
-      <RouterLink class="text-center" to="/profile" :class="{ active: $route.path === '/profile' }"
-        ><i class="pi pi-user"></i
-      ></RouterLink>
+      <RouterLink class="text-center" to="/" :class="{ active: $route.path === '/' }">
+        <span v-if="route.name === 'Home'"><BIconHouseFill /></span>
+        <span v-else><BIconHouse /></span>
+      </RouterLink>
+      <RouterLink class="text-center" to="/profile" :class="{ active: $route.path === '/profile' }">
+        <span v-if="route.name === 'Profile'"><BIconPersonFill /></span>
+        <span v-else><BIconPerson /></span>
+      </RouterLink>
     </div>
   </nav>
 </template>

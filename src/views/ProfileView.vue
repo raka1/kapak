@@ -5,6 +5,7 @@ import login from '@/stores/login'
 import cart from '@/stores/cart'
 import NavigationHead from '@/components/NavigationHead.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
+import { BIconBoxArrowInLeft, BIconGear, BIconHeart, BIconList } from 'bootstrap-icons-vue'
 
 async function logout() {
   NProgress.start()
@@ -39,16 +40,16 @@ async function logout() {
       </div>
       <div class="list-group mt-3">
         <RouterLink class="list-group-item" to="/orders">
-          <i class="pi pi-list pe-2"></i> My Orders
+          <BIconList class="pe-2" /> My Orders
         </RouterLink>
         <RouterLink class="list-group-item" to="/wishlist">
-          <i class="pi pi-heart pe-2"></i> Wishlist
+          <BIconHeart class="pe-2" /> Wishlist
         </RouterLink>
         <RouterLink class="list-group-item" to="/settings">
-          <i class="pi pi-cog pe-2"></i> Settings
+          <BIconGear class="pe-2" /> Settings
         </RouterLink>
         <div class="list-group-item" @click.prevent="logout">
-          <i class="pi pi-sign-out pe-2"></i> Logout
+          <BIconBoxArrowInLeft class="pe-2" /> Logout
         </div>
       </div>
     </div>
