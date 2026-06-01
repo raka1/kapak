@@ -22,6 +22,9 @@ const prices = ref<Price[]>([])
 const selectedPrice = ref<Price | null>(null)
 const provider = ref('')
 
+const staticUrl = import.meta.env.VITE_STATIC_URL
+const staticProviderImagesUrl = `${staticUrl}/images/providers/`
+
 let get: boolean = false
 
 async function getProviders() {
@@ -59,7 +62,7 @@ function prefix(e: Event) {
 
       if (find) {
         get = true
-        imRef.value?.setAttribute('src', 'data:image/png;base64,' + image)
+        imRef.value?.setAttribute('src', `${staticProviderImagesUrl}${image}`)
         provider.value = 'Provider: ' + name
 
         if (imRef.value && inputRef.value?.offsetHeight !== undefined)

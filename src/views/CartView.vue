@@ -17,6 +17,9 @@ const showConfirm = ref(false)
 const confirmTitle = ref('')
 const confirmMessage = ref('')
 
+const staticUrl = import.meta.env.VITE_STATIC_URL
+const staticProductImagesUrl = `${staticUrl}/images/products/`
+
 let quantityTimeout: ReturnType<typeof setTimeout> | null = null
 
 async function handleCartUpdate(
@@ -308,7 +311,7 @@ onUnmounted(() => {
               :to="`/${cartItem.seller.username}/${item.product.slug}`"
               class="align-top me-4 img-cart"
             >
-              <img :src="'data:image/png;base64, ' + item.product.image" />
+              <img :src="`${staticProductImagesUrl}${item.product.image}`" />
             </RouterLink>
             <div class="align-top">
               <div class="d-grid" style="grid-template-columns: auto 8rem; gap: 1rem">

@@ -21,6 +21,9 @@ const hasMore = ref(true)
 const isLoadingMore = ref(false)
 const isMounted = ref(false)
 
+const staticUrl = import.meta.env.VITE_STATIC_URL
+const staticProductImagesUrl = `${staticUrl}/images/products/`
+
 type propsType = {
   shopname?: string | null
 }
@@ -116,7 +119,7 @@ onMounted(async () => {
           class="card mb-4 uplift"
           :title="product.name"
         >
-          <img :src="'data:image/png;base64, ' + product.images" class="card-img-top" />
+          <img :src="`${staticProductImagesUrl}${product.images}`" class="card-img-top" />
           <div class="card-body">
             <div class="text-truncate">{{ product.name }}</div>
             <div class="text-truncate" style="font-weight: bold">

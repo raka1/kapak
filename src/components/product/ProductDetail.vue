@@ -49,6 +49,9 @@ const variant = ref(0)
 const hidePreview = ref<boolean>(true)
 const btnInPreview = ref(0)
 
+const staticUrl = import.meta.env.VITE_STATIC_URL
+const staticProductImagesUrl = `${staticUrl}/images/products/`
+
 let enlargedSwiper: Swiper
 
 type emitType = {
@@ -96,7 +99,7 @@ function selectImage(
 ) {
   if (ref) {
     if (ref.style.backgroundColor) ref.style.backgroundColor = ''
-    ref.src = `data:image/jpg;base64,${image}`
+    ref.src = `${staticProductImagesUrl}${image}`
   }
   const selectedElement = list.find((el) => el.classList.contains('selected'))
   selectedElement?.classList.remove('selected')
@@ -293,7 +296,7 @@ onBeforeMount(() => {
     <div class="row">
       <div class="col-5 position-relative">
         <img
-          :src="product?.images[0] ? 'data:image/jpg;base64,' + product.images[0] : ''"
+          :src="product?.images[0] ? `${staticProductImagesUrl}${product.images[0]}` : ''"
           alt="Error when loading an image"
           class="d-block w-100 h-100"
           data-bs-toggle="modal"
@@ -419,7 +422,7 @@ onBeforeMount(() => {
           class="rounded-2"
           :class="index == 0 ? 'selected' : ''"
           :key="index"
-          :style="{ 'background-image': `url(data:image/jpg;base64,${image})` }"
+          :style="{ 'background-image': `url(${staticProductImagesUrl}${image})` }"
           ref="imageListRef"
           @click="selectImage(imageRef, imageListRef, index, image)"
         ></div>
@@ -431,7 +434,7 @@ onBeforeMount(() => {
       <div class="swiper-wrapper">
         <div v-for="(image, index) in product?.images" :key="index" class="swiper-slide">
           <img
-            :src="'data:image/jpg;base64,' + image"
+            :src="`${staticProductImagesUrl}${image}`"
             alt="Error when loading an image"
             class="d-block w-100 pointer"
             data-bs-toggle="modal"
@@ -589,7 +592,7 @@ onBeforeMount(() => {
                 <div class="swiper-wrapper">
                   <div v-for="(image, index) in product?.images" :key="index" class="swiper-slide">
                     <img
-                      :src="'data:image/jpg;base64,' + image"
+                      :src="`${staticProductImagesUrl}${image}`"
                       alt="Error when loading an image"
                       class="d-block w-100"
                     />
@@ -606,7 +609,7 @@ onBeforeMount(() => {
                 class="rounded-2"
                 :class="index == indexInEnlargedImage ? 'selected' : ''"
                 :key="index"
-                :style="{ 'background-image': `url(data:image/jpg;base64,${image})` }"
+                :style="{ 'background-image': `url(${staticProductImagesUrl}${image})` }"
                 ref="enlargedImageListRef"
                 @click="
                   (selectImage(enlargedImageRef, enlargedImageListRef, index, image),

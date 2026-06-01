@@ -16,6 +16,9 @@ interface Images {
 const waitingCarouselsRef = ref<HTMLDivElement | null>(null)
 const carousels = ref<Images[]>([])
 
+const staticUrl = import.meta.env.VITE_STATIC_URL
+const staticBannerImagesUrl = `${staticUrl}/images/banners/`
+
 async function getCarousels() {
   try {
     const response = await fetch('/api/v1/item/banners')
@@ -69,7 +72,7 @@ onMounted(async () => {
         <div v-for="(carousel, index) in carousels" :key="index" class="swiper-slide">
           <RouterLink v-if="carousel.status" :to="`/banner/${carousel.name}`">
             <img
-              :src="'data:image/jpg;base64,' + carousel.image"
+              :src="`${staticBannerImagesUrl}${carousel.image}`"
               :alt="carousel.name"
               @load="onBannerLoaded(index)"
               class="d-block w-100"

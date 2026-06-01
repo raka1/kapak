@@ -19,6 +19,16 @@ export default defineConfig(({ mode }) => {
     rewrite: (path: string) => path.replace(/^\/api\/v1/, ''),
   }
 
+  const staticProxyConfig = {
+    target: process.env.VITE_STATIC_URL,
+    changeOrigin: true,
+    secure: false,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    rewrite: (path: string) => path.replace(/^\/static/, ''),
+  }
+
   return {
     plugins: [
       vue(),
@@ -35,6 +45,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api/v1': apiProxyConfig,
+        '/static': staticProxyConfig,
       },
     },
   }
