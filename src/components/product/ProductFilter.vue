@@ -8,6 +8,7 @@ const router = useRouter()
 interface Category {
   _id: number
   name: string
+  slug: string
 }
 
 const selectedCategory = ref('')
@@ -95,7 +96,7 @@ onMounted(() => {
       <strong>Category</strong>
       <select v-model="selectedCategory" class="form-select mt-1" @change="updateUrlParams()">
         <option value="">All Categories</option>
-        <option v-for="category in categories" :key="category._id" :value="category._id">
+        <option v-for="category in categories" :key="category._id" :value="category.slug">
           {{ category.name }}
         </option>
       </select>
