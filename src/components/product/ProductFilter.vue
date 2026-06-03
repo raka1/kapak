@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { BIconChevronDown, BIconFilter, BIconX } from 'bootstrap-icons-vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -11,14 +12,21 @@ interface Category {
   slug: string
 }
 
-const selectedCategory = ref('')
+type emitType = {
+  (event: 'toggleFilter', value: boolean): void
+}
+
+const selectedCategories = ref<string[]>([])
 const categories = ref<Category[]>([])
+const isShowMoreCategories = ref(false)
 const minPrice = ref('')
 const maxPrice = ref('')
 const minPriceBefore = ref('')
 const maxPriceBefore = ref('')
 const minPriceFocused = ref(false)
 const maxPriceFocused = ref(false)
+
+const emit = defineEmits<emitType>()
 
 function handleInput(which: 'min' | 'max') {
   let value
@@ -44,6 +52,10 @@ function handleInput(which: 'min' | 'max') {
   else maxPrice.value = new Intl.NumberFormat('id-ID').format(Number(value))
 }
 
+function hideFilter() {
+  emit('toggleFilter', false)
+}
+
 function handleKeyDownPrice(event: KeyboardEvent, value: string, which: 'min' | 'max') {
   const key = event.key
 
@@ -61,7 +73,7 @@ function handleKeyDownPrice(event: KeyboardEvent, value: string, which: 'min' | 
 function updateUrlParams() {
   const query = { ...route.query }
 
-  if (selectedCategory.value) query.ct = selectedCategory.value
+  if (selectedCategories.value.length) query.ct = selectedCategories.value.join(',')
   else delete query.ct
 
   if (minPrice.value) query.np = minPrice.value.replace(/\./g, '')
@@ -90,19 +102,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <strong>Filter</strong>
-  <div id="filter" class="rounded-4 mt-3 p-3 uplift">
-    <div class="mb-2">
-      <strong>Category</strong>
-      <select v-model="selectedCategory" class="form-select mt-1" @change="updateUrlParams()">
-        <option value="">All Categories</option>
-        <option v-for="category in categories" :key="category._id" :value="category.slug">
-          {{ category.name }}
-        </option>
-      </select>
+  <div id="back-drop" @click="hideFilter" class="sm-show"></div>
+
+  <div class="mb-3 d-flex align-items-center sm-hide">
+    <strong><BIconFilter />&nbsp;Filter</strong>
+  </div>
+  <div id="filter" class="rounded-4 p-3 uplift">
+    <div id="filter-close">
+      <BIconX @click="hideFilter" />
     </div>
-    <div class="mb-2"><strong>Price</strong></div>
-    <div>
+    <br />
+    <div class="mb-3">
       <label for="min-price">Min Price</label>
       <div class="input-group mb-2">
         <label
@@ -143,15 +153,69 @@ onMounted(() => {
         />
       </div>
     </div>
+    <div class="mb-2"><strong>Based on Category</strong></div>
+    <template v-for="category in categories" :key="category._id">
+      <div class="form-check" v-if="isShowMoreCategories || categories.indexOf(category) < 4">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          :id="`category-${category._id}`"
+          :value="category.slug"
+          v-model="selectedCategories"
+          @change="updateUrlParams()"
+        />
+        <label class="form-check-label mb-2" :for="`category-${category._id}`">
+          {{ category.name }}
+        </label>
+      </div>
+    </template>
+    <div
+      class="d-flex align-items-center justify-content-center"
+      v-if="!isShowMoreCategories"
+      style="cursor: pointer"
+      @click="isShowMoreCategories = true"
+    >
+      <strong>Show More</strong>&nbsp;<BIconChevronDown />
+    </div>
   </div>
 </template>
 
 <style scoped>
+#back-drop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.18);
+  z-index: 1040;
+}
+
 #filter {
   background-color: var(--main-bg);
+  border: 1px solid var(--line);
   transition:
     background-color 0.15s ease-in-out,
     color 0.15s ease-in-out;
+}
+
+@media only screen and (max-width: 768px) {
+  #filter {
+    border-radius: 0;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+  }
+
+  #filter-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-size: 1.25rem;
+    color: var(--text);
+  }
 }
 
 .form-select {

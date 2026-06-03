@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BIconArrowDown } from 'bootstrap-icons-vue'
+import { BIconArrowDown, BIconBinocularsFill, BIconFilter } from 'bootstrap-icons-vue'
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -28,7 +28,12 @@ type propsType = {
   shopname?: string | null
 }
 
+type emitType = {
+  (event: 'toggleFilter', value: boolean): void
+}
+
 const props = defineProps<propsType>()
+const emit = defineEmits<emitType>()
 
 function buildQuery(params: Record<string, unknown>) {
   const searchParams = new URLSearchParams()
@@ -39,6 +44,10 @@ function buildQuery(params: Record<string, unknown>) {
   })
   const query = searchParams.toString()
   return query ? `?${query}` : ''
+}
+
+function showFilter() {
+  emit('toggleFilter', true)
 }
 
 async function getProducts() {
@@ -52,6 +61,7 @@ async function getProducts() {
     if (route.name == 'Search' && route.query.q) {
       params.q = route.query.q
 
+      if (route.query.ct) params.ct = route.query.ct
       if (route.query.np) params.np = route.query.np
       if (route.query.xp) params.xp = route.query.xp
     }
@@ -103,6 +113,14 @@ onMounted(async () => {
 </script>
 
 <template>
+  <div class="row row-cols-2 mb-3">
+    <div class="d-flex align-items-center" v-if="route.name == 'Search' && route.query.q">
+      <BIconBinocularsFill />&nbsp;Searching for "{{ route.query.q }}"
+    </div>
+    <div class="d-flex align-items-center justify-content-end" @click="showFilter">
+      <BIconFilter />&nbsp;<strong>Filter</strong>
+    </div>
+  </div>
   <transition name="fade" mode="out-in">
     <div
       v-if="products.length && isMounted"
