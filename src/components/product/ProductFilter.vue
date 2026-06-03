@@ -108,10 +108,10 @@ onMounted(() => {
     <strong><BIconFilter />&nbsp;Filter</strong>
   </div>
   <div id="filter" class="rounded-4 p-3 uplift">
-    <div id="filter-close">
+    <div id="filter-close" class="sm-show">
       <BIconX @click="hideFilter" />
     </div>
-    <br />
+    <br class="sm-show" />
     <div class="mb-3">
       <label for="min-price">Min Price</label>
       <div class="input-group mb-2">
