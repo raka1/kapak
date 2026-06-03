@@ -117,7 +117,11 @@ onMounted(async () => {
     <div class="d-flex align-items-center" v-if="route.name == 'Search' && route.query.q">
       <BIconBinocularsFill />&nbsp;Searching for "{{ route.query.q }}"
     </div>
-    <div class="d-flex align-items-center justify-content-end" @click="showFilter">
+    <div
+      id="filter-button"
+      class="d-flex align-items-center justify-content-end"
+      @click="showFilter"
+    >
       <BIconFilter />&nbsp;<strong>Filter</strong>
     </div>
   </div>
@@ -247,5 +251,11 @@ onMounted(async () => {
 
 .btn-load-more i {
   transform: translateY(0.1rem);
+}
+
+@media only screen and (min-width: 768px) {
+  #filter-button {
+    display: none !important;
+  }
 }
 </style>
