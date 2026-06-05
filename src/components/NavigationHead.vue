@@ -197,6 +197,15 @@ watch(
   },
 )
 
+watch(
+  () => route.query,
+  () => {
+    if (route.query.q && searchRef.value) {
+      searchRef.value.value = String(route.query.q)
+    }
+  },
+)
+
 onMounted(() => {
   applyTheme()
   getAutocompleteItems()
