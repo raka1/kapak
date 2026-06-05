@@ -412,11 +412,11 @@ onMounted(() => {
 }
 
 #search {
-  width: calc(100% - 24rem) !important;
+  width: calc(100% - 24rem);
 }
 
 #search.login {
-  width: calc(100% - 20rem) !important;
+  width: calc(100% - 20rem);
 }
 
 .icons {
