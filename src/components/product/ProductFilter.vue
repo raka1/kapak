@@ -88,7 +88,15 @@ function updateUrlParams() {
 async function getCategories() {
   try {
     const response = await fetch('/api/v1/item/categories')
-    categories.value = await response.json()
+    const json = await response.json()
+
+    if (json) {
+      categories.value = json.sort((a: Category, b: Category) =>
+        selectedCategories.value.includes(a.slug) && !selectedCategories.value.includes(b.slug)
+          ? -1
+          : 0,
+      )
+    }
   } catch (error) {
     console.error(error)
   }
@@ -96,6 +104,7 @@ async function getCategories() {
 
 onMounted(() => {
   getCategories()
+  if (route.query.ct) selectedCategories.value = String(route.query.ct).split(',')
   if (route.query.np) minPrice.value = String(route.query.np)
   if (route.query.xp) maxPrice.value = String(route.query.xp)
 })
