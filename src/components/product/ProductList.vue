@@ -113,8 +113,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="row row-cols-2 mb-3">
-    <div class="d-flex align-items-center" v-if="route.name == 'Search' && route.query.q">
+  <div class="row row-cols-2 mb-3" v-if="route.name == 'Search' && route.query.q">
+    <div class="d-flex align-items-center">
       <BIconBinocularsFill />&nbsp;Searching for "{{ route.query.q }}"
     </div>
     <div
