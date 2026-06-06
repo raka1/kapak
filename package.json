@@ -14,7 +14,7 @@
     "lint:eslint": "eslint . --fix --cache",
     "format": "prettier --write --experimental-cli src/"
   },
-  "author": "Raka <raka@literature.ink>",
+  "author": "Raka <raka@rondeletia.com>",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.3.8",

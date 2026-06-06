@@ -27,7 +27,7 @@ const route = useRoute()
     </div>
     <div class="footer-contact mb-2 small">
       Email:
-      <a href="mailto:raka@literature.ink" class="footer-email">raka@literature.ink</a>
+      <a href="mailto:raka@rondeletia.com" class="footer-email">raka@rondeletia.com</a>
     </div>
     <div class="container mb-3">© 2026 Kapak. All Rights Reserved.</div>
   </div>
