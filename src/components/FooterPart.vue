@@ -29,7 +29,9 @@ const route = useRoute()
       Email:
       <a href="mailto:raka@rondeletia.com" class="footer-email">raka@rondeletia.com</a>
     </div>
-    <div class="container mb-3">© 2026 Kapak, Powered by Rondeletia. All Rights Reserved.</div>
+    <div class="container mb-3">
+      Refined by Rondeletia with love. Open source under ISC License.
+    </div>
   </div>
 </template>
 
