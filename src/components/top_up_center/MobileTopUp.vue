@@ -125,7 +125,12 @@ onMounted(getProviders)
           @input="prefix"
           placeholder="ex. 0838xxxxxxxx / 0856xxxxxxxx"
         />
-        <img ref="imRef" id="im" :alt="provider ? 'Logo of ' + provider : 'Provider logo'" />
+        <img
+          v-show="provider"
+          ref="imRef"
+          id="im"
+          :alt="provider ? 'Logo of ' + provider : 'Provider logo'"
+        />
       </div>
       <transition name="expand" tag="div"
         ><span v-if="provider">{{ provider }}</span></transition
