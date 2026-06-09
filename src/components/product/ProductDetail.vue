@@ -590,11 +590,13 @@ onBeforeMount(() => {
       <div class="modal-content">
         <div class="modal-body">
           <div class="row">
-            <div class="col-11">
+            <div class="col-10">
               <h3 class="mb-4">{{ product?.name }}</h3>
             </div>
-            <div class="col-1 d-flex justify-content-end">
-              <span data-bs-dismiss="modal" style="cursor: pointer"><i class="bi bi-x"></i></span>
+            <div class="col-2 d-flex justify-content-end">
+              <span data-bs-dismiss="modal" style="cursor: pointer"
+                ><BIconX style="height: 1.5rem; width: 1.5rem"
+              /></span>
             </div>
           </div>
           <div class="row">
