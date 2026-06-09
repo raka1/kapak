@@ -29,6 +29,7 @@ onMounted(() => {
           class="nav flex-column nav-pills me-3"
           ref="vTabRef"
           id="v-tab"
+          role="tablist"
           aria-orientation="vertical"
         >
           <button
@@ -37,6 +38,9 @@ onMounted(() => {
             data-bs-toggle="pill"
             data-bs-target="#v-mobile"
             type="button"
+            role="tab"
+            aria-controls="v-mobile"
+            aria-selected="true"
           >
             <BIconPhone /><span class="sm-hide">&nbsp;&nbsp;Mobile</span>
           </button>
@@ -46,6 +50,9 @@ onMounted(() => {
             data-bs-toggle="pill"
             data-bs-target="#v-data-plan"
             type="button"
+            role="tab"
+            aria-controls="v-data-plan"
+            aria-selected="false"
           >
             <BIconGlobe /><span class="sm-hide">&nbsp;&nbsp;Data Plan</span>
           </button>
@@ -55,6 +62,9 @@ onMounted(() => {
             data-bs-toggle="pill"
             data-bs-target="#v-electricity-token"
             type="button"
+            role="tab"
+            aria-controls="v-electricity-token"
+            aria-selected="false"
           >
             <BIconLightningCharge /><span class="sm-hide">&nbsp;&nbsp;Electricity Token</span>
           </button>
@@ -64,6 +74,9 @@ onMounted(() => {
             data-bs-toggle="pill"
             data-bs-target="#v-games"
             type="button"
+            role="tab"
+            aria-controls="v-games"
+            aria-selected="false"
           >
             <BIconController /><span class="sm-hide">&nbsp;&nbsp;Games</span>
           </button>
