@@ -311,7 +311,10 @@ onUnmounted(() => {
               :to="`/${cartItem.seller.username}/${item.product.slug}`"
               class="align-top me-4 img-cart"
             >
-              <img :src="`${staticProductImagesUrl}${item.product.image}`" />
+              <img
+                :src="`${staticProductImagesUrl}${item.product.image}`"
+                :alt="item.product.name"
+              />
             </RouterLink>
             <div class="align-top">
               <div class="d-grid" style="grid-template-columns: auto 8rem; gap: 1rem">
@@ -329,7 +332,7 @@ onUnmounted(() => {
                 </div>
               </div>
               <div class="text-muted">
-                {{ item.variant.name ? item.variant.name : '&nbsp;' }}
+                {{ item.variant.name ? item.variant.name : '\u00A0' }}
               </div>
               <div class="d-flex mt-2 justify-content-end">
                 <div class="btn me-4" @click="deleteItem(item.product._id, item.variant_index)">
@@ -407,7 +410,7 @@ onUnmounted(() => {
   </div>
   <div v-else id="empty-container" class="position-relative w-100 d-flex justify-content-center">
     <div id="empty" class="row">
-      <div class="col-12 col-md-3"><img src="/images/cart.png" /></div>
+      <div class="col-12 col-md-3"><img src="/images/cart.png" alt="Empty cart" /></div>
       <div class="col-12 col-md-9">
         <h3>Oops, your cart is empty!</h3>
         <p>Time to treat yourself.</p>

@@ -141,7 +141,11 @@ onMounted(async () => {
           class="card mb-4 uplift"
           :title="product.name"
         >
-          <img :src="`${staticProductImagesUrl}${product.images}`" class="card-img-top" />
+          <img
+            :src="`${staticProductImagesUrl}${product.images}`"
+            :alt="product ? product.name : 'Product image'"
+            class="card-img-top"
+          />
           <div class="card-body">
             <div class="text-truncate">{{ product.name }}</div>
             <div class="text-truncate" style="font-weight: bold">

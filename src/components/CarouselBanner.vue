@@ -73,7 +73,7 @@ onMounted(async () => {
           <RouterLink v-if="carousel.status" :to="`/banner/${carousel.name}`">
             <img
               :src="`${staticBannerImagesUrl}${carousel.image}`"
-              :alt="carousel.name"
+              :alt="carousel.name ? carousel.name : 'Error when loading a banner image'"
               @load="onBannerLoaded(index)"
               class="d-block w-100"
             />

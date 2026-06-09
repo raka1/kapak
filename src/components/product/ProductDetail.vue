@@ -297,7 +297,7 @@ onBeforeMount(() => {
       <div class="col-5 position-relative">
         <img
           :src="product?.images[0] ? `${staticProductImagesUrl}${product.images[0]}` : ''"
-          alt="Error when loading an image"
+          :alt="product ? product.name : 'Error when loading an image'"
           class="d-block w-100 h-100"
           data-bs-toggle="modal"
           data-bs-target="#imageModal"
@@ -411,6 +411,7 @@ onBeforeMount(() => {
       <img
         class="rounded-2 pointer"
         ref="imageRef"
+        :alt="product ? product.name : 'Product image'"
         id="show"
         data-bs-toggle="modal"
         data-bs-target="#imageModal"
@@ -435,7 +436,7 @@ onBeforeMount(() => {
         <div v-for="(image, index) in product?.images" :key="index" class="swiper-slide">
           <img
             :src="`${staticProductImagesUrl}${image}`"
-            alt="Error when loading an image"
+            :alt="product ? product.name : 'Error when loading an image'"
             class="d-block w-100 pointer"
             data-bs-toggle="modal"
             data-bs-target="#imageModal"
@@ -587,13 +588,17 @@ onBeforeMount(() => {
           </div>
           <div class="row">
             <div class="col-12 col-md-9 d-flex justify-content-center mobile-centered">
-              <img ref="enlargedImageRef" class="rounded-2 w-100 sm-hide" />
+              <img
+                ref="enlargedImageRef"
+                class="rounded-2 w-100 sm-hide"
+                :alt="product ? product.name : 'Error when loading an image'"
+              />
               <div class="col-12 swiper sm-show mb-4 sm-show" id="swiper-enlarge">
                 <div class="swiper-wrapper">
                   <div v-for="(image, index) in product?.images" :key="index" class="swiper-slide">
                     <img
                       :src="`${staticProductImagesUrl}${image}`"
-                      alt="Error when loading an image"
+                      :alt="product ? product.name : 'Error when loading an image'"
                       class="d-block w-100"
                     />
                   </div>
@@ -611,6 +616,7 @@ onBeforeMount(() => {
                 :key="index"
                 :style="{ 'background-image': `url(${staticProductImagesUrl}${image})` }"
                 ref="enlargedImageListRef"
+                :alt="product ? product.name : 'Error when loading an image'"
                 @click="
                   (selectImage(enlargedImageRef, enlargedImageListRef, index, image),
                   enlargedSwiper.slideTo(index))

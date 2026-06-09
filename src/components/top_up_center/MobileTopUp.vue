@@ -63,6 +63,7 @@ function prefix(e: Event) {
       if (find) {
         get = true
         imRef.value?.setAttribute('src', `${staticProviderImagesUrl}${image}`)
+        imRef.value?.setAttribute('alt', 'Logo of ' + name)
         provider.value = 'Provider: ' + name
 
         if (imRef.value && inputRef.value?.offsetHeight !== undefined)
@@ -124,7 +125,7 @@ onMounted(getProviders)
           @input="prefix"
           placeholder="ex. 0838xxxxxxxx / 0856xxxxxxxx"
         />
-        <img ref="imRef" id="im" />
+        <img ref="imRef" id="im" :alt="provider ? 'Logo of ' + provider : 'Provider logo'" />
       </div>
       <transition name="expand" tag="div"
         ><span v-if="provider">{{ provider }}</span></transition
