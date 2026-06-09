@@ -30,7 +30,7 @@ import { BIconHeart, BIconLock, BIconPhone, BIconSearch, BIconShop } from 'boots
         </ul>
       </div>
       <div class="text-center text-muted">
-        <span>Made with <BIconHeart /> by Kapak Team</span>
+        <span>Made with <BIconHeart /> by Kapak Team, Powered by Rondeletia</span>
       </div>
     </div>
   </div>
