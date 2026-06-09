@@ -217,7 +217,12 @@ onMounted(() => {
 <template>
   <nav ref="navRef" class="navbar fixed-top bg-body-primary">
     <div class="container-fluid container-little">
-      <RouterLink class="navbar-brand" to="/" ref="brandRef" id="brand"></RouterLink>
+      <RouterLink
+        class="navbar-brand"
+        :to="{ name: 'Home' }"
+        ref="brandRef"
+        id="brand"
+      ></RouterLink>
       <button
         class="btn"
         id="back"
@@ -251,7 +256,7 @@ onMounted(() => {
         </button>
       </div>
       <div class="d-flex ps-4">
-        <RouterLink to="/cart" class="btn icons me-3">
+        <RouterLink :to="{ name: 'Cart' }" class="btn icons me-3">
           <BIconCart />
           <span
             v-if="cart().total_all_quantity > 0"
@@ -260,7 +265,7 @@ onMounted(() => {
             {{ cart().total_all_quantity }}
           </span>
         </RouterLink>
-        <RouterLink to="/chat" class="btn icons me-3">
+        <RouterLink :to="{ name: 'Chat' }" class="btn icons me-3">
           <BIconEnvelope />
         </RouterLink>
         <div class="btn icons" @click.prevent="toggleTheme">
@@ -271,13 +276,13 @@ onMounted(() => {
         <div v-if="login().isLoginChecked" class="sm-hide">
           <div v-if="!login().username" class="">
             <RouterLink
-              to="/login"
+              :to="{ name: 'Login' }"
               class="btn btn-sm me-2"
               style="height: 2.2rem; align-content: center"
               >Login</RouterLink
             >
             <RouterLink
-              to="/sign-up"
+              :to="{ name: 'SignUp' }"
               class="btn btn-sm"
               style="height: 2.2rem; align-content: center"
               >Sign Up</RouterLink
@@ -293,17 +298,17 @@ onMounted(() => {
                   </div>
                 </li>
                 <li>
-                  <RouterLink class="dropdown-item" to="/orders">
+                  <RouterLink class="dropdown-item" :to="{ name: 'Orders' }">
                     <BIconList /> My Orders
                   </RouterLink>
                 </li>
                 <li>
-                  <RouterLink class="dropdown-item" to="/wishlist">
+                  <RouterLink class="dropdown-item" :to="{ name: 'Wishlist' }">
                     <BIconHeart /> Wishlist
                   </RouterLink>
                 </li>
                 <li>
-                  <RouterLink class="dropdown-item" to="/settings">
+                  <RouterLink class="dropdown-item" :to="{ name: 'Settings' }">
                     <BIconGear /> Settings
                   </RouterLink>
                 </li>

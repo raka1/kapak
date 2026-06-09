@@ -13,7 +13,9 @@ defineProps<Props>()
     <div class="cons-card uplift">
       <h2>{{ page }} Page Coming Soon</h2>
       <p class="text-muted">This page is under construction.<br />Stay tuned for updates!</p>
-      <RouterLink to="/" class="btn btn-full"><BIconHouseFill /> Back to Home</RouterLink>
+      <RouterLink :to="{ name: 'Home' }" class="btn btn-full"
+        ><BIconHouseFill /> Back to Home</RouterLink
+      >
     </div>
   </div>
 </template>

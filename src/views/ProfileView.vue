@@ -39,13 +39,13 @@ async function logout() {
         <strong class="profile-name">{{ login().username }}</strong>
       </div>
       <div class="list-group mt-3">
-        <RouterLink class="list-group-item" to="/orders">
+        <RouterLink class="list-group-item" :to="{ name: 'Orders' }">
           <BIconList class="pe-2" /> My Orders
         </RouterLink>
-        <RouterLink class="list-group-item" to="/wishlist">
+        <RouterLink class="list-group-item" :to="{ name: 'Wishlist' }">
           <BIconHeart class="pe-2" /> Wishlist
         </RouterLink>
-        <RouterLink class="list-group-item" to="/settings">
+        <RouterLink class="list-group-item" :to="{ name: 'Settings' }">
           <BIconGear class="pe-2" /> Settings
         </RouterLink>
         <div class="list-group-item" @click.prevent="logout">
@@ -58,10 +58,10 @@ async function logout() {
       <hr style="color: var(--line)" />
       <div class="row">
         <div class="col-6 d-grid">
-          <RouterLink class="btn btn-full" to="/login">Login</RouterLink>
+          <RouterLink class="btn btn-full" :to="{ name: 'Login' }">Login</RouterLink>
         </div>
         <div class="col-6 d-grid">
-          <RouterLink class="btn btn-full-outline" to="/sign-up">Sign Up</RouterLink>
+          <RouterLink class="btn btn-full-outline" :to="{ name: 'SignUp' }">Sign Up</RouterLink>
         </div>
       </div>
     </div>

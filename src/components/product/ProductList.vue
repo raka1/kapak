@@ -137,7 +137,7 @@ onMounted(async () => {
     >
       <div v-for="(product, index) in products" :key="index">
         <RouterLink
-          :to="`/${product.seller}/${product.slug}`"
+          :to="{ name: 'Product', params: { seller: product.seller, slug: product.slug } }"
           class="card mb-4 uplift"
           :title="product.name"
         >

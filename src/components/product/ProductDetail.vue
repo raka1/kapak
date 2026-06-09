@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Swiper from 'swiper'
-import { ref, onMounted, onBeforeMount, watch } from 'vue'
+import { ref, onMounted, onBeforeMount, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Pagination } from 'swiper/modules'
 import 'swiper/css'
@@ -76,7 +76,8 @@ async function getProduct() {
         : '',
       product.value?.seller.username ?? '',
     )
-    selectImage(imageRef.value, imageListRef.value, 0, product.value?.images[0] ?? '')
+    await nextTick()
+    if (imageRef.value) resizeImage()
   } catch (error) {
     console.error(error)
     emit('avaibility', false)
@@ -296,8 +297,9 @@ onBeforeMount(() => {
     <div class="row">
       <div class="col-5 position-relative">
         <img
+          v-if="product"
           :src="product?.images[0] ? `${staticProductImagesUrl}${product.images[0]}` : ''"
-          :alt="product ? product.name : 'Error when loading an image'"
+          :alt="product ? product.name : 'Product image'"
           class="d-block w-100 h-100"
           data-bs-toggle="modal"
           data-bs-target="#imageModal"
@@ -376,7 +378,7 @@ onBeforeMount(() => {
       <RouterLink
         class="btn btn-full"
         v-if="btnInPreview == 1"
-        :to="login().username ? '/cart/checkout' : '/login'"
+        :to="login().username ? { name: 'Checkout' } : { name: 'Login' }"
         >Buy Now</RouterLink
       >
     </div>
@@ -392,13 +394,20 @@ onBeforeMount(() => {
     >
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <RouterLink class="breadcrumb-item" to="/">Home</RouterLink>
+          <RouterLink class="breadcrumb-item" :to="{ name: 'Home' }">Home</RouterLink>
         </li>
         <li class="breadcrumb-item">
-          <RouterLink class="breadcrumb-item" to="#">{{ product?.category }}</RouterLink>
+          <span class="breadcrumb-item">{{ product?.category }}</span>
         </li>
         <li class="breadcrumb-item">
-          <RouterLink class="breadcrumb-item" :to="route.path">{{ product?.name }}</RouterLink>
+          <RouterLink
+            class="breadcrumb-item"
+            :to="{
+              name: 'Product',
+              params: { seller: route.params.seller, slug: route.params.slug },
+            }"
+            >{{ product?.name }}</RouterLink
+          >
         </li>
       </ol>
     </nav>
@@ -409,9 +418,11 @@ onBeforeMount(() => {
   <div class="row" id="product-container">
     <div id="image" class="col-12 col-md-3 sm-hide">
       <img
+        v-if="product"
+        :src="product?.images[0] ? `${staticProductImagesUrl}${product.images[0]}` : ''"
+        :alt="product ? product.name : 'Product image'"
         class="rounded-2 pointer"
         ref="imageRef"
-        :alt="product ? product.name : 'Product image'"
         id="show"
         data-bs-toggle="modal"
         data-bs-target="#imageModal"
@@ -558,7 +569,7 @@ onBeforeMount(() => {
             <div class="separator d-inline-block"></div>
             <RouterLink
               class="btn btn-sm btn-full d-inline-block"
-              :to="login().username ? '/cart/checkout' : '/login'"
+              :to="login().username ? { name: 'Checkout' } : { name: 'Login' }"
               >Buy Now</RouterLink
             >
           </div>

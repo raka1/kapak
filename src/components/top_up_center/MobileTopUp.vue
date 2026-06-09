@@ -155,7 +155,7 @@ onMounted(getProviders)
         <RouterLink
           class="btn btn-lg btn-full d-inline-block"
           :class="selectedPrice ? '' : 'disabled'"
-          to="/cart/checkout"
+          :to="{ name: 'Checkout' }"
           >Buy Now</RouterLink
         >
       </div>

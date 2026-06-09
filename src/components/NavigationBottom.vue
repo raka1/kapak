@@ -8,11 +8,19 @@ const route = useRoute()
 <template>
   <nav class="navbar fixed-bottom bg-body-primary">
     <div class="row row-cols-2">
-      <RouterLink class="text-center" to="/" :class="{ active: $route.path === '/' }">
+      <RouterLink
+        class="text-center"
+        :to="{ name: 'Home' }"
+        :class="{ active: route.name === 'Home' }"
+      >
         <span v-if="route.name === 'Home'"><BIconHouseFill /></span>
         <span v-else><BIconHouse /></span>
       </RouterLink>
-      <RouterLink class="text-center" to="/profile" :class="{ active: $route.path === '/profile' }">
+      <RouterLink
+        class="text-center"
+        :to="{ name: 'Profile' }"
+        :class="{ active: route.name === 'Profile' }"
+      >
         <span v-if="route.name === 'Profile'"><BIconPersonFill /></span>
         <span v-else><BIconPerson /></span>
       </RouterLink>

@@ -438,7 +438,7 @@ onMounted(() => {
           Already have an account?
           <RouterLink
             replace
-            to="/login"
+            :to="{ name: 'Login' }"
             class="btn link"
             @click="emit('getEmail', emailM)"
             style="transform: translateY(-0.15rem)"
@@ -571,13 +571,14 @@ onMounted(() => {
             />
             <label class="form-check-label" for="agreement">
               I'm okay with the
-              <RouterLink to="#" class="btn link" style="transform: translateY(-0.15rem)">
+              <button type="button" class="btn link" style="transform: translateY(-0.15rem)">
                 terms of use
-              </RouterLink>
+              </button>
               and
-              <RouterLink to="#" class="btn link" style="transform: translateY(-0.15rem)">
-                privacy policy </RouterLink
-              >.
+              <button type="button" class="btn link" style="transform: translateY(-0.15rem)">
+                privacy policy
+              </button>
+              .
             </label>
           </div>
           <div class="row mb-4">

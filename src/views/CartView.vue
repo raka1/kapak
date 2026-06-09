@@ -308,7 +308,10 @@ onUnmounted(() => {
         <div>
           <div class="d-grid" style="grid-template-columns: 6rem auto; gap: 1rem">
             <RouterLink
-              :to="`/${cartItem.seller.username}/${item.product.slug}`"
+              :to="{
+                name: 'Product',
+                params: { seller: cartItem.seller.username, slug: item.product.slug },
+              }"
               class="align-top me-4 img-cart"
             >
               <img
@@ -319,7 +322,10 @@ onUnmounted(() => {
             <div class="align-top">
               <div class="d-grid" style="grid-template-columns: auto 8rem; gap: 1rem">
                 <RouterLink
-                  :to="`/${cartItem.seller.username}/${item.product.slug}`"
+                  :to="{
+                    name: 'Product',
+                    params: { seller: cartItem.seller.username, slug: item.product.slug },
+                  }"
                   style="color: var(--main-text); text-decoration: none"
                   >{{ item.product.name }}</RouterLink
                 >

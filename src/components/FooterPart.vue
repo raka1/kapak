@@ -11,11 +11,11 @@ const route = useRoute()
     :style="{ display: route.name === 'Login' || route.name === 'SignUp' ? 'none' : '' }"
   >
     <div class="footer-links mb-2">
-      <RouterLink to="/about">About</RouterLink>
+      <RouterLink :to="{ name: 'About' }">About</RouterLink>
       <span class="mx-2">|</span>
-      <RouterLink to="/contact">Contact</RouterLink>
+      <RouterLink :to="{ name: 'Contact' }">Contact</RouterLink>
       <span class="mx-2">|</span>
-      <RouterLink to="/faq">FAQ</RouterLink>
+      <RouterLink :to="{ name: 'FAQ' }">FAQ</RouterLink>
     </div>
     <div class="footer-social mb-2">
       <a href="https://instagram.com/_tukangsate2" target="_blank">

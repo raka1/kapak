@@ -70,7 +70,10 @@ onMounted(async () => {
     <div class="swiper mt-4 rounded-4 uplift" v-else>
       <div class="swiper-wrapper">
         <div v-for="(carousel, index) in carousels" :key="index" class="swiper-slide">
-          <RouterLink v-if="carousel.status" :to="`/banner/${carousel.name}`">
+          <RouterLink
+            v-if="carousel.status"
+            :to="{ name: 'Banner', params: { name: carousel.name } }"
+          >
             <img
               :src="`${staticBannerImagesUrl}${carousel.image}`"
               :alt="carousel.name ? carousel.name : 'Error when loading a banner image'"
@@ -88,7 +91,7 @@ onMounted(async () => {
     </div>
   </transition>
   <div style="text-align: right">
-    <RouterLink id="see-all-promos" class="btn" to="/all-banners">See all</RouterLink>
+    <RouterLink id="see-all-promos" class="btn" :to="{ name: 'AllBanners' }">See all</RouterLink>
   </div>
 </template>
 

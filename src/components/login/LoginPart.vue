@@ -190,7 +190,7 @@ onMounted(() => {
         />
       </div>
       <div class="row mb-4">
-        <div class="col"><RouterLink to="#" class="btn link">Forgot password?</RouterLink></div>
+        <div class="col"><button type="button" class="btn link">Forgot password?</button></div>
         <div class="col text-end">
           <button ref="loginRef" type="submit" class="btn btn-full" :disabled="logining">
             Login
@@ -216,7 +216,7 @@ onMounted(() => {
       Need an account?
       <RouterLink
         replace
-        to="/sign-up"
+        :to="{ name: 'SignUp' }"
         class="btn link"
         @click="emit('getEmail', usernameM)"
         style="transform: translateY(-0.15rem)"
