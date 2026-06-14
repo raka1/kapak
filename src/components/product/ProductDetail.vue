@@ -287,102 +287,108 @@ onBeforeMount(() => {
     </div>
   </nav>
 
-  <div id="back-drop" :class="{ hidden: hidePreview }" @click="hidePreview = true"></div>
+  <transition name="fade">
+    <div id="back-drop" v-if="!hidePreview" @click="hidePreview = true"></div
+  ></transition>
 
   <!-- Checkout preview modal for mobile view -->
-  <div :class="{ hidden: hidePreview }" id="purchase-preview-wrapper">
-    <div id="purchase-preview-close">
-      <BIconX @click="hidePreview = true" />
-    </div>
-    <div class="row">
-      <div class="col-5 position-relative">
-        <img
-          v-if="product"
-          :src="product?.images[0] ? `${staticProductImagesUrl}${product.images[0]}` : ''"
-          :alt="product ? product.name : 'Product image'"
-          class="d-block w-100 h-100"
-          data-bs-toggle="modal"
-          data-bs-target="#imageModal"
-          @click="enlargeImage($event, 0)"
+  <transition name="shift-up">
+    <div v-if="!hidePreview" id="purchase-preview-wrapper">
+      <div id="purchase-preview-close">
+        <BIconX @click="hidePreview = true" />
+      </div>
+      <div class="row">
+        <div class="col-5 position-relative">
+          <img
+            v-if="product"
+            :src="product?.images[0] ? `${staticProductImagesUrl}${product.images[0]}` : ''"
+            :alt="product ? product.name : 'Product image'"
+            class="d-block w-100 h-100"
+            data-bs-toggle="modal"
+            data-bs-target="#imageModal"
+            @click="enlargeImage($event, 0)"
+          />
+          <div
+            class="position-absolute bottom-0 d-flex align-items-center justify-content-center"
+            id="enlarge-icon"
+          >
+            <BIconArrowsExpand />
+          </div>
+        </div>
+        <div class="col-7" style="margin-top: auto">
+          <h5 class="text-truncate">
+            {{
+              product?.variants[variant]?.price !== undefined
+                ? 'Rp' +
+                  Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
+                    Number(product.variants[variant]?.price),
+                  )
+                : ''
+            }}
+          </h5>
+          <div class="text-truncate">
+            Stock:
+            {{
+              product?.variants[variant]?.stock !== undefined
+                ? Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
+                    Number(product.variants[variant]?.stock),
+                  )
+                : ''
+            }}
+          </div>
+        </div>
+      </div>
+      <hr style="color: var(--line)" />
+      <div v-if="product && product.variants.length > 1">
+        <div class="mb-1">
+          <strong>Choose variant:</strong>
+        </div>
+        <div id="variant-list" class="mb-3">
+          <button
+            v-for="(v, index) in product?.variants"
+            :key="index"
+            class="btn btn-full-outline me-1 mb-1 uplift"
+            :class="{
+              active: index == variant,
+            }"
+            @click="variant = index"
+          >
+            {{ v.name }}
+          </button>
+        </div>
+        <hr style="color: var(--line)" />
+      </div>
+      <div class="quantity input-group">
+        <button class="btn" :class="{ focus: quantityFocused }" @click="decreaseQuantity">
+          <BIconDash class="ps-2 pe-2" />
+        </button>
+        <input
+          class="text-center"
+          :class="{ focus: quantityFocused }"
+          type="text"
+          v-model="quantityString"
+          @input="quantityInput"
+          @focus="quantityFocused = true"
+          @blur="quantityFocused = false"
         />
-        <div
-          class="position-absolute bottom-0 d-flex align-items-center justify-content-center"
-          id="enlarge-icon"
-        >
-          <BIconArrowsExpand />
-        </div>
-      </div>
-      <div class="col-7" style="margin-top: auto">
-        <h5 class="text-truncate">
-          {{
-            product?.variants[variant]?.price !== undefined
-              ? 'Rp' +
-                Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
-                  Number(product.variants[variant]?.price),
-                )
-              : ''
-          }}
-        </h5>
-        <div class="text-truncate">
-          Stock:
-          {{
-            product?.variants[variant]?.stock !== undefined
-              ? Intl.NumberFormat('id-ID', { style: 'decimal' }).format(
-                  Number(product.variants[variant]?.stock),
-                )
-              : ''
-          }}
-        </div>
-      </div>
-    </div>
-    <hr style="color: var(--line)" />
-    <div v-if="product && product.variants.length > 1">
-      <div class="mb-1">
-        <strong>Choose variant:</strong>
-      </div>
-      <div id="variant-list" class="mb-3">
-        <button
-          v-for="(v, index) in product?.variants"
-          :key="index"
-          class="btn btn-full-outline me-1 mb-1 uplift"
-          :class="{
-            active: index == variant,
-          }"
-          @click="variant = index"
-        >
-          {{ v.name }}
+        <button class="btn" :class="{ focus: quantityFocused }" @click="increaseQuantity">
+          <BIconPlus class="ps-2 pe-2" />
         </button>
       </div>
       <hr style="color: var(--line)" />
+      <div class="d-grid">
+        <button class="btn btn-full" v-if="btnInPreview == 0" @click="addToCart">
+          Add to Cart
+        </button>
+        <RouterLink
+          class="btn btn-full"
+          v-if="btnInPreview == 1"
+          :to="login().username ? { name: 'Checkout' } : { name: 'Login' }"
+          >Buy Now</RouterLink
+        >
+      </div>
     </div>
-    <div class="quantity input-group">
-      <button class="btn" :class="{ focus: quantityFocused }" @click="decreaseQuantity">
-        <BIconDash class="ps-2 pe-2" />
-      </button>
-      <input
-        class="text-center"
-        :class="{ focus: quantityFocused }"
-        type="text"
-        v-model="quantityString"
-        @input="quantityInput"
-        @focus="quantityFocused = true"
-        @blur="quantityFocused = false"
-      />
-      <button class="btn" :class="{ focus: quantityFocused }" @click="increaseQuantity">
-        <BIconPlus class="ps-2 pe-2" />
-      </button>
-    </div>
-    <hr style="color: var(--line)" />
-    <div class="d-grid">
-      <button class="btn btn-full" v-if="btnInPreview == 0" @click="addToCart">Add to Cart</button>
-      <RouterLink
-        class="btn btn-full"
-        v-if="btnInPreview == 1"
-        :to="login().username ? { name: 'Checkout' } : { name: 'Login' }"
-        >Buy Now</RouterLink
-      >
-    </div>
-  </div>
+  </transition>
 
   <!-- Product detail and description -->
   <transition name="fade" mode="out-in">
@@ -580,7 +586,7 @@ onBeforeMount(() => {
 
   <!-- Modal for image preview -->
   <div
-    class="modal modal-lg"
+    class="modal fade stack-left modal-lg"
     id="imageModal"
     tabindex="-1"
     aria-labelledby="imageModalLabel"
@@ -644,8 +650,28 @@ onBeforeMount(() => {
 </template>
 
 <style scoped>
-.hidden {
-  display: none;
+.shift-up-enter-active,
+.shift-up-leave-active {
+  transition: transform 0.15s ease-in-out;
+}
+
+.shift-up-enter-from,
+.shift-up-leave-to {
+  transform: translateY(100%);
+}
+
+.shift-up-enter-to,
+.shift-up-leave-from {
+  transform: translateY(0);
+}
+
+.modal.stack-left .modal-dialog {
+  transform: translateX(100%);
+  transition: transform 0.15s ease-in-out;
+}
+
+.modal.stack-left.show .modal-dialog {
+  transform: translateX(0);
 }
 
 #back-drop {
