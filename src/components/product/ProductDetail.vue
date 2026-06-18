@@ -359,8 +359,12 @@ onBeforeMount(() => {
         <hr style="color: var(--line)" />
       </div>
       <div class="quantity input-group">
-        <button class="btn" :class="{ focus: quantityFocused }" @click="decreaseQuantity">
-          <BIconDash class="ps-2 pe-2" />
+        <button
+          class="btn d-flex align-items-center justify-content-center"
+          :class="{ focus: quantityFocused }"
+          @click="decreaseQuantity"
+        >
+          <BIconDash />
         </button>
         <input
           class="text-center"
@@ -371,8 +375,12 @@ onBeforeMount(() => {
           @focus="quantityFocused = true"
           @blur="quantityFocused = false"
         />
-        <button class="btn" :class="{ focus: quantityFocused }" @click="increaseQuantity">
-          <BIconPlus class="ps-2 pe-2" />
+        <button
+          class="btn d-flex align-items-center justify-content-center"
+          :class="{ focus: quantityFocused }"
+          @click="increaseQuantity"
+        >
+          <BIconPlus />
         </button>
       </div>
       <hr style="color: var(--line)" />
@@ -527,8 +535,12 @@ onBeforeMount(() => {
           <div class="row">
             <div class="col-7">
               <div class="quantity input-group">
-                <button class="btn" :class="{ focus: quantityFocused }" @click="decreaseQuantity">
-                  <BIconDash class="ps-2 pe-2" />
+                <button
+                  class="btn d-flex align-items-center justify-content-center"
+                  :class="{ focus: quantityFocused }"
+                  @click="decreaseQuantity"
+                >
+                  <BIconDash />
                 </button>
                 <input
                   class="text-center"
@@ -539,8 +551,12 @@ onBeforeMount(() => {
                   @focus="quantityFocused = true"
                   @blur="quantityFocused = false"
                 />
-                <button class="btn" :class="{ focus: quantityFocused }" @click="increaseQuantity">
-                  <BIconPlus class="ps-2 pe-2" />
+                <button
+                  class="btn d-flex align-items-center justify-content-center"
+                  :class="{ focus: quantityFocused }"
+                  @click="increaseQuantity"
+                >
+                  <BIconPlus />
                 </button>
               </div>
             </div>
